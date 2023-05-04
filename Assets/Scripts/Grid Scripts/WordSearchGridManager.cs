@@ -31,32 +31,6 @@ public class WordSearchGridManager : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
-    {
-        // //FOR DEBUGGING AND SHOWING THE ANSWERS INSIDE THE GRID
-        // if(Input.GetKey(KeyCode.Space))
-        // {
-        //     foreach (Transform letterTransform in letterTransformList)
-        //     {
-        //         LetterGridObject node = GetLetterGridObject(letterTransform.position);
-        //         if(node.isOccupied()) letterTransform.GetComponent<TextMeshPro>().color = Color.green;
-        //     }
-
-        //     isDebugging = true;
-        // }
-
-        // else if(isDebugging && Input.GetKeyUp(KeyCode.Space))
-        // {
-        //     foreach (Transform letterTransform in letterTransformList)
-        //     {
-        //         LetterGridObject node = GetLetterGridObject(letterTransform.position);
-        //         if(node.isOccupied()) letterTransform.GetComponent<TextMeshPro>().color = Color.white;
-        //     }
-
-        //     isDebugging = false;
-        // }
-    }
-
     public void HighlightWordsInGrid(List<string> words, float duration)
     {
         foreach (Transform letterTransform in letterTransformList)
