@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Mini Game Scripts\Sequence Game\SequenceButton.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\Word Search Classes\WordSearchSettings.cs" />
      <Compile Include="Assets\Scripts\Grid Scripts\Grid.cs" />
+     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWord Classes\CrossWordObject.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchHint.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Manager\TriviaGameManager.cs" />
@@ -54,6 +55,7 @@
      <Compile Include="Assets\Scripts\Mini Game Scripts\Sequence Game\SequenceGame.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchTextUI.cs" />
      <Compile Include="Assets\Scripts\Manager Scripts\UnityReactManager.cs" />
+     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWord Classes\CrossWordSettings.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchMistakeCounter.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\GhostController.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\MiniGameManager.cs" />
@@ -72,6 +74,7 @@
      <Compile Include="Assets\Scripts\Trivia Game Scripts\TriviaGameTimer.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\FlappyGhost.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\TriviaGameCredits.cs" />
+     <Compile Include="Assets\CrossWordGridManager.cs" />
      <Compile Include="Assets\GridLetter.cs" />
      <Compile Include="Assets\Scripts\Sounds Scripts\AudioManager.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
