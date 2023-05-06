@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CrossWordManager : MonoBehaviour
 {
   
@@ -10,7 +12,6 @@ public class CrossWordManager : MonoBehaviour
     
     crossWordSettings = DataManager.instance.GetGameSettings<CrossWordSettings>();
     
-    gridManager.instance.CreateCrossWordGrid(
   }
   
 }
