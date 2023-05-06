@@ -5,4 +5,6 @@ public class CrossWordSettings
     public bool enableHints;
     public bool randomizeQuestion;
     public string basedGrading;
+    public bool showCorrectAnswer;
+    public int numOfLettersToShow;
 }
