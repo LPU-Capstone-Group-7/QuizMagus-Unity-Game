@@ -9,7 +9,6 @@ public class WordSearchManager : MonoBehaviour
     public static WordSearchManager instance;
     private WordSearchSettings wordSearchSettings;
     private float preferredGridSize;
-    private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
     private List<string> answers = new List<string>();
 
     [Header("Grid Components")]
