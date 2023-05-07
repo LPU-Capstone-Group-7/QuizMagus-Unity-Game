@@ -73,11 +73,12 @@
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Manager\HintManager.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\TriviaGameTimer.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\FlappyGhost.cs" />
+     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWordManager.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\TriviaGameCredits.cs" />
      <Compile Include="Assets\CrossWordGridManager.cs" />
      <Compile Include="Assets\GridLetter.cs" />
      <Compile Include="Assets\Scripts\Sounds Scripts\AudioManager.cs" />
-     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWordManager.cs" />
+     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWordGeneration.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\GameDesigns\kenney_tinydungeon\Tilesheet.txt" />
