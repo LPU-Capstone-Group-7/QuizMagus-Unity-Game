@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CrossWordGeneration : MonoBehaviour
 {
-    private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
+    private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
     private CrossWordLayout bestCrossWordLayout;
 
     private void Update() {
@@ -74,7 +74,7 @@ public class CrossWordGeneration : MonoBehaviour
                 }
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
-                CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, testWords.Count - words.Count);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, (testWords.Count + 1) - words.Count);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
                 if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords)
@@ -98,25 +98,25 @@ public class CrossWordGeneration : MonoBehaviour
     {
         //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
 
-        // string gridString = "";
-        // for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
-        // {
-        //     for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
-        //     {
-        //         if(crossWordLayout.board[row,col] != '\0')
-        //         {
-        //             gridString += crossWordLayout.board[row,col];
-        //         }
-        //         else
-        //         {
-        //             gridString += "#";
-        //         }
-        //     }
+        string gridString = "";
+        for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
+        {
+            for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
+            {
+                if(crossWordLayout.board[row,col] != '\0')
+                {
+                    gridString += crossWordLayout.board[row,col];
+                }
+                else
+                {
+                    gridString += " ";
+                }
+            }
 
-        //     gridString += "\n";
-        // }
+            gridString += "\n";
+        }
 
-        // Debug.Log(gridString);
+        Debug.Log(gridString);
     }
 
     private List<WordPlacement> FindIntersections(char[,] board, string word)
