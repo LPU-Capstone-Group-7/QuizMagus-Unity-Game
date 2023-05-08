@@ -102,31 +102,6 @@ public class CrossWordGeneration : MonoBehaviour
         }
     }
 
-    private void DisplayBestLayout(CrossWordLayout crossWordLayout)
-    {
-        //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
-
-        string gridString = "";
-        for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
-        {
-            for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
-            {
-                if(crossWordLayout.board[row,col] != '\0')
-                {
-                    gridString += crossWordLayout.board[row,col];
-                }
-                else
-                {
-                    gridString += " ";
-                }
-            }
-
-            gridString += "\n";
-        }
-
-        Debug.Log(gridString);
-    }
-
     private List<WordPlacement> FindIntersections(char[,] board, string word)
     {
         //INITITALIZE LIST
@@ -266,6 +241,31 @@ public class CrossWordGeneration : MonoBehaviour
         }
 
         return board;
+    }
+
+    private void DisplayBestLayout(CrossWordLayout crossWordLayout)
+    {
+        //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
+
+        string gridString = "";
+        for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
+        {
+            for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
+            {
+                if(crossWordLayout.board[row,col] != '\0')
+                {
+                    gridString += crossWordLayout.board[row,col];
+                }
+                else
+                {
+                    gridString += " ";
+                }
+            }
+
+            gridString += "\n";
+        }
+
+        Debug.Log(gridString);
     }
 
 
