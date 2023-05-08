@@ -7,35 +7,42 @@ using UnityEngine;
 public class CrossWordGeneration : MonoBehaviour
 {
     private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
+    //private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
     private CrossWordLayout bestCrossWordLayout;
 
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            GenerateCrossWordLayout(testWords);
-        }
+    private void Start()
+    {
+        System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+        stopwatch.Start();
+
+        GenerateCrossWordLayout(testWords);
+
+        stopwatch.Stop();
+        Debug.Log ("Time taken: "+(stopwatch.Elapsed));
     }
     void GenerateCrossWordLayout(List<string> words)
     {
-        //SORT WORDS BY LENGTH AND CHANGED THEM ALL TO LOWERCASE
-        List<string> sortedWords = words.OrderByDescending(w => w.Length).ToList();
-
-        for (int i = 0; i < sortedWords.Count; i++)
+        for (int i = 0; i < words.Count; i++)
         {
-            sortedWords[i] = sortedWords[i].ToLower();
+            words[i] = words[i].ToLower();
         }
 
-        //FIGURE OUT THE SIZE OF THE BOARD USING THE LENGTH OF THE LONGEST WORD INSIDE THE LIST, WHICH IS THE FIRST INDEXED WORD
-        int boardSize = sortedWords[0].Length + (sortedWords[0].Length / 2);
+        //SORT WORDS BY LENGTH AND CHANGED THEM ALL TO LOWERCASE
+        Queue<string> sortedWords = new Queue<string>(words.OrderByDescending(w => w.Length));
+
+        //FIGURE OUT THE SIZE OF THE BOARD USING THE LENGTH OF THE LONGEST WORD INSIDE THE QUEUE, WHICH IS THE FIRST INDEXED WORD
+        string firstWord = sortedWords.Peek();
+
+        int boardSize = firstWord.Length + (firstWord.Length / 2);
         char[,] initialBoard = new char[boardSize, boardSize];
 
         //PLACE THE FIRST WORD HORIZONTALLY IN THE MIDDLE OF THE BOARD
         int middleRow = boardSize / 2;
-        int startCol = (boardSize - sortedWords[0].Length) / 2;
+        int startCol = (boardSize - firstWord.Length) / 2;
 
-        for (int i = 0; i < sortedWords[0].Length; i++)
+        for (int i = 0; i < firstWord.Length; i++)
         {
-            initialBoard[middleRow, startCol + i] = sortedWords[0][i];
+            initialBoard[middleRow, startCol + i] = firstWord[i];
         }
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
@@ -43,21 +50,22 @@ public class CrossWordGeneration : MonoBehaviour
         DisplayBestLayout(bestCrossWordLayout);
 
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
-        PlaceAllWords(sortedWords.Skip(1).ToList(), initialBoard);
+        sortedWords.Dequeue();
+        PlaceAllWords(sortedWords, initialBoard, 1);
     }
 
-    void PlaceAllWords(List<string> words, char[,] board)
+    void PlaceAllWords(Queue<string> words, char[,] board, int wordCount)
     {
         //LOOP BREAKER
        if(words.Count <= 0) return;
 
-       //CREATE NEW UPDATED BOARD THAT WILL BE RETURNED
-       char[,] updatedBoard = new char[board.GetLength(0), board.GetLength(1)];
-       Array.Copy(board, updatedBoard, board.Length);
-
         //TAKE THE NEXT WORD, SEARCH THROUGH ALL THE LETTERS ALREADY IN THE BOARD, AND SEE IF THERE ARE ANY POSSIBLE INTERSECTIONS
         //GET ALL POSSIBLE INTERSECTIONS INSIDE THE LIST
-        List<WordPlacement> intersections = FindIntersections(board, words[0]);
+        string word = words.Dequeue();
+        List<WordPlacement> intersections = FindIntersections(board, word);
+
+        //CREATE NEW UPDATED BOARD THAT WILL BE RETURNED
+        char[,] updatedBoard = null;
 
         if(intersections.Count > 0)
         {
@@ -66,15 +74,15 @@ public class CrossWordGeneration : MonoBehaviour
                 //CREATE NEW UPDATED BOARD WITH THIS WORD PLACEMENT
                 if(wordPlacement.canPlaceWordHorizontally)
                 {
-                    updatedBoard = PlaceWordHorizontally(board, wordPlacement, words[0]);
+                    updatedBoard = PlaceWordHorizontally(board, wordPlacement, word);
                 }
                 else
                 {
-                    updatedBoard = PlaceWordVertically(board, wordPlacement, words[0]);
+                    updatedBoard = PlaceWordVertically(board, wordPlacement, word);
                 }
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
-                CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, (testWords.Count + 1) - words.Count);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, wordCount + 1);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
                 if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords)
@@ -89,7 +97,7 @@ public class CrossWordGeneration : MonoBehaviour
                 }
 
                 //PLACE NEXT WORD IN GRID
-                PlaceAllWords(words.Skip(1).ToList(), updatedBoard);
+                PlaceAllWords(new Queue<string>(words), updatedBoard, wordCount + 1);
             }
         }
     }
