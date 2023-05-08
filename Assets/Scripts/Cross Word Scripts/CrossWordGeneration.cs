@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class CrossWordGeneration : MonoBehaviour
 {
-    private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
-    //private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
+    //private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
+    private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
+    //private List<string> testWords = new List<string>{"Cat", "Bat", "Dog"};
     private CrossWordLayout bestCrossWordLayout;
 
     private void Start()
@@ -33,7 +34,7 @@ public class CrossWordGeneration : MonoBehaviour
         //FIGURE OUT THE SIZE OF THE BOARD USING THE LENGTH OF THE LONGEST WORD INSIDE THE QUEUE, WHICH IS THE FIRST INDEXED WORD
         string firstWord = sortedWords.Peek();
 
-        int boardSize = firstWord.Length + (firstWord.Length / 2);
+        int boardSize = firstWord.Length + (firstWord.Length / 2) > words.Count? firstWord.Length + (firstWord.Length /2) : words.Count + (words.Count /2);
         char[,] initialBoard = new char[boardSize, boardSize];
 
         //PLACE THE FIRST WORD HORIZONTALLY IN THE MIDDLE OF THE BOARD
@@ -64,40 +65,25 @@ public class CrossWordGeneration : MonoBehaviour
         string word = words.Dequeue();
         List<WordPlacement> intersections = FindIntersections(board, word);
 
-        //CREATE NEW UPDATED BOARD THAT WILL BE RETURNED
-        char[,] updatedBoard = null;
-
         if(intersections.Count > 0)
         {
             foreach (WordPlacement wordPlacement in intersections)
             {
                 //CREATE NEW UPDATED BOARD WITH THIS WORD PLACEMENT
-                if(wordPlacement.canPlaceWordHorizontally)
-                {
-                    updatedBoard = PlaceWordHorizontally(board, wordPlacement, word);
-                }
-                else
-                {
-                    updatedBoard = PlaceWordVertically(board, wordPlacement, word);
-                }
+                char[,] updatedBoard = wordPlacement.canPlaceWordHorizontally? PlaceWordHorizontally(board, wordPlacement, word) : PlaceWordVertically(board, wordPlacement, word);
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
                 CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, wordCount + 1);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
-                if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords)
-                {
-                    bestCrossWordLayout = crossWordLayout;
-                    DisplayBestLayout(bestCrossWordLayout);
-                }
-                else if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetTotalLettersInBoard() < bestCrossWordLayout.GetTotalLettersInBoard())
+                if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords || (crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetTotalLettersInBoard() < bestCrossWordLayout.GetTotalLettersInBoard()))
                 {
                     bestCrossWordLayout = crossWordLayout;
                     DisplayBestLayout(bestCrossWordLayout);
                 }
 
                 //PLACE NEXT WORD IN GRID
-                PlaceAllWords(new Queue<string>(words), updatedBoard, wordCount + 1);
+                PlaceAllWords(words, updatedBoard, wordCount + 1);
             }
         }
     }
@@ -106,6 +92,9 @@ public class CrossWordGeneration : MonoBehaviour
     {
         //INITITALIZE LIST
         List<WordPlacement> intersectionList = new List<WordPlacement>();
+
+        //Create HASHSET OF LETTERS IN THE WORD
+        HashSet<char> wordLetters = new HashSet<char>(word);
         
         for (int row = 0; row < board.GetLength(0); row++)
         {
@@ -113,26 +102,30 @@ public class CrossWordGeneration : MonoBehaviour
             {
                 char boardLetter = board[row,col];
 
-                //SEE IF THERE IS A LETTER IN THIS CELL AND WORD HAS SIMILARITIES WITH IT
-                for (int i = 0; i < word.Length; i++)
+                if(wordLetters.Contains(boardLetter))
                 {
-                    if(boardLetter == word[i])
+                    //SEE IF THERE IS A LETTER IN THIS CELL AND WORD HAS SIMILARITIES WITH IT
+                    for (int i = 0; i < word.Length; i++)
                     {
-                        if(CanPlaceWordHorizontally(board, word, i, row, col))
+                        if(boardLetter == word[i])
                         {
-                            int startCol = col - i;
-                            WordPlacement wordPlacement = new WordPlacement(row, startCol, true);
-                            intersectionList.Add(wordPlacement);
-                        }
+                            if(CanPlaceWordHorizontally(board, word, i, row, col))
+                            {
+                                int startCol = col - i;
+                                WordPlacement wordPlacement = new WordPlacement(row, startCol, true);
+                                intersectionList.Add(wordPlacement);
+                            }
 
-                        if(CanPlaceWordVertically(board, word, i, row, col))
-                        {
-                            int startRow = row - i;
-                            WordPlacement wordPlacement = new WordPlacement(startRow, col, false);
-                            intersectionList.Add(wordPlacement);
+                            if(CanPlaceWordVertically(board, word, i, row, col))
+                            {
+                                int startRow = row - i;
+                                WordPlacement wordPlacement = new WordPlacement(startRow, col, false);
+                                intersectionList.Add(wordPlacement);
+                            }
                         }
                     }
                 }
+
             }
         }
 
@@ -245,7 +238,7 @@ public class CrossWordGeneration : MonoBehaviour
 
     private void DisplayBestLayout(CrossWordLayout crossWordLayout)
     {
-        //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
+        //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + "/" + testWords.Count + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
 
         string gridString = "";
         for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
@@ -258,7 +251,7 @@ public class CrossWordGeneration : MonoBehaviour
                 }
                 else
                 {
-                    gridString += " ";
+                    gridString += "#";
                 }
             }
 
