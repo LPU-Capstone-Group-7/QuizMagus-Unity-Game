@@ -4,11 +4,71 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/*
+* CHANGE LIST SORTING APPROACH TO PRIORITIZE WORDS WITH MORE SIMILAR LETTERS IF LENGTHS ARE  THE SAME -- DONE
+* CHANGE CHAR[,] ARRAY  TO A STRUCT CROSSWORD LETTER CONTAINING {WORD[], LETTER, ORIENTATIONS[]}
+* TRIM UNUSED CORNER ARRAYS -- DONE
+* CREATE A WAY TO MOVE  THIS CODE INTO A GENERIC OBJECT GRID
+*/
+
 public class CrossWordGeneration : MonoBehaviour
 {
     //private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
     private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
     //private List<string> testWords = new List<string>{"Cat", "Bat", "Dog"};
+//     List<string> testWords = new List<string>
+// {
+//     "lion",
+//     "tiger",
+//     "bear",
+//     "wolf",
+//     "leopard",
+//     "cheetah",
+//     "lynx",
+//     "jaguar",
+//     "panther",
+//     "cougar",
+//     "bobcat",
+//     "fox",
+//     "coyote",
+//     "hyena",
+//     "mongoose",
+//     "badger",
+//     "raccoon",
+//     "opossum",
+//     "weasel",
+//     "ferret",
+//     "skunk",
+//     "platypus",
+//     "otter",
+//     "seal",
+//     "walrus",
+//     "dolphin",
+//     "whale",
+//     "shark",
+//     "swordfish",
+//     "salmon",
+//     "trout",
+//     "bass",
+//     "crab",
+//     "lobster",
+//     "shrimp",
+//     "clam",
+//     "oyster",
+//     "octopus",
+//     "squid",
+//     "snail",
+//     "slug",
+//     "worm",
+//     "ant",
+//     "bee",
+//     "caterpillar",
+//     "mosquito",
+//     "spider",
+//     "scorpion",
+//     "snail",
+// };
+    List<string> sortedWordList = new List<string>();
     private CrossWordLayout bestCrossWordLayout;
 
     private void Start()
@@ -29,25 +89,24 @@ public class CrossWordGeneration : MonoBehaviour
         }
 
         //SORT WORDS BY LENGTH AND CHANGED THEM ALL TO LOWERCASE
-        Queue<string> sortedWords = new Queue<string>(words.OrderByDescending(w => w.Length));
+        sortedWordList = SortWordList(words);
+        Queue<string> sortedWords = new Queue<string>(sortedWordList);
 
         //FIGURE OUT THE SIZE OF THE BOARD USING THE LENGTH OF THE LONGEST WORD INSIDE THE QUEUE, WHICH IS THE FIRST INDEXED WORD
         string firstWord = sortedWords.Peek();
 
-        int boardSize = firstWord.Length + (firstWord.Length / 2) > words.Count? firstWord.Length + (firstWord.Length /2) : words.Count + (words.Count /2);
+        int boardSize = firstWord.Length > words.Count? firstWord.Length * 2 : words.Count * 2;
         char[,] initialBoard = new char[boardSize, boardSize];
 
-        //PLACE THE FIRST WORD HORIZONTALLY IN THE MIDDLE OF THE BOARD
-        int middleRow = boardSize / 2;
-        int startCol = (boardSize - firstWord.Length) / 2;
+        //PLACE THE FIRST WORD VERTICALLY IN THE MIDDLE OF THE BOARD
+        int startRow = boardSize/2;
+        int startCol = (boardSize/2) - Mathf.CeilToInt((float)firstWord.Length /2);
+        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, true); 
 
-        for (int i = 0; i < firstWord.Length; i++)
-        {
-            initialBoard[middleRow, startCol + i] = firstWord[i];
-        }
+        PlaceWordVertically(initialBoard, firstWordPlacement, firstWord);
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
-        bestCrossWordLayout = new CrossWordLayout(initialBoard, 1);
+        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard), 1);
         DisplayBestLayout(bestCrossWordLayout);
 
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
@@ -73,10 +132,10 @@ public class CrossWordGeneration : MonoBehaviour
                 char[,] updatedBoard = wordPlacement.canPlaceWordHorizontally? PlaceWordHorizontally(board, wordPlacement, word) : PlaceWordVertically(board, wordPlacement, word);
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
-                CrossWordLayout crossWordLayout = new CrossWordLayout(updatedBoard, wordCount + 1);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard), wordCount + 1);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
-                if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords || (crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetTotalLettersInBoard() < bestCrossWordLayout.GetTotalLettersInBoard()))
+                if(CompareToBestLayout(crossWordLayout))
                 {
                     bestCrossWordLayout = crossWordLayout;
                     DisplayBestLayout(bestCrossWordLayout);
@@ -86,6 +145,7 @@ public class CrossWordGeneration : MonoBehaviour
                 PlaceAllWords(words, updatedBoard, wordCount + 1);
             }
         }
+        else{Debug.Log("Skipped: " + word);}
     }
 
     private List<WordPlacement> FindIntersections(char[,] board, string word)
@@ -236,32 +296,98 @@ public class CrossWordGeneration : MonoBehaviour
         return board;
     }
 
-    private void DisplayBestLayout(CrossWordLayout crossWordLayout)
+    private char[,] TrimCrossWordBoard(char[,] board)
     {
-        //Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + "/" + testWords.Count + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard());
+        int boardRow = board.GetLength(0);
+        int boardCol = board.GetLength(1);
 
-        string gridString = "";
-        for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
+        //FIND THE MIN AND MAX ROW AND COLUMNS INDICES THAT HAVE A LETER
+        int minRow = boardRow - 1, maxRow = 0;
+        int minCol = boardCol -1, maxCol = 0;
+
+        for (int row = 0; row < boardRow; row++)
         {
-            for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
+            for (int col = 0; col < boardCol; col++)
             {
-                if(crossWordLayout.board[row,col] != '\0')
+                if(board[row, col] != '\0')
                 {
-                    gridString += crossWordLayout.board[row,col];
-                }
-                else
-                {
-                    gridString += "#";
+                    minRow = Mathf.Min(minRow, row);
+                    maxRow = Mathf.Max(maxRow, row);
+                    minCol = Mathf.Min(minCol, col);
+                    maxCol = Mathf.Max(maxCol, col);
                 }
             }
+        }
+        
+        //CREATE NEW ARRAY WITH THE TRIMMED DIMENSIONS
+        int trimmedRows = maxRow - minRow + 1;
+        int trimmedCols = maxCol - minCol + 1;
+        char[,] trimmedBoard = new char[trimmedRows, trimmedCols];
 
-            gridString += "\n";
+        //COPY CONTENTS FROM THE ORIGINAL BOARD
+        for (int row = 0; row < trimmedRows; row++)
+        {
+            for (int col = 0; col < trimmedCols; col++)
+            {
+                trimmedBoard[row, col] = board[row + minRow, col + minCol];
+            }
         }
 
-        Debug.Log(gridString);
+        return trimmedBoard;
+
+
+    }
+    
+    private void DisplayBestLayout(CrossWordLayout crossWordLayout)
+    {
+        Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + "/" + testWords.Count + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
     }
 
+    //SORTING FUNCTION ALGORITHM
+    private List<string> SortWordList(List<string> words)
+    {
+        words.Sort((a, b) => 
+        {
+            int commonLettersA = CountCommonLetters(a, words);
+            int commonLettersB = CountCommonLetters(b, words);
+                
+            if(commonLettersA == commonLettersB) return 0;
 
+            return commonLettersB - commonLettersA;
+        });
+
+        return words;
+    }
+
+    private int CountCommonLetters(string selectedWord, List<string> words)
+    {
+        int count = 0;
+
+        foreach (string word in words)
+        {
+            if(word != selectedWord)
+            {
+                foreach (char letter in word)
+                {
+                    if(selectedWord.Contains(letter)) count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    //COMPARE BEST CROSSWORD LAYOUT
+    private bool CompareToBestLayout(CrossWordLayout crossWordLayout)
+    {
+        if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords) return true;
+
+        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.getAspectDiff() < bestCrossWordLayout.getAspectDiff()) return true;
+
+        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.getAspectDiff() == bestCrossWordLayout.getAspectDiff() && crossWordLayout.board.GetLength(1) > crossWordLayout.board.GetLength(1)) return true;
+
+        return false;
+    }
 }
 
 struct WordPlacement
@@ -289,6 +415,13 @@ struct CrossWordLayout
         this.numOfPlacedWords = numOfPlacedWords;
     }
 
+    public float getAspectDiff()
+    {
+        int numSquares = board.GetLength(0) * board.GetLength(1);
+        float aspectRatio = (float)numSquares / (float)board.GetLength(0);
+
+        return Math.Abs(aspectRatio - 1f);
+    }
     public int GetTotalLettersInBoard()
     {
         int ctr = 0;
