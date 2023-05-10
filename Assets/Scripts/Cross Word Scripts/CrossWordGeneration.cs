@@ -6,20 +6,15 @@ using UnityEngine;
 
 /*
 * CHANGE LIST SORTING APPROACH TO PRIORITIZE WORDS WITH MORE SIMILAR LETTERS IF LENGTHS ARE  THE SAME -- DONE
-* CHANGE CHAR[,] ARRAY  TO A STRUCT CROSSWORD LETTER CONTAINING {WORD[], LETTER, ORIENTATIONS[]}
+* CHANGE CHAR[,] ARRAY  TO A STRUCT CROSSWORD LETTER CONTAINING {WORD[], LETTER, ORIENTATIONS[]} -- DONE
 * TRIM UNUSED CORNER ARRAYS -- DONE
 * CREATE A WAY TO MOVE  THIS CODE INTO A GENERIC OBJECT GRID
 */
 
-public enum Orientation{
-    across,
-    down
-}
 public class CrossWordGeneration : MonoBehaviour
 {
     //private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
     //private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
-    //private List<string> testWords = new List<string>{"Cat", "Bat", "Dog"};
     List<string> testWords = new List<string>
 {
     "lion",
@@ -407,67 +402,5 @@ public class CrossWordGeneration : MonoBehaviour
         if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetAspectDiff() == bestCrossWordLayout.GetAspectDiff() && crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
 
         return false;
-    }
-}
-
-struct WordPlacement
-{
-    public int startRow;
-    public int startCol;
-    public bool canPlaceWordHorizontally;
-
-    public WordPlacement(int startRow, int startCol, bool canPlaceWordHorizontally)
-    {
-        this.startRow = startRow;
-        this.startCol = startCol;
-        this.canPlaceWordHorizontally = canPlaceWordHorizontally;
-    }
-}
-
-struct CrossWordLayout
-{
-    public char[,] board;
-    public HashSet<CrossWordEntry> crossWordEntries;
-    public int numOfPlacedWords;
-
-    public CrossWordLayout(char[,] board, int numOfPlacedWords, HashSet<CrossWordEntry> crossWordEntries)
-    {
-        this.board = board;
-        this.numOfPlacedWords = numOfPlacedWords;
-        this.crossWordEntries = crossWordEntries;
-    }
-
-    public float GetAspectDiff()
-    {
-        float aspectRatio = board.GetLength(1) / board.GetLength(0);
-        return Mathf.Abs(aspectRatio - 1.0f);
-    }
-    public int GetTotalLettersInBoard()
-    {
-        int ctr = 0;
-
-        for (int row = 0; row < board.GetLength(0); row++)
-        {
-            for (int col = 0; col < board.GetLength(1); col++)
-            {
-                if(board[row, col] != '\0') ctr++;
-            }
-        }
-
-        return ctr; 
-    }
-}
-
-struct CrossWordEntry
-{
-    string word;
-    Orientation orientation;
-    HashSet<(int row, int col, char letter)> letterPlacements;
-
-    public CrossWordEntry(string word, Orientation orientation, HashSet<(int row, int col, char letter)> letterPlacements)
-    {
-        this.word = word;
-        this.orientation = orientation;
-        this.letterPlacements = letterPlacements;
     }
 }
