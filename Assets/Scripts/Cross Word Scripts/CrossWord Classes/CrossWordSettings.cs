@@ -36,12 +36,10 @@ public struct CrossWordLayout
 {
     public char[,] board;
     public HashSet<CrossWordEntry> crossWordEntries;
-    public int numOfPlacedWords;
 
-    public CrossWordLayout(char[,] board, int numOfPlacedWords, HashSet<CrossWordEntry> crossWordEntries)
+    public CrossWordLayout(char[,] board, HashSet<CrossWordEntry> crossWordEntries)
     {
         this.board = board;
-        this.numOfPlacedWords = numOfPlacedWords;
         this.crossWordEntries = crossWordEntries;
     }
 

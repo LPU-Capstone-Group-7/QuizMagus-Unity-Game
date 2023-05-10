@@ -107,15 +107,15 @@ public class CrossWordGeneration : MonoBehaviour
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
         HashSet<CrossWordEntry> initialCrossWordEntries = new HashSet<CrossWordEntry>{crossWordEntry};
-        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard), 1, initialCrossWordEntries) ;
+        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard), initialCrossWordEntries) ;
         DisplayBestLayout(bestCrossWordLayout);
 
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
         sortedWords.Dequeue();
-        PlaceAllWords(sortedWords, initialBoard, 1, initialCrossWordEntries);
+        PlaceAllWords(sortedWords, initialBoard, initialCrossWordEntries);
     }
 
-    void PlaceAllWords(Queue<string> words, char[,] board, int wordCount, HashSet<CrossWordEntry> crossWordEntries)
+    void PlaceAllWords(Queue<string> words, char[,] board, HashSet<CrossWordEntry> crossWordEntries)
     {
         //LOOP BREAKER
        if(words.Count <= 0) return;
@@ -136,7 +136,7 @@ public class CrossWordGeneration : MonoBehaviour
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
                 updatedCrossWordEntries.Add(crossWordEntry);
-                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard), wordCount + 1, updatedCrossWordEntries);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard), updatedCrossWordEntries);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
                 if(CompareToBestLayout(crossWordLayout))
@@ -146,7 +146,7 @@ public class CrossWordGeneration : MonoBehaviour
                 }
 
                 //PLACE NEXT WORD IN GRID
-                PlaceAllWords(words, updatedBoard, wordCount + 1, updatedCrossWordEntries);
+                PlaceAllWords(words, updatedBoard, updatedCrossWordEntries);
             }
         }
         else{Debug.Log("Skipped: " + word);}
@@ -395,11 +395,14 @@ public class CrossWordGeneration : MonoBehaviour
     //COMPARE BEST CROSSWORD LAYOUT
     private bool CompareToBestLayout(CrossWordLayout crossWordLayout)
     {
-        if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords) return true;
+        if(crossWordLayout.crossWordEntries.Count > bestCrossWordLayout.crossWordEntries.Count) return true;
 
-        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetAspectDiff() < bestCrossWordLayout.GetAspectDiff()) return true;
+        if(crossWordLayout.crossWordEntries.Count == bestCrossWordLayout.crossWordEntries.Count)
+        {
+            if(crossWordLayout.GetAspectDiff() < bestCrossWordLayout.GetAspectDiff()) return true;
 
-        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetAspectDiff() == bestCrossWordLayout.GetAspectDiff() && crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
+            if(crossWordLayout.GetAspectDiff() == bestCrossWordLayout.GetAspectDiff() && crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
+        }
 
         return false;
     }
