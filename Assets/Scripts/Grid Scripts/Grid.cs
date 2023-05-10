@@ -131,6 +131,22 @@ public class Grid<TGridObject>
         return GetGridObject(x, y);
     }
 
+    //Get all the gridObject 
+    public List<TGridObject> GetAllGridObject()
+    {
+        List<TGridObject> gridObjects = new List<TGridObject>();
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                gridObjects.Add(GetGridObject(x,y));        
+            }
+        }
+
+        return gridObjects;
+    }
+
     public int GetWidth()
     { 
         return width;

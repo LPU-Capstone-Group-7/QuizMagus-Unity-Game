@@ -10,6 +10,7 @@ public class CrossWordObject
 
    public char letter;
    public List<string> assignedWords = new List<string>();
+   public HashSet<Orientation> orientations = new HashSet<Orientation>();
    public bool isAnswered;
 
    public CrossWordObject(Grid<CrossWordObject> grid, int x, int y)
@@ -17,5 +18,13 @@ public class CrossWordObject
         this.grid = grid;
         this.x = x;
         this.y = y;
+   }
+
+   public void AssignPlacedWord(string word, char letter, Orientation orientation)
+   {
+      this.letter = letter;
+
+      assignedWords.Add(word);
+      orientations.Add(orientation);
    }
 }

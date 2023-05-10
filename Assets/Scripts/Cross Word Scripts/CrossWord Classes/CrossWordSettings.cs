@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CrossWordSettings
@@ -43,6 +44,21 @@ public struct CrossWordLayout
         this.crossWordEntries = crossWordEntries;
     }
 
+    public HashSet<CrossWordEntry> FindMatchingEntries(int row, int col, char letter)
+    {
+        HashSet<CrossWordEntry> matchingEntries = new HashSet<CrossWordEntry>();
+
+        foreach (CrossWordEntry entry in crossWordEntries)
+        {
+            if(entry.letterPlacements.Contains((row, col, letter)))
+            {
+                matchingEntries.Add(entry);
+            }
+        }
+
+        return matchingEntries;
+    }
+
     public float GetAspectDiff()
     {
         float aspectRatio = board.GetLength(1) / board.GetLength(0);
@@ -66,9 +82,9 @@ public struct CrossWordLayout
 
 public struct CrossWordEntry
 {
-    string word;
-    Orientation orientation;
-    HashSet<(int row, int col, char letter)> letterPlacements;
+    public string word;
+    public Orientation orientation;
+    public HashSet<(int row, int col, char letter)> letterPlacements;
 
     public CrossWordEntry(string word, Orientation orientation, HashSet<(int row, int col, char letter)> letterPlacements)
     {
