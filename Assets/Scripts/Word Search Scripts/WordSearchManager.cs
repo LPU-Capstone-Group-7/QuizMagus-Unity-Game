@@ -15,8 +15,6 @@ public class WordSearchManager : MonoBehaviour
     [SerializeField] int gridSize;
     [SerializeField] float gridLength;
     private WordSearchGridManager gridManager;
-    private bool allowBackwards = false;
-    private bool allowDiagonals = false;
 
     [Header("Word Search Quiz Components")]
     private int level = 1;

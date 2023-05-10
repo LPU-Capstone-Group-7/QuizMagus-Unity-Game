@@ -8,7 +8,6 @@ using System;
 public class WordSearchGridManager : MonoBehaviour
 {
     public static WordSearchGridManager instance;
-    private bool isDebugging = false;
 
     [Header("Grid Component")]
     [SerializeField] private int gridSize;
