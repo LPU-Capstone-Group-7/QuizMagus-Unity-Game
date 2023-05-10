@@ -11,63 +11,67 @@ using UnityEngine;
 * CREATE A WAY TO MOVE  THIS CODE INTO A GENERIC OBJECT GRID
 */
 
+public enum Orientation{
+    across,
+    down
+}
 public class CrossWordGeneration : MonoBehaviour
 {
     //private List<string> testWords =  new List<string>{"abracadabra", "abrakadabra", "abrawadabra", "abraxadabra", "abrayadabra", "abrazadabra"};
-    private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
+    //private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
     //private List<string> testWords = new List<string>{"Cat", "Bat", "Dog"};
-//     List<string> testWords = new List<string>
-// {
-//     "lion",
-//     "tiger",
-//     "bear",
-//     "wolf",
-//     "leopard",
-//     "cheetah",
-//     "lynx",
-//     "jaguar",
-//     "panther",
-//     "cougar",
-//     "bobcat",
-//     "fox",
-//     "coyote",
-//     "hyena",
-//     "mongoose",
-//     "badger",
-//     "raccoon",
-//     "opossum",
-//     "weasel",
-//     "ferret",
-//     "skunk",
-//     "platypus",
-//     "otter",
-//     "seal",
-//     "walrus",
-//     "dolphin",
-//     "whale",
-//     "shark",
-//     "swordfish",
-//     "salmon",
-//     "trout",
-//     "bass",
-//     "crab",
-//     "lobster",
-//     "shrimp",
-//     "clam",
-//     "oyster",
-//     "octopus",
-//     "squid",
-//     "snail",
-//     "slug",
-//     "worm",
-//     "ant",
-//     "bee",
-//     "caterpillar",
-//     "mosquito",
-//     "spider",
-//     "scorpion",
-//     "snail",
-// };
+    List<string> testWords = new List<string>
+{
+    "lion",
+    "tiger",
+    "bear",
+    "wolf",
+    "leopard",
+    "cheetah",
+    "lynx",
+    "jaguar",
+    "panther",
+    "cougar",
+    "bobcat",
+    "fox",
+    "coyote",
+    "hyena",
+    "mongoose",
+    "badger",
+    "raccoon",
+    "opossum",
+    "weasel",
+    "ferret",
+    "skunk",
+    "platypus",
+    "otter",
+    "seal",
+    "walrus",
+    "dolphin",
+    "whale",
+    "shark",
+    "swordfish",
+    "salmon",
+    "trout",
+    "bass",
+    "crab",
+    "lobster",
+    "shrimp",
+    "clam",
+    "oyster",
+    "octopus",
+    "squid",
+    "snail",
+    "slug",
+    "worm",
+    "ant",
+    "bee",
+    "caterpillar",
+    "mosquito",
+    "spider",
+    "scorpion",
+    "snail",
+};
     List<string> sortedWordList = new List<string>();
     private CrossWordLayout bestCrossWordLayout;
 
@@ -101,20 +105,22 @@ public class CrossWordGeneration : MonoBehaviour
         //PLACE THE FIRST WORD VERTICALLY IN THE MIDDLE OF THE BOARD
         int startRow = boardSize/2;
         int startCol = (boardSize/2) - Mathf.CeilToInt((float)firstWord.Length /2);
-        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, true); 
+        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, false); 
 
-        PlaceWordVertically(initialBoard, firstWordPlacement, firstWord);
+        HashSet<(int row, int col, char letter)> initialLetterPlacements = new HashSet<(int row, int col, char letter)>();
+        PlaceWordVertically(initialBoard, firstWordPlacement, firstWord, out CrossWordEntry crossWordEntry);
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
-        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard), 1);
+        HashSet<CrossWordEntry> initialCrossWordEntries = new HashSet<CrossWordEntry>{crossWordEntry};
+        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard), 1, initialCrossWordEntries) ;
         DisplayBestLayout(bestCrossWordLayout);
 
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
         sortedWords.Dequeue();
-        PlaceAllWords(sortedWords, initialBoard, 1);
+        PlaceAllWords(sortedWords, initialBoard, 1, initialCrossWordEntries);
     }
 
-    void PlaceAllWords(Queue<string> words, char[,] board, int wordCount)
+    void PlaceAllWords(Queue<string> words, char[,] board, int wordCount, HashSet<CrossWordEntry> crossWordEntries)
     {
         //LOOP BREAKER
        if(words.Count <= 0) return;
@@ -129,10 +135,13 @@ public class CrossWordGeneration : MonoBehaviour
             foreach (WordPlacement wordPlacement in intersections)
             {
                 //CREATE NEW UPDATED BOARD WITH THIS WORD PLACEMENT
-                char[,] updatedBoard = wordPlacement.canPlaceWordHorizontally? PlaceWordHorizontally(board, wordPlacement, word) : PlaceWordVertically(board, wordPlacement, word);
+                CrossWordEntry crossWordEntry;
+                HashSet<CrossWordEntry> updatedCrossWordEntries = new HashSet<CrossWordEntry>(crossWordEntries);
+                char[,] updatedBoard = wordPlacement.canPlaceWordHorizontally? PlaceWordHorizontally(board, wordPlacement, word, out crossWordEntry) : PlaceWordVertically(board, wordPlacement, word, out crossWordEntry);
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
-                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard), wordCount + 1);
+                updatedCrossWordEntries.Add(crossWordEntry);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard), wordCount + 1, updatedCrossWordEntries);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
                 if(CompareToBestLayout(crossWordLayout))
@@ -142,7 +151,7 @@ public class CrossWordGeneration : MonoBehaviour
                 }
 
                 //PLACE NEXT WORD IN GRID
-                PlaceAllWords(words, updatedBoard, wordCount + 1);
+                PlaceAllWords(words, updatedBoard, wordCount + 1, updatedCrossWordEntries);
             }
         }
         else{Debug.Log("Skipped: " + word);}
@@ -276,22 +285,33 @@ public class CrossWordGeneration : MonoBehaviour
         return true;
     }
 
-    private char[,] PlaceWordHorizontally(char[,] board, WordPlacement wordPlacement, string word)
+    private char[,] PlaceWordHorizontally(char[,] board, WordPlacement wordPlacement, string word, out CrossWordEntry crossWordEntry)
     {
+        HashSet<(int row, int col, char letter)> letterPlacements = new HashSet<(int row, int col, char letter)>();
+
         for (int i = 0; i < word.Length; i++)
         {
             board[wordPlacement.startRow, wordPlacement.startCol + i] = word[i];
+            letterPlacements.Add((wordPlacement.startRow, wordPlacement.startCol + i, word[i]));
         }
+
+        crossWordEntry = new CrossWordEntry(word, Orientation.across, letterPlacements);
 
         return board;
     }
 
-    private char[,] PlaceWordVertically(char[,] board, WordPlacement wordPlacement, string word)
+    private char[,] PlaceWordVertically(char[,] board, WordPlacement wordPlacement, string word, out CrossWordEntry crossWordEntry)
     {
+        HashSet<(int row, int col, char letter)> letterPlacements = new HashSet<(int row, int col, char letter)>();
+
         for (int i = 0; i < word.Length; i++)
         {
             board[wordPlacement.startRow + i, wordPlacement.startCol] = word[i];
+            letterPlacements.Add((wordPlacement.startRow + i, wordPlacement.startCol, word[i]));
+
         }
+
+        crossWordEntry = new CrossWordEntry(word, Orientation.down, letterPlacements);
 
         return board;
     }
@@ -340,7 +360,7 @@ public class CrossWordGeneration : MonoBehaviour
     
     private void DisplayBestLayout(CrossWordLayout crossWordLayout)
     {
-        Debug.Log("PLACED WORDS: " + crossWordLayout.numOfPlacedWords + "/" + testWords.Count + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
+        Debug.Log("PLACED WORDS: " + crossWordLayout.crossWordEntries.Count + "/" + testWords.Count + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
     }
 
     //SORTING FUNCTION ALGORITHM
@@ -382,9 +402,9 @@ public class CrossWordGeneration : MonoBehaviour
     {
         if(crossWordLayout.numOfPlacedWords > bestCrossWordLayout.numOfPlacedWords) return true;
 
-        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.getAspectDiff() < bestCrossWordLayout.getAspectDiff()) return true;
+        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetAspectDiff() < bestCrossWordLayout.GetAspectDiff()) return true;
 
-        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.getAspectDiff() == bestCrossWordLayout.getAspectDiff() && crossWordLayout.board.GetLength(1) > crossWordLayout.board.GetLength(1)) return true;
+        if(crossWordLayout.numOfPlacedWords == bestCrossWordLayout.numOfPlacedWords && crossWordLayout.GetAspectDiff() == bestCrossWordLayout.GetAspectDiff() && crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
 
         return false;
     }
@@ -407,20 +427,20 @@ struct WordPlacement
 struct CrossWordLayout
 {
     public char[,] board;
+    public HashSet<CrossWordEntry> crossWordEntries;
     public int numOfPlacedWords;
 
-    public CrossWordLayout(char[,] board, int numOfPlacedWords)
+    public CrossWordLayout(char[,] board, int numOfPlacedWords, HashSet<CrossWordEntry> crossWordEntries)
     {
         this.board = board;
         this.numOfPlacedWords = numOfPlacedWords;
+        this.crossWordEntries = crossWordEntries;
     }
 
-    public float getAspectDiff()
+    public float GetAspectDiff()
     {
-        int numSquares = board.GetLength(0) * board.GetLength(1);
-        float aspectRatio = (float)numSquares / (float)board.GetLength(0);
-
-        return Math.Abs(aspectRatio - 1f);
+        float aspectRatio = board.GetLength(1) / board.GetLength(0);
+        return Mathf.Abs(aspectRatio - 1.0f);
     }
     public int GetTotalLettersInBoard()
     {
@@ -435,5 +455,19 @@ struct CrossWordLayout
         }
 
         return ctr; 
+    }
+}
+
+struct CrossWordEntry
+{
+    string word;
+    Orientation orientation;
+    HashSet<(int row, int col, char letter)> letterPlacements;
+
+    public CrossWordEntry(string word, Orientation orientation, HashSet<(int row, int col, char letter)> letterPlacements)
+    {
+        this.word = word;
+        this.orientation = orientation;
+        this.letterPlacements = letterPlacements;
     }
 }
