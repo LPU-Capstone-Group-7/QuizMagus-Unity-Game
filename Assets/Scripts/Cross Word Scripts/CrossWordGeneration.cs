@@ -265,16 +265,10 @@ public class CrossWordGeneration : MonoBehaviour
             }
 
             //CHECK LEFT SIDE 
-            if (cellCol > 0 && board[cellRow, cellCol - 1] != '\0')
-            {
-                return false;
-            }
+            if (cellCol > 0 && board[cellRow, cellCol - 1] != '\0') return false;
 
             //CHECK RIGHT SIDE
-            if (cellCol < board.GetLength(1) - 1 && board[cellRow, cellCol + 1] != '\0')
-            {
-                return false;
-            }
+            if (cellCol < board.GetLength(1) - 1 && board[cellRow, cellCol + 1] != '\0') return false;
         }
         
         return true;
