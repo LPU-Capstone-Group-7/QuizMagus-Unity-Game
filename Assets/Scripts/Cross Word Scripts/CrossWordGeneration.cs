@@ -8,7 +8,7 @@ using UnityEngine;
 * CHANGE LIST SORTING APPROACH TO PRIORITIZE WORDS WITH MORE SIMILAR LETTERS IF LENGTHS ARE  THE SAME -- DONE
 * CHANGE CHAR[,] ARRAY  TO A STRUCT CROSSWORD LETTER CONTAINING {WORD[], LETTER, ORIENTATIONS[]} -- DONE
 * TRIM UNUSED CORNER ARRAYS -- DONE
-* CREATE A WAY TO MOVE  THIS CODE INTO A GENERIC OBJECT GRID
+* CREATE A WAY TO MOVE  THIS CODE INTO A GENERIC OBJECT GRID -- DONE
 */
 
 public class CrossWordGeneration : MonoBehaviour
@@ -50,7 +50,8 @@ public class CrossWordGeneration : MonoBehaviour
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
         HashSet<CrossWordEntry> initialCrossWordEntries = new HashSet<CrossWordEntry>{crossWordEntry};
-        bestCrossWordLayout = new CrossWordLayout(TrimCrossWordBoard( initialBoard, ref initialCrossWordEntries), initialCrossWordEntries) ;
+        (char[,] trimmedBoard, HashSet<CrossWordEntry> updatedEntries) = TrimCrossWordBoard(initialBoard, initialCrossWordEntries);
+        bestCrossWordLayout = new CrossWordLayout(trimmedBoard, updatedEntries);
         DisplayBestLayout(bestCrossWordLayout, firstWord);
 
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
@@ -89,7 +90,8 @@ public class CrossWordGeneration : MonoBehaviour
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
                 updatedCrossWordEntries.Add(crossWordEntry);
-                CrossWordLayout crossWordLayout = new CrossWordLayout(TrimCrossWordBoard(updatedBoard, ref updatedCrossWordEntries), updatedCrossWordEntries);
+                (char[,] trimmedBoard, HashSet<CrossWordEntry> updatedEntries) = TrimCrossWordBoard(updatedBoard, updatedCrossWordEntries);
+                CrossWordLayout crossWordLayout = new CrossWordLayout(trimmedBoard, updatedEntries);
 
                 //COMPARE IT TO THE CURRENT BEST CROSSWORD LAYOUT
                 if(CompareToBestLayout(crossWordLayout))
@@ -258,7 +260,7 @@ public class CrossWordGeneration : MonoBehaviour
         return board;
     }
 
-    private char[,] TrimCrossWordBoard(char[,] board, ref HashSet<CrossWordEntry> crossWordEntries)
+    private (char[,] trimmedBoard, HashSet<CrossWordEntry> updatedCrossWordEntries) TrimCrossWordBoard(char[,] board, HashSet<CrossWordEntry> crossWordEntries)
     {
         int boardRow = board.GetLength(0);
         int boardCol = board.GetLength(1);
@@ -296,45 +298,36 @@ public class CrossWordGeneration : MonoBehaviour
         }
 
         //UPDATE CROSSWORD ENTRIES BASED ON THE NEWLY TRIMED BOARD
-        foreach (CrossWordEntry entry in crossWordEntries.ToList())
-        {
-            HashSet<(int row, int col, char letter)> updatedPlacements = new HashSet<(int row, int col, char letter)>();
-            int oldCount = entry.letterPlacements.Count;
+        HashSet<CrossWordEntry> updatedEntries = new HashSet<CrossWordEntry>();
 
+        foreach (CrossWordEntry entry in crossWordEntries)
+        {
+            HashSet<(int row, int col, char letter)> updatedLetterPlacements = new HashSet<(int row, int col, char letter)>();
+            
             foreach ((int row, int col, char letter) placement in entry.letterPlacements)
             {
                 int updatedRow = placement.row - minRow;
                 int updatedCol = placement.col - minCol;
-
-                if(updatedRow >= 0 && updatedRow < trimmedRows && updatedCol >= 0 && updatedCol < trimmedCols)
+                
+                if (updatedRow >= 0 && updatedRow < trimmedRows && updatedCol >= 0 && updatedCol < trimmedCols)
                 {
-                    updatedPlacements.Add((updatedRow, updatedCol, placement.letter));
+                    updatedLetterPlacements.Add((updatedRow, updatedCol, placement.letter));
                 }
             }
-
-            if (updatedPlacements.Count == 0)
+            if (updatedLetterPlacements.Count > 0)
             {
-                // Remove entry if it no longer has any valid placements
-                crossWordEntries.Remove(entry);
+                CrossWordEntry updatedEntry = new CrossWordEntry(entry.word, entry.orientation, updatedLetterPlacements);
+                updatedEntries.Add(updatedEntry);
             }
-            else
-            {
-                crossWordEntries.Remove(entry);
-                crossWordEntries.Add(new CrossWordEntry(entry.word, entry.orientation, updatedPlacements));
-            }
-
-            Debug.Log("WORD: " + entry.word + " OLD: " + oldCount + " NEW:" + updatedPlacements.Count);
         }
 
-
-        return trimmedBoard;
-
+        return (trimmedBoard, updatedEntries);
 
     }
     
     private void DisplayBestLayout(CrossWordLayout crossWordLayout, string newWord)
     {
-        //Debug.Log("NEW WORD: " + newWord+ " ,PLACED WORDS: " + crossWordLayout.crossWordEntries.Count + "/" + numberOfWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
+        Debug.Log("NEW WORD: " + newWord+ " ,PLACED WORDS: " + crossWordLayout.crossWordEntries.Count + "/" + numberOfWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
     }
 
     //SORTING FUNCTION ALGORITHM

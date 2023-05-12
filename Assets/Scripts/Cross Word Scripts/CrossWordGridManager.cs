@@ -116,6 +116,8 @@ public class CrossWordGridManager : MonoBehaviour
           //ASSIGN TO GRID
           CrossWordObject node = grid.GetGridObject(col, crossWordLayout.board.GetLength(0) -1 - row);
           
+          //if(matchingEntries.Count == 0) Debug.Log("No Matching Entries");
+
           foreach (CrossWordEntry entry in matchingEntries)
           {
             node.AssignPlacedWord(entry.word, letter, entry.orientation);
