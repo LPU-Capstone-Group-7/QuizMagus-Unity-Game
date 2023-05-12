@@ -239,7 +239,7 @@ public class CrossWordGeneration : MonoBehaviour
             letterPlacements.Add((wordPlacement.startRow, wordPlacement.startCol + i, word[i]));
         }
 
-        crossWordEntry = new CrossWordEntry(word, Orientation.across, letterPlacements);
+        crossWordEntry = new CrossWordEntry(word, wordPlacement, letterPlacements);
 
         return board;
     }
@@ -255,7 +255,7 @@ public class CrossWordGeneration : MonoBehaviour
 
         }
 
-        crossWordEntry = new CrossWordEntry(word, Orientation.down, letterPlacements);
+        crossWordEntry = new CrossWordEntry(word, wordPlacement, letterPlacements);
 
         return board;
     }
@@ -297,12 +297,19 @@ public class CrossWordGeneration : MonoBehaviour
             }
         }
 
+
         //UPDATE CROSSWORD ENTRIES BASED ON THE NEWLY TRIMED BOARD
         HashSet<CrossWordEntry> updatedEntries = new HashSet<CrossWordEntry>();
 
         foreach (CrossWordEntry entry in crossWordEntries)
         {
             HashSet<(int row, int col, char letter)> updatedLetterPlacements = new HashSet<(int row, int col, char letter)>();
+
+            //UPDATE WORD PLACEMENT BASED ON THE NEWLY TRIMMED BOARD
+            int updatedStartRow = entry.wordPlacement.startRow - minRow;
+            int updatedStartCol = entry.wordPlacement.startCol - minCol;
+
+            WordPlacement updatedWordPlacement = new WordPlacement(updatedStartRow, updatedStartCol, entry.wordPlacement.orientation);
             
             foreach ((int row, int col, char letter) placement in entry.letterPlacements)
             {
@@ -316,7 +323,7 @@ public class CrossWordGeneration : MonoBehaviour
             }
             if (updatedLetterPlacements.Count > 0)
             {
-                CrossWordEntry updatedEntry = new CrossWordEntry(entry.word, entry.orientation, updatedLetterPlacements);
+                CrossWordEntry updatedEntry = new CrossWordEntry(entry.word, updatedWordPlacement, updatedLetterPlacements);
                 updatedEntries.Add(updatedEntry);
             }
         }

@@ -82,13 +82,13 @@ public struct CrossWordLayout
 public struct CrossWordEntry
 {
     public string word;
-    public Orientation orientation;
+    public WordPlacement wordPlacement;
     public HashSet<(int row, int col, char letter)> letterPlacements;
 
-    public CrossWordEntry(string word, Orientation orientation, HashSet<(int row, int col, char letter)> letterPlacements)
+    public CrossWordEntry(string word, WordPlacement wordPlacement, HashSet<(int row, int col, char letter)> letterPlacements)
     {
         this.word = word;
-        this.orientation = orientation;
+        this.wordPlacement = wordPlacement;
         this.letterPlacements = letterPlacements;
     }
 }
