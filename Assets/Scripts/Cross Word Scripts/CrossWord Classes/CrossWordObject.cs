@@ -9,8 +9,7 @@ public class CrossWordObject
     public Grid<CrossWordObject> grid;
 
    public char letter;
-   public List<string> assignedWords = new List<string>();
-   public HashSet<Orientation> orientations = new HashSet<Orientation>();
+   public HashSet<CrossWordClue> crossWordClues;
    public bool isAnswered;
 
    public CrossWordObject(Grid<CrossWordObject> grid, int x, int y)
@@ -20,11 +19,23 @@ public class CrossWordObject
         this.y = y;
    }
 
-   public void AssignPlacedWord(string word, char letter, Orientation orientation)
+   public void AssignPlacedWord(char letter, CrossWordClue clue)
    {
       this.letter = letter;
-
-      assignedWords.Add(word);
-      orientations.Add(orientation);
+      crossWordClues.Add(clue);
    }
+}
+
+public struct CrossWordClue
+{
+   public TriviaQuestion triviaQuestion;
+   public Orientation orientation;
+
+   public CrossWordClue(TriviaQuestion triviaQuestion, Orientation orientation)
+   {
+      this.triviaQuestion = triviaQuestion;
+      this.orientation = orientation;
+   }
+
+
 }

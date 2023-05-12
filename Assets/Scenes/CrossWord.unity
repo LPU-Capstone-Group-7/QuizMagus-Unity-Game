@@ -153,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d19e6cac8d7ae44bada5826edb29a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 0
-  gridLength: 0
+  letterTransformPrefab: {fileID: 8581605977101607200, guid: 4f5155b628c23c54681b45043457f6c9, type: 3}
 --- !u!4 &119693886
 Transform:
   m_ObjectHideFlags: 0
