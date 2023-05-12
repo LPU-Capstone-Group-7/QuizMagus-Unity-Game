@@ -80,7 +80,7 @@ public class CrossWordGridManager : MonoBehaviour
     // System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
     // stopwatch.Start();
 
-    // CreateCrossWordGrid(testWords50);
+    CreateCrossWordGrid(testWords50);
 
     // stopwatch.Stop();
     // Debug.Log ("Time taken: "+(stopwatch.Elapsed));
@@ -118,7 +118,8 @@ public class CrossWordGridManager : MonoBehaviour
           
           foreach (CrossWordEntry entry in matchingEntries)
           {
-            node.AssignPlacedWord(entry.word, letter, entry.orientation);
+            // CrossWordClue crossWordClue = new CrossWordClue(triviaQ);
+            // node.AssignPlacedWord(letter, crossWordClue);
           }
 
           grid.TriggerGridObjectChanged(col, crossWordLayout.board.GetLength(0) -1 - row);

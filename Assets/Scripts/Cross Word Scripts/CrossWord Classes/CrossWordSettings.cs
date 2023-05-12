@@ -16,13 +16,13 @@ public struct WordPlacement
 {
     public int startRow;
     public int startCol;
-    public bool canPlaceWordHorizontally;
+    public Orientation orientation;
 
-    public WordPlacement(int startRow, int startCol, bool canPlaceWordHorizontally)
+    public WordPlacement(int startRow, int startCol, Orientation orientation)
     {
         this.startRow = startRow;
         this.startCol = startCol;
-        this.canPlaceWordHorizontally = canPlaceWordHorizontally;
+        this.orientation = orientation;
     }
 }
 
@@ -91,4 +91,16 @@ public struct CrossWordEntry
         this.orientation = orientation;
         this.letterPlacements = letterPlacements;
     }
+}
+
+public struct CrossWordClue
+{
+   public TriviaQuestion triviaQuestion;
+   public Orientation orientation;
+
+   public CrossWordClue(TriviaQuestion triviaQuestion, Orientation orientation)
+   {
+      this.triviaQuestion = triviaQuestion;
+      this.orientation = orientation;
+   }
 }

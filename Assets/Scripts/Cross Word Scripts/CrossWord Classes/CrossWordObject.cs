@@ -25,17 +25,3 @@ public class CrossWordObject
       crossWordClues.Add(clue);
    }
 }
-
-public struct CrossWordClue
-{
-   public TriviaQuestion triviaQuestion;
-   public Orientation orientation;
-
-   public CrossWordClue(TriviaQuestion triviaQuestion, Orientation orientation)
-   {
-      this.triviaQuestion = triviaQuestion;
-      this.orientation = orientation;
-   }
-
-
-}

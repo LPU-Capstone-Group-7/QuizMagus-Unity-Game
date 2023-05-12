@@ -43,7 +43,7 @@ public class CrossWordGeneration : MonoBehaviour
         //PLACE THE FIRST WORD VERTICALLY IN THE MIDDLE OF THE BOARD
         int startRow = boardSize/2;
         int startCol = (boardSize/2) - Mathf.CeilToInt((float)firstWord.Length /2);
-        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, false); 
+        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, Orientation.down); 
 
         HashSet<(int row, int col, char letter)> initialLetterPlacements = new HashSet<(int row, int col, char letter)>();
         PlaceWordVertically(initialBoard, firstWordPlacement, firstWord, out CrossWordEntry crossWordEntry);
@@ -60,7 +60,7 @@ public class CrossWordGeneration : MonoBehaviour
 
         //TRY ALSO HORIZONTAL ATTEMPT
         char[,] horizontalInitialBoard = new char[boardSize, boardSize];
-        WordPlacement firstHorizontalWordPlacement = new WordPlacement(startCol, startRow, false); 
+        WordPlacement firstHorizontalWordPlacement = new WordPlacement(startCol, startRow, Orientation.across); 
         PlaceWordHorizontally(initialBoard, firstHorizontalWordPlacement, firstWord, out CrossWordEntry horizontalCrossWordEntry);
         HashSet<CrossWordEntry> horizontalInitialCrossWordEntries = new HashSet<CrossWordEntry>{horizontalCrossWordEntry};
         PlaceAllWords(sortedWords, horizontalInitialBoard, horizontalInitialCrossWordEntries);
@@ -86,7 +86,7 @@ public class CrossWordGeneration : MonoBehaviour
                 //CREATE NEW UPDATED BOARD WITH THIS WORD PLACEMENT
                 CrossWordEntry crossWordEntry;
                 HashSet<CrossWordEntry> updatedCrossWordEntries = new HashSet<CrossWordEntry>(crossWordEntries);
-                char[,] updatedBoard = wordPlacement.canPlaceWordHorizontally? PlaceWordHorizontally(board, wordPlacement, word, out crossWordEntry) : PlaceWordVertically(board, wordPlacement, word, out crossWordEntry);
+                char[,] updatedBoard = wordPlacement.orientation == Orientation.across? PlaceWordHorizontally(board, wordPlacement, word, out crossWordEntry) : PlaceWordVertically(board, wordPlacement, word, out crossWordEntry);
 
                 //INITIALIZE NEW CROSSWORD LAYOUT
                 updatedCrossWordEntries.Add(crossWordEntry);
@@ -131,14 +131,14 @@ public class CrossWordGeneration : MonoBehaviour
                             if(CanPlaceWordHorizontally(board, word, i, row, col))
                             {
                                 int startCol = col - i;
-                                WordPlacement wordPlacement = new WordPlacement(row, startCol, true);
+                                WordPlacement wordPlacement = new WordPlacement(row, startCol, Orientation.across);
                                 intersectionList.Add(wordPlacement);
                             }
 
                             if(CanPlaceWordVertically(board, word, i, row, col))
                             {
                                 int startRow = row - i;
-                                WordPlacement wordPlacement = new WordPlacement(startRow, col, false);
+                                WordPlacement wordPlacement = new WordPlacement(startRow, col, Orientation.down);
                                 intersectionList.Add(wordPlacement);
                             }
                         }
