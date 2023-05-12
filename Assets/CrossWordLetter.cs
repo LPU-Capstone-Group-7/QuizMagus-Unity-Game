@@ -15,20 +15,15 @@ public class CrossWordLetter : MonoBehaviour
     {
         if(crossWordObject != null)
         {
-            if(crossWordObject.isStartingLetter) 
+            numberText.text = "";
+
+            foreach(CrossWordClue clue in crossWordObject.crossWordClues)
             {
-                foreach (CrossWordClue clue in crossWordObject.crossWordClues)
+                if(crossWordObject.x == clue.startNode.x && crossWordObject.y == clue.startNode.y)
                 {
-                    if(crossWordObject.letter.ToString().ToLower() == clue.triviaQuestion.answer[0].ToString().ToLower())
-                    {
-                        numberText.text = clue.itemNumber.ToString();
-                        break;
-                    }
+                    numberText.text = clue.itemNumber.ToString();
+                    break;
                 }
-            }
-            else
-            {
-                numberText.text = "";
             }
 
             letterText.text = crossWordObject.letter.ToString();

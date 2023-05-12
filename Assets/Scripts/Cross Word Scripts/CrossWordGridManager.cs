@@ -127,19 +127,19 @@ public class CrossWordGridManager : MonoBehaviour
       (TriviaQuestion triviaQuestion, int index) selectedTriviaQuestion = FindTriviaQuestionClue(entry.word, triviaQuestionList);
       triviaQuestionList.Remove(selectedTriviaQuestion);
 
+      //GET CROSSWORD ENTRY'S START X AND START Y
+      int startX = entry.wordPlacement.startCol;
+      int startY = crossWordLayout.board.GetLength(0) - entry.wordPlacement.startRow -1;
+
       foreach ((int row, int col, char letter) placedLetter in entry.letterPlacements)
       {
         //ASSIGN THE FUCKING SHIT TO THIS GRID NODE
         CrossWordObject node = grid.GetGridObject(placedLetter.col, crossWordLayout.board.GetLength(0) - placedLetter.row - 1);
         char letter = crossWordLayout.board[placedLetter.row, placedLetter.col];
 
-        //DETERMINE IF THIS PLACED LETTER IS THE STARTING LETTER
-        bool isStartingLetter = false;
-        if(entry.wordPlacement.startRow == placedLetter.row && entry.wordPlacement.startCol == placedLetter.col) isStartingLetter = true;
-        //Debug.Log("START: [" + entry.wordPlacement.startRow + "," + entry.wordPlacement.startCol + "]" + "COORD: [" + placedLetter.row + "," + placedLetter.col + "]" );
-
-        CrossWordClue crossWordClues = new CrossWordClue(selectedTriviaQuestion.index, selectedTriviaQuestion.triviaQuestion, entry.wordPlacement.orientation); 
-        node.AssignPlacedWord( isStartingLetter, letter, crossWordClues);
+        //GENERATE CROSSWORD CLUE AND ASSIGN IT TO THE DESIRED NODE
+        CrossWordClue crossWordClues = new CrossWordClue(selectedTriviaQuestion.index,new Vector2Int(startX, startY), selectedTriviaQuestion.triviaQuestion, entry.wordPlacement.orientation); 
+        node.AssignPlacedWord(letter, crossWordClues);
 
         grid.TriggerGridObjectChanged(placedLetter.col, crossWordLayout.board.GetLength(0) - placedLetter.row - 1);
 

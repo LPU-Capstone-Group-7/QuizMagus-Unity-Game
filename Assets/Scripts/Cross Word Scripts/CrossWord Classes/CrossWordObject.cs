@@ -9,7 +9,6 @@ public class CrossWordObject
     public Grid<CrossWordObject> grid;
 
    public char letter;
-   public bool isStartingLetter = false;
    public HashSet<CrossWordClue> crossWordClues = new HashSet<CrossWordClue>();
    public bool isAnswered;
 
@@ -20,10 +19,8 @@ public class CrossWordObject
         this.y = y;
    }
 
-   public void AssignPlacedWord(bool isStartingLetter, char letter, CrossWordClue clue)
-   {
-      if(!this.isStartingLetter) this.isStartingLetter = isStartingLetter;
-      
+   public void AssignPlacedWord(char letter, CrossWordClue clue)
+   {      
       this.letter = letter;
       crossWordClues.Add(clue);
    }
