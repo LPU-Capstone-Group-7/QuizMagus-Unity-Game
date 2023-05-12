@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 119693886}
   - component: {fileID: 119693885}
   - component: {fileID: 119693887}
+  - component: {fileID: 119693888}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -178,6 +179,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f6ead72c4d1d3340b0a7b93a01a51c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &119693888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119693884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2dd1101661d9a48a91b6efbedcdf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &515877970
@@ -695,6 +708,10 @@ PrefabInstance:
     - target: {fileID: 7182347317724808846, guid: eb84d92eb3676944e98b1a8c8a035df8, type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 7182347317724808846, guid: eb84d92eb3676944e98b1a8c8a035df8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb84d92eb3676944e98b1a8c8a035df8, type: 3}

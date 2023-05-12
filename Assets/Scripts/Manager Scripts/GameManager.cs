@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(!isPlayingMusic) PlayRandomBackgroundMusic();
-        if(isPlayingMusic && !AudioManager.instance.isPlaying(currentPlayingMusic)) isPlayingMusic = false;
+        // if(!isPlayingMusic) PlayRandomBackgroundMusic();
+        // if(isPlayingMusic && !AudioManager.instance.isPlaying(currentPlayingMusic)) isPlayingMusic = false;
     }
 
     public void PlayRandomBackgroundMusic()

@@ -95,12 +95,14 @@ public struct CrossWordEntry
 
 public struct CrossWordClue
 {
-   public TriviaQuestion triviaQuestion;
-   public Orientation orientation;
+    public int itemNumber;
+    public TriviaQuestion triviaQuestion;
+    public Orientation orientation;
 
-   public CrossWordClue(TriviaQuestion triviaQuestion, Orientation orientation)
-   {
-      this.triviaQuestion = triviaQuestion;
-      this.orientation = orientation;
-   }
+    public CrossWordClue(int itemNumber, TriviaQuestion triviaQuestion, Orientation orientation)
+    {
+        this.itemNumber = itemNumber;
+        this.triviaQuestion = triviaQuestion;
+        this.orientation = orientation;
+    }
 }

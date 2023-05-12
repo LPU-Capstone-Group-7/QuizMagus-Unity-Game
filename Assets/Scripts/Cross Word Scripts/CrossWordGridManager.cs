@@ -68,6 +68,7 @@ public class CrossWordGridManager : MonoBehaviour
 
   [Header("CrossWord Components")]
   [SerializeField] Transform letterTransformPrefab;
+  TriviaQuestion[] triviaQuestions;
   CrossWordLayout crossWordLayout;
 
   private void Awake()
@@ -80,14 +81,24 @@ public class CrossWordGridManager : MonoBehaviour
     // System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
     // stopwatch.Start();
 
-    CreateCrossWordGrid(testWords50);
+    //CreateCrossWordGrid(testWords50);
 
     // stopwatch.Stop();
     // Debug.Log ("Time taken: "+(stopwatch.Elapsed));
   }
 
-  public void CreateCrossWordGrid(List<string> words)
+  public void CreateCrossWordGrid(TriviaQuestion[] triviaQuestions)
   {
+    //GENERATE LIST OF WORDS USING THE TRIVIA QUESTIONS
+    this.triviaQuestions = triviaQuestions;
+
+    List<string> words = new List<string>();
+    foreach (TriviaQuestion triviaQuestion in triviaQuestions)
+    {
+      string word = triviaQuestion.answer.ToLower().Replace(" ","");
+      words.Add(word);
+    }
+
     //GENERATE LAYOUT BASED ON LIST OF WORDS
     crossWordLayout = CrossWordGeneration.instance.GenerateCrossWordLayout(words);
 
@@ -95,42 +106,66 @@ public class CrossWordGridManager : MonoBehaviour
     GenerateGrid(crossWordLayout.board.GetLength(1) , crossWordLayout.board.GetLength(0), 0.8f, transform.position);
   }
   
-  public void GenerateGrid(int width, int height, float cellSize, Vector3 position)
+  private void GenerateGrid(int width, int height, float cellSize, Vector3 position)
   {
     this.cellSize = cellSize;
 
     grid = new Grid<CrossWordObject>(width, height, cellSize, position, (Grid<CrossWordObject> g, int x, int y) => new CrossWordObject(g, x, y));
 
-    //ASSIGN CROSSWORD ENTRIES TO THE CORRECT GRID POSITION
-    for (int row = 0; row < crossWordLayout.board.GetLength(0); row++)
+    //GENERATE TRIVIA QUESTION LIST WITH ITEM NUNMBER
+    List<(TriviaQuestion triviaQuestion, int index)> triviaQuestionList = new List<(TriviaQuestion triviaQuestion, int index)>();
+    for (int i = 0; i < triviaQuestions.Length; i++)
     {
-      for (int col = 0; col < crossWordLayout.board.GetLength(1); col++)
+      triviaQuestionList.Add((triviaQuestions[i],i + 1));
+    }
+
+    //PLACE EACH CROSSWORD ENTRIES TO THE CORRECT GRID POSITION
+    foreach (CrossWordEntry entry in crossWordLayout.crossWordEntries)
+    {
+
+      //FIND CROSSWORD ENTRY'S DESIGNATED CLUE
+      (TriviaQuestion triviaQuestion, int index) selectedTriviaQuestion = FindTriviaQuestionClue(entry.word, triviaQuestionList);
+      triviaQuestionList.Remove(selectedTriviaQuestion);
+
+      foreach ((int row, int col, char letter) placedLetter in entry.letterPlacements)
       {
-        char letter =  crossWordLayout.board[row, col];
+        //ASSIGN THE FUCKING SHIT TO THIS GRID NODE
+        CrossWordObject node = grid.GetGridObject(placedLetter.col, crossWordLayout.board.GetLength(0) - placedLetter.row - 1);
+        char letter = crossWordLayout.board[placedLetter.row, placedLetter.col];
 
-        if(letter != '\0')
-        {          
-          //FIND CROSSWORD ENTRY OF THIS COORDINATE
-          HashSet<CrossWordEntry> matchingEntries = crossWordLayout.FindMatchingEntries(row, col,letter);
+        //DETERMINE IF THIS PLACED LETTER IS THE STARTING LETTER
+        bool isStartingLetter = false;
+        if(entry.wordPlacement.startRow == placedLetter.row && entry.wordPlacement.startCol == placedLetter.col) isStartingLetter = true;
+        //Debug.Log("START: [" + entry.wordPlacement.startRow + "," + entry.wordPlacement.startCol + "]" + "COORD: [" + placedLetter.row + "," + placedLetter.col + "]" );
 
-          //ASSIGN TO GRID
-          CrossWordObject node = grid.GetGridObject(col, crossWordLayout.board.GetLength(0) -1 - row);
-          
-          foreach (CrossWordEntry entry in matchingEntries)
-          {
-            // CrossWordClue crossWordClue = new CrossWordClue(triviaQ);
-            // node.AssignPlacedWord(letter, crossWordClue);
-          }
+        CrossWordClue crossWordClues = new CrossWordClue(selectedTriviaQuestion.index, selectedTriviaQuestion.triviaQuestion, entry.wordPlacement.orientation); 
+        node.AssignPlacedWord( isStartingLetter, letter, crossWordClues);
 
-          grid.TriggerGridObjectChanged(col, crossWordLayout.board.GetLength(0) -1 - row);
-        }
+        grid.TriggerGridObjectChanged(placedLetter.col, crossWordLayout.board.GetLength(0) - placedLetter.row - 1);
 
       }
     }
 
+    
     //INSTANTIATE LETTERS INSIDE THE GRID
     SpawnCrossWordLetters();
 
+  }
+
+  (TriviaQuestion triviaQuestion, int index) FindTriviaQuestionClue(string word, List<(TriviaQuestion triviaQuestion, int index)> triviaQuestions)
+  {
+    (TriviaQuestion triviaQuestion, int index) selectedTriviaQuestion = (new TriviaQuestion(), -1);
+
+    foreach ((TriviaQuestion triviaQuestion, int index) triviaQuestion in triviaQuestions)
+    {
+      if(word == triviaQuestion.triviaQuestion.answer.ToLower().Replace(" ",""))
+      {
+        selectedTriviaQuestion = triviaQuestion;
+        break;
+      }
+    }
+
+    return selectedTriviaQuestion;
   }
 
   void SpawnCrossWordLetters()
@@ -141,14 +176,14 @@ public class CrossWordGridManager : MonoBehaviour
       if(node.letter != '\0')
       {
         Vector3 gridPosition = grid.GetCenterWorldPosition(node.x, node.y);
-        Transform letterTransform = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity);
+        Transform crossWordBox = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity);
 
-        //CHANGE THE LETTER TO THE CORRESPONDING NODE'S LETTER
-        letterTransform.GetComponent<TextMeshPro>().text = node.letter.ToString();
+        //ASSIGN GRID OBJECT TO CROSSWORD BOX GAMEOBJECT
+        crossWordBox.GetComponent<CrossWordLetter>().crossWordObject = node;
 
         //ADJUST LETTER NODE FONT SIZE
-        float fontSize = cellSize * 10f;
-        letterTransform.GetComponent<TextMeshPro>().fontSize = fontSize;
+        //float fontSize = cellSize * 10f;
+        //crossWordBox.GetComponent<TextMeshPro>().fontSize = fontSize;
 
       }
     }

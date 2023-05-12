@@ -8,9 +8,10 @@ public class CrossWordManager : MonoBehaviour
   
   private void Start()
   {
-    gridManager = CrossWordGridManager.instance;
-    
     crossWordSettings = DataManager.instance.GetGameSettings<CrossWordSettings>();
+
+    gridManager = CrossWordGridManager.instance;
+    gridManager.CreateCrossWordGrid(crossWordSettings.triviaQuestions);
     
   }
   
