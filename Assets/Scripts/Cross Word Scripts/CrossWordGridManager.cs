@@ -77,13 +77,13 @@ public class CrossWordGridManager : MonoBehaviour
 
   private void Start()
   {
-    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-    stopwatch.Start();
+    // System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+    // stopwatch.Start();
 
-    CreateCrossWordGrid(testWords50);
+    // CreateCrossWordGrid(testWords50);
 
-    stopwatch.Stop();
-    Debug.Log ("Time taken: "+(stopwatch.Elapsed));
+    // stopwatch.Stop();
+    // Debug.Log ("Time taken: "+(stopwatch.Elapsed));
   }
 
   public void CreateCrossWordGrid(List<string> words)
@@ -116,8 +116,6 @@ public class CrossWordGridManager : MonoBehaviour
           //ASSIGN TO GRID
           CrossWordObject node = grid.GetGridObject(col, crossWordLayout.board.GetLength(0) -1 - row);
           
-          //if(matchingEntries.Count == 0) Debug.Log("No Matching Entries");
-
           foreach (CrossWordEntry entry in matchingEntries)
           {
             node.AssignPlacedWord(entry.word, letter, entry.orientation);
