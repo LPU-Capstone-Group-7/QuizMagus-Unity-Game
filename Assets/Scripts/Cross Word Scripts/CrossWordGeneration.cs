@@ -40,13 +40,13 @@ public class CrossWordGeneration : MonoBehaviour
         int boardSize = firstWord.Length > words.Count? firstWord.Length * 2 : words.Count * 2;
         char[,] initialBoard = new char[boardSize, boardSize];
 
-        //PLACE THE FIRST WORD VERTICALLY IN THE MIDDLE OF THE BOARD
-        int startRow = boardSize/2;
-        int startCol = (boardSize/2) - Mathf.CeilToInt((float)firstWord.Length /2);
-        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, Orientation.down); 
+        //PLACE THE FIRST WORD HORIZONTALLY IN THE MIDDLE OF THE BOARD
+        int startCol = boardSize/2;
+        int startRow = (boardSize/2) - Mathf.CeilToInt((float)firstWord.Length /2);
+        WordPlacement firstWordPlacement = new WordPlacement(startRow, startCol, Orientation.across); 
 
         HashSet<(int row, int col, char letter)> initialLetterPlacements = new HashSet<(int row, int col, char letter)>();
-        PlaceWordVertically(initialBoard, firstWordPlacement, firstWord, out CrossWordEntry crossWordEntry);
+        PlaceWordHorizontally(initialBoard, firstWordPlacement, firstWord, out CrossWordEntry crossWordEntry);
 
         //INITIALIZE THE BEST CROSSWORD LAYOUT
         HashSet<CrossWordEntry> initialCrossWordEntries = new HashSet<CrossWordEntry>{crossWordEntry};
@@ -57,14 +57,6 @@ public class CrossWordGeneration : MonoBehaviour
         //TRY TO PLACE OTHER WORDS INSIDE THE BOARD
         sortedWords.Dequeue();
         PlaceAllWords(sortedWords, initialBoard, initialCrossWordEntries);
-
-        //TRY ALSO HORIZONTAL ATTEMPT
-        char[,] horizontalInitialBoard = new char[boardSize, boardSize];
-        WordPlacement firstHorizontalWordPlacement = new WordPlacement(startCol, startRow, Orientation.across); 
-        PlaceWordHorizontally(initialBoard, firstHorizontalWordPlacement, firstWord, out CrossWordEntry horizontalCrossWordEntry);
-        HashSet<CrossWordEntry> horizontalInitialCrossWordEntries = new HashSet<CrossWordEntry>{horizontalCrossWordEntry};
-        PlaceAllWords(sortedWords, horizontalInitialBoard, horizontalInitialCrossWordEntries);
-
 
         return bestCrossWordLayout;
     }

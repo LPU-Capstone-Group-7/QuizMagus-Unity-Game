@@ -8,6 +8,7 @@ public class CrossWordGridManager : MonoBehaviour
   public static CrossWordGridManager instance;
 
   [Header("Grid Component")]
+  [SerializeField] private Vector2 gridLength;
   private float cellSize;
   private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
   List<string> testWords50 = new List<string>
@@ -67,6 +68,7 @@ public class CrossWordGridManager : MonoBehaviour
   Grid<CrossWordObject> grid;
 
   [Header("CrossWord Components")]
+  [SerializeField] Transform letterTransformParent;
   [SerializeField] Transform letterTransformPrefab;
   TriviaQuestion[] triviaQuestions;
   CrossWordLayout crossWordLayout;
@@ -176,7 +178,7 @@ public class CrossWordGridManager : MonoBehaviour
       if(node.letter != '\0')
       {
         Vector3 gridPosition = grid.GetCenterWorldPosition(node.x, node.y);
-        Transform crossWordBox = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity);
+        Transform crossWordBox = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity, letterTransformParent);
 
         //ASSIGN GRID OBJECT TO CROSSWORD BOX GAMEOBJECT
         crossWordBox.GetComponent<CrossWordLetter>().crossWordObject = node;
