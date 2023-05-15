@@ -10,23 +10,54 @@ public class CrossWordTile : MonoBehaviour
     [SerializeField] TextMeshPro numberText;
     [SerializeField] TextMeshPro letterText;
 
+    [Header("Sprite Components")]
+    [SerializeField] Sprite[] crossWordTileSprites;
+
     // Start is called before the first frame update
     void Start()
     {
-        if(crossWordObject != null)
+        
+    }
+
+    public void SpawnCrossWordTile(CrossWordObject node, float cellSize)
+    {
+        if(node != null)
         {
+            //ADJUST FONT SIZE DEPENDING ON CELL SIZE
+            letterText.fontSize = cellSize * 6f;
+            numberText.fontSize = cellSize * 2f;
+
+            //ADJUST SCALE DEPENDING ON THE CELLSIZE
+            transform.localScale = new Vector3(cellSize, cellSize, 1);
+
+            //ADD UI TEXT DESIGNATED CHARACTERS/STRINGS
             numberText.text = "";
 
-            foreach(CrossWordClue clue in crossWordObject.crossWordClues)
+            foreach(CrossWordClue clue in node.crossWordClues)
             {
-                if(crossWordObject.x == clue.startNode.x && crossWordObject.y == clue.startNode.y)
+                if(node.x == clue.startNode.x && node.y == clue.startNode.y)
                 {
                     numberText.text = clue.itemNumber.ToString();
                     break;
                 }
             }
 
-            letterText.text = crossWordObject.letter.ToString();
+            letterText.text = node.letter.ToString();
+
+            //CHANGE TILE IMAGE DEPENDING ON NODE'S NEIGHBOUR
+            Grid<CrossWordObject> grid = CrossWordGridManager.instance.GetGrid();
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+            bool hasLetterBelow = node.y > 0 && grid.GetGridObject(node.x, node.y - 1).letter != '\0';
+
+            if(!hasLetterBelow)
+            {
+                sr.sprite = crossWordTileSprites[1];
+            }
+            else
+            {
+                sr.sprite = crossWordTileSprites[0];
+            }
         }
     }
 

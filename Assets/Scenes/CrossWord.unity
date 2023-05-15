@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxGridSize: {x: 32, y: 16}
-  cellSize: 0.8
+  cellSize: 1
   letterTransformParent: {fileID: 140555968}
   letterTransformPrefab: {fileID: 3557265957211832832, guid: eb84d92eb3676944e98b1a8c8a035df8, type: 3}
 --- !u!4 &119693886

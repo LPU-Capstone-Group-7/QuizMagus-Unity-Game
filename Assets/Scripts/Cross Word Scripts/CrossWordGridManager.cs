@@ -198,16 +198,16 @@ public class CrossWordGridManager : MonoBehaviour
         Transform crossWordBox = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity, letterTransformParent);
 
         //ASSIGN GRID OBJECT TO CROSSWORD BOX GAMEOBJECT
-        crossWordBox.GetComponent<CrossWordTile>().crossWordObject = node;
-
-        //ADJUST LETTER NODE FONT SIZE
-        //float fontSize = cellSize * 10f;
-        //crossWordBox.GetComponent<TextMeshPro>().fontSize = fontSize;
+        crossWordBox.GetComponent<CrossWordTile>().SpawnCrossWordTile(node, cellSize);
 
       }
     }
   }
 
+  public Grid<CrossWordObject> GetGrid()
+  {
+    return grid;
+  }
   private void OnDrawGizmos() 
   {
     Vector3 maxGridPosition = GetBoardPosition(maxGridSize.x, maxGridSize.y, 1, transform.position);
