@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d19e6cac8d7ae44bada5826edb29a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGridSize: {x: 0, y: 0, z: 0}
+  maxGridSize: {x: 32, y: 16}
+  cellSize: 0.8
   letterTransformParent: {fileID: 140555968}
   letterTransformPrefab: {fileID: 3557265957211832832, guid: eb84d92eb3676944e98b1a8c8a035df8, type: 3}
 --- !u!4 &119693886
@@ -420,7 +421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 137.45, y: 53.009}
+  m_AnchoredPosition: {x: 137.45, y: 78.4}
   m_SizeDelta: {x: -287.556, y: -170.281}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295934202

@@ -198,7 +198,7 @@ public class CrossWordGridManager : MonoBehaviour
         Transform crossWordBox = Instantiate(letterTransformPrefab, gridPosition, Quaternion.identity, letterTransformParent);
 
         //ASSIGN GRID OBJECT TO CROSSWORD BOX GAMEOBJECT
-        crossWordBox.GetComponent<CrossWordLetter>().crossWordObject = node;
+        crossWordBox.GetComponent<CrossWordTile>().crossWordObject = node;
 
         //ADJUST LETTER NODE FONT SIZE
         //float fontSize = cellSize * 10f;

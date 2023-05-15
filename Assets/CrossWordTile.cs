@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class CrossWordLetter : MonoBehaviour
+public class CrossWordTile : MonoBehaviour
 {
     public CrossWordObject crossWordObject;
 

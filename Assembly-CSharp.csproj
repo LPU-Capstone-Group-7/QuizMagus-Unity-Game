@@ -58,7 +58,7 @@
      <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWord Classes\CrossWordSettings.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchMistakeCounter.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\GhostController.cs" />
-     <Compile Include="Assets\CrossWordLetter.cs" />
+     <Compile Include="Assets\CrossWordTile.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\MiniGameManager.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchTimer.cs" />
      <Compile Include="Assets\Scripts\CinemachineCameraShake.cs" />
