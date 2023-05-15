@@ -179,6 +179,19 @@ public class CrossWordGeneration : MonoBehaviour
             if(cellRow < board.GetLength(0) - 1 && board[cellRow + 1, cellCol] != '\0' ) return false;
        }
 
+       //CHECK IF THERE IS ATLEAST ONE EMPTY CELL TO THE CELLS THAT IT WOULD OCCUPY
+       bool hasOneEmptyCell = false;
+       for (int i = 0; i < word.Length; i++)
+       {
+            char letter = word[i];
+            int cellRow = row;
+            int cellCol = startingCol + i;
+
+            if(board[cellRow, cellCol] == '\0') hasOneEmptyCell = true;
+       }
+
+       if(!hasOneEmptyCell) return false;
+
        return true;
     }
 
@@ -217,6 +230,19 @@ public class CrossWordGeneration : MonoBehaviour
             //CHECK RIGHT SIDE
             if (cellCol < board.GetLength(1) - 1 && board[cellRow, cellCol + 1] != '\0') return false;
         }
+
+        //CHECK IF THERE IS ATLEAST ONE EMPTY CELL TO THE CELLS THAT IT WOULD OCCUPY
+       bool hasOneEmptyCell = false;
+       for (int i = 0; i < word.Length; i++)
+       {
+            char letter = word[i];
+            int cellRow = startingRow + i;
+            int cellCol = col;
+
+            if(board[cellRow, cellCol] == '\0') hasOneEmptyCell = true;
+       }
+
+       if(!hasOneEmptyCell) return false;
         
         return true;
     }
@@ -372,9 +398,9 @@ public class CrossWordGeneration : MonoBehaviour
         {
             if(crossWordLayout.GetTotalLettersInBoard() > bestCrossWordLayout.GetTotalLettersInBoard()) return false;
 
-            if(crossWordLayout.GetAspectDiff() < bestCrossWordLayout.GetAspectDiff()) return true;
+            //if(crossWordLayout.GetAspectDiff() < bestCrossWordLayout.GetAspectDiff()) return true;
 
-            if(crossWordLayout.GetAspectDiff() == bestCrossWordLayout.GetAspectDiff() && crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
+            if(crossWordLayout.board.GetLength(1) > bestCrossWordLayout.board.GetLength(1)) return true;
         }
 
         return false;

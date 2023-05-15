@@ -110,14 +110,13 @@ public class CrossWordGridManager : MonoBehaviour
   
   private void GenerateGrid(int width, int height, Vector3 position)
   {
-    if(width > maxGridSize.x && width > height)
-    {
-      cellSize = (float)maxGridSize.x / width;
-    }
-    else if(height > maxGridSize.y && height > width)
-    {
-      cellSize = (float)maxGridSize.y / height;
-    }
+    // if(width > maxGridSize.x  || height > maxGridSize.y)
+    // {
+    //   float widthCellSize = (float)maxGridSize.y / width;
+    //   float heightCellSize = (float)maxGridSize.y / height;
+
+    //   cellSize = Mathf.Max (widthCellSize, heightCellSize);
+    // }
 
     Vector3 boardPosition = GetBoardPosition(width, height, cellSize, position);
 
