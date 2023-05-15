@@ -11,58 +11,7 @@ public class CrossWordGridManager : MonoBehaviour
   [SerializeField] private Vector2Int maxGridSize;
   [SerializeField] private float cellSize = 1f;
   private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
-  List<string> testWords50 = new List<string>
-  {
-    "lion",
-    "tiger",
-    "bear",
-    "wolf",
-    "leopard",
-    "cheetah",
-    "lynx",
-    "jaguar",
-    "panther",
-    "cougar",
-    "bobcat",
-    "fox",
-    "coyote",
-    "hyena",
-    "mongoose",
-    "badger",
-    "raccoon",
-    "opossum",
-    "weasel",
-    "ferret",
-    "skunk",
-    "platypus",
-    "otter",
-    "seal",
-    "walrus",
-    "dolphin",
-    "whale",
-    "shark",
-    "swordfish",
-    "salmon",
-    "trout",
-    "bass",
-    "crab",
-    "lobster",
-    "shrimp",
-    "clam",
-    "oyster",
-    "octopus",
-    "squid",
-    "snail",
-    "slug",
-    "worm",
-    "ant",
-    "bee",
-    "caterpillar",
-    "mosquito",
-    "spider",
-    "scorpion",
-    "snail",
-  };
+
 
   List<string> testWords01 = new List<string>{"dog", "duck"};
   Grid<CrossWordObject> grid;
@@ -110,15 +59,10 @@ public class CrossWordGridManager : MonoBehaviour
   
   private void GenerateGrid(int width, int height, Vector3 position)
   {
-    // if(width > maxGridSize.x  || height > maxGridSize.y)
-    // {
-    //   float widthCellSize = (float)maxGridSize.y / width;
-    //   float heightCellSize = (float)maxGridSize.y / height;
 
-    //   cellSize = Mathf.Max (widthCellSize, heightCellSize);
-    // }
-
+    //CENTER CROSSWORD BOARD AND SET CAMERA BOUNDING BOX DEPENDING ON THE SIZE OF THE GRID
     Vector3 boardPosition = GetBoardPosition(width, height, cellSize, position);
+    GameObject.FindObjectOfType<CameraDragController>().SetCameraBoundingBox(new Vector2(width * cellSize, height * cellSize) /2, position, 1.5f);
 
     grid = new Grid<CrossWordObject>(width, height, cellSize, boardPosition, (Grid<CrossWordObject> g, int x, int y) => new CrossWordObject(g, x, y));
 
@@ -155,7 +99,6 @@ public class CrossWordGridManager : MonoBehaviour
 
       }
     }
-
     
     //INSTANTIATE LETTERS INSIDE THE GRID
     SpawnCrossWordLetters();
@@ -206,18 +149,6 @@ public class CrossWordGridManager : MonoBehaviour
   public Grid<CrossWordObject> GetGrid()
   {
     return grid;
-  }
-  private void OnDrawGizmos() 
-  {
-    Vector3 maxGridPosition = GetBoardPosition(maxGridSize.x, maxGridSize.y, 1, transform.position);
-    Gizmos.color = Color.red;
-
-    Gizmos.DrawLine(maxGridPosition, new Vector3(maxGridPosition.x, maxGridPosition.y + maxGridSize.y));
-    Gizmos.DrawLine(maxGridPosition, new Vector3(maxGridPosition.x + maxGridSize.x, maxGridPosition.y));
-    
-    Vector3 upperRightCorner = new Vector3(maxGridPosition.x + maxGridSize.x,  maxGridPosition.y + maxGridSize.y);
-    Gizmos.DrawLine(upperRightCorner, new Vector3(maxGridPosition.x, maxGridPosition.y + maxGridSize.y));
-    Gizmos.DrawLine(upperRightCorner, new Vector3(maxGridPosition.x + maxGridSize.x, maxGridPosition.y));
   }
     
 }
