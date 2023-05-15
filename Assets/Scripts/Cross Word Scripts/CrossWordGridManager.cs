@@ -8,8 +8,8 @@ public class CrossWordGridManager : MonoBehaviour
   public static CrossWordGridManager instance;
 
   [Header("Grid Component")]
-  [SerializeField] private Vector2 gridLength;
-  private float cellSize;
+  [SerializeField] private Vector2Int maxGridSize;
+  [SerializeField] private float cellSize = 1f;
   private List<string> testWords =  new List<string>{"Elephants","Kangaroos","Crocodiles","Chimpanzees","Flamingos","Rhinoceroses","Gorillas","Cheetahs","Hippopotamuses","Toucans", "Dog", "Cat", "Bat"};
   List<string> testWords50 = new List<string>
   {
@@ -105,14 +105,23 @@ public class CrossWordGridManager : MonoBehaviour
     crossWordLayout = CrossWordGeneration.instance.GenerateCrossWordLayout(words);
 
     //GENERATE GRID USING THE SIZE OF THE CROSSWORD LAYOUT
-    GenerateGrid(crossWordLayout.board.GetLength(1) , crossWordLayout.board.GetLength(0), 0.8f, transform.position);
+    GenerateGrid(crossWordLayout.board.GetLength(1) , crossWordLayout.board.GetLength(0), transform.position);
   }
   
-  private void GenerateGrid(int width, int height, float cellSize, Vector3 position)
+  private void GenerateGrid(int width, int height, Vector3 position)
   {
-    this.cellSize = cellSize;
+    if(width > maxGridSize.x && width > height)
+    {
+      cellSize = (float)maxGridSize.x / width;
+    }
+    else if(height > maxGridSize.y && height > width)
+    {
+      cellSize = (float)maxGridSize.y / height;
+    }
 
-    grid = new Grid<CrossWordObject>(width, height, cellSize, position, (Grid<CrossWordObject> g, int x, int y) => new CrossWordObject(g, x, y));
+    Vector3 boardPosition = GetBoardPosition(width, height, cellSize, position);
+
+    grid = new Grid<CrossWordObject>(width, height, cellSize, boardPosition, (Grid<CrossWordObject> g, int x, int y) => new CrossWordObject(g, x, y));
 
     //GENERATE TRIVIA QUESTION LIST WITH ITEM NUNMBER
     List<(TriviaQuestion triviaQuestion, int index)> triviaQuestionList = new List<(TriviaQuestion triviaQuestion, int index)>();
@@ -154,7 +163,15 @@ public class CrossWordGridManager : MonoBehaviour
 
   }
 
-  (TriviaQuestion triviaQuestion, int index) FindTriviaQuestionClue(string word, List<(TriviaQuestion triviaQuestion, int index)> triviaQuestions)
+    private Vector3 GetBoardPosition(int width, int height, float cellSize, Vector3 centerPosition)
+    {
+        float adjustedX = (width * cellSize) / 2f;
+        float adjustedY = (height * cellSize) /2f;
+
+        return new Vector3(centerPosition.x - adjustedX, centerPosition.y - adjustedY, centerPosition.z);
+    }
+
+    (TriviaQuestion triviaQuestion, int index) FindTriviaQuestionClue(string word, List<(TriviaQuestion triviaQuestion, int index)> triviaQuestions)
   {
     (TriviaQuestion triviaQuestion, int index) selectedTriviaQuestion = (new TriviaQuestion(), -1);
 
@@ -189,6 +206,19 @@ public class CrossWordGridManager : MonoBehaviour
 
       }
     }
+  }
+
+  private void OnDrawGizmos() 
+  {
+    Vector3 maxGridPosition = GetBoardPosition(maxGridSize.x, maxGridSize.y, 1, transform.position);
+    Gizmos.color = Color.red;
+
+    Gizmos.DrawLine(maxGridPosition, new Vector3(maxGridPosition.x, maxGridPosition.y + maxGridSize.y));
+    Gizmos.DrawLine(maxGridPosition, new Vector3(maxGridPosition.x + maxGridSize.x, maxGridPosition.y));
+    
+    Vector3 upperRightCorner = new Vector3(maxGridPosition.x + maxGridSize.x,  maxGridPosition.y + maxGridSize.y);
+    Gizmos.DrawLine(upperRightCorner, new Vector3(maxGridPosition.x, maxGridPosition.y + maxGridSize.y));
+    Gizmos.DrawLine(upperRightCorner, new Vector3(maxGridPosition.x + maxGridSize.x, maxGridPosition.y));
   }
     
 }
