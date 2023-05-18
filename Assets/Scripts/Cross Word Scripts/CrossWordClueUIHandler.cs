@@ -29,8 +29,6 @@ public class CrossWordClueUIHandler : MonoBehaviour
     private void ChangeActiveClue(CrossWordClue clue)
     {
         if(activeClue.triviaQuestion == clue.triviaQuestion && activeClue.startNode == clue.startNode) return;
-
-        Debug.Log(clue.triviaQuestion.question);
         tickerUI.CreateNewTicker(clue.triviaQuestion.question);
     }
 
@@ -39,10 +37,10 @@ public class CrossWordClueUIHandler : MonoBehaviour
         //SORT CLUES BY INDEX
         clues.Sort((a, b) => a.index.CompareTo(b.index));
 
+        //SPAWN THEM IN THE DESIGNATED LAYOUT GROUP
         for (int i = 0; i < clues.Count; i++)
         {
             TextMeshProUGUI questionItemText = Instantiate(questionItemTextPrefab, Vector3.zero, Quaternion.identity).GetComponent<TextMeshProUGUI>();
-            // questionItemText.rectTransform.localScale = Vector3.one;
             questionItemText.text = clues[i].index + ". " + clues[i].triviaQuestion.question;
 
             if(clues[i].orientation == Orientation.across)
