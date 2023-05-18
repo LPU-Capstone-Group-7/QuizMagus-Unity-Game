@@ -28,3 +28,22 @@ public class CrossWordObject
       crossWordClues.Add(clue.orientation, clue);
    }
 }
+
+public class CrossWordGridItem
+{
+   public int index;
+   public TriviaQuestion triviaQuestion;
+   public HashSet<CrossWordObject> itemNodes;
+   public Orientation orientation;
+   public bool isAnswered = false;
+
+
+   public CrossWordGridItem(int index, TriviaQuestion triviaQuestion, HashSet<CrossWordObject> itemNodes, Orientation orientation, bool isAnswered)
+   {
+      this.index = index;
+      this.triviaQuestion = triviaQuestion;
+      this.itemNodes = itemNodes;
+      this.orientation = orientation;
+      this.isAnswered = isAnswered;
+   }
+}

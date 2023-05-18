@@ -21,6 +21,7 @@ public class CrossWordGridManager : MonoBehaviour
   [SerializeField] Transform letterTransformPrefab;
   TriviaQuestion[] triviaQuestions;
   CrossWordLayout crossWordLayout;
+  List<CrossWordGridItem> crossWordGridItems = new List<CrossWordGridItem>();
 
   private void Awake()
   {
@@ -76,6 +77,8 @@ public class CrossWordGridManager : MonoBehaviour
     //PLACE EACH CROSSWORD ENTRIES TO THE CORRECT GRID POSITION
     foreach (CrossWordEntry entry in crossWordLayout.crossWordEntries)
     {
+      //INITIALIZE NEW NODE LIST
+      HashSet<CrossWordObject> nodeList = new HashSet<CrossWordObject>();
 
       //FIND CROSSWORD ENTRY'S DESIGNATED CLUE
       (TriviaQuestion triviaQuestion, int index) selectedTriviaQuestion = FindTriviaQuestionClue(entry.word, triviaQuestionList);
@@ -94,14 +97,23 @@ public class CrossWordGridManager : MonoBehaviour
         //GENERATE CROSSWORD CLUE AND ASSIGN IT TO THE DESIRED NODE
         CrossWordClue crossWordClues = new CrossWordClue(selectedTriviaQuestion.index,new Vector2Int(startX, startY), selectedTriviaQuestion.triviaQuestion, entry.wordPlacement.orientation); 
         node.AssignPlacedWord(letter, crossWordClues);
+        nodeList.Add(node);
 
         grid.TriggerGridObjectChanged(placedLetter.col, crossWordLayout.board.GetLength(0) - placedLetter.row - 1);
 
       }
+
+      //CREATE CROSSWORD GRID ITEM TO KEEP TRACK OF ANSWERED AND UNANSWERED QUESTIONS AND EACH ITEM'S STATES
+      CrossWordGridItem item = new CrossWordGridItem(selectedTriviaQuestion.index, selectedTriviaQuestion.triviaQuestion, nodeList, entry.wordPlacement.orientation, false);
+      crossWordGridItems.Add(item);
+
     }
     
     //INSTANTIATE LETTERS INSIDE THE GRID
     SpawnCrossWordLetters();
+
+    //GENERATE LIST OF QUESTIONS
+    CrossWordClueUIHandler.instance.ListAllClues(crossWordGridItems);
 
   }
 
