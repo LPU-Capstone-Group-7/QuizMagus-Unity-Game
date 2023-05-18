@@ -352,7 +352,7 @@ public class CrossWordGeneration : MonoBehaviour
     
     private void DisplayBestLayout(CrossWordLayout crossWordLayout, string newWord)
     {
-        Debug.Log("NEW WORD: " + newWord+ " ,PLACED WORDS: " + crossWordLayout.crossWordEntries.Count + "/" + numberOfWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
+        //Debug.Log("NEW WORD: " + newWord+ " ,PLACED WORDS: " + crossWordLayout.crossWordEntries.Count + "/" + numberOfWords + " ,NUMBER OF LETTERS: " + crossWordLayout.GetTotalLettersInBoard() + " ,SIZE: [" + crossWordLayout.board.GetLength(0) + "," + crossWordLayout.board.GetLength(1) + "]" );
     }
 
     //SORTING FUNCTION ALGORITHM

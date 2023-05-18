@@ -2,9 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+/*
+    TODO
+    HIGHLIGHT SELECTED CROSSWORD ITEM AND ALSO RELATED TILES -- DONE
+    WINDOW THAT SHOWS ALL CLUES ACROSS AND DOWN
+    DISPLAY WINDOW FOR SHOWING CLUES ON THAT SPECIFIC TILES
+    INPUT FIELD FOR ANSWERING TILES
+*/
 public class CrossWordTile : MonoBehaviour
 {
     public CrossWordObject crossWordObject;
+    bool hasLetterBelow;
 
     [Header("UI Components")]
     [SerializeField] TextMeshPro numberText;
@@ -12,11 +21,13 @@ public class CrossWordTile : MonoBehaviour
 
     [Header("Sprite Components")]
     [SerializeField] Sprite[] crossWordTileSprites;
+    [SerializeField] Sprite[] crossWordTileHighlightSprites;
+    Sprite baseSprite;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        CrossWordManager.instance.onNodeSelected += HighlightCrossWordTile;
     }
 
     public void SpawnCrossWordTile(CrossWordObject node, float cellSize)
@@ -33,11 +44,11 @@ public class CrossWordTile : MonoBehaviour
             //ADD UI TEXT DESIGNATED CHARACTERS/STRINGS
             numberText.text = "";
 
-            foreach(CrossWordClue clue in node.crossWordClues)
+            foreach(KeyValuePair<Orientation, CrossWordClue> clue in node.crossWordClues)
             {
-                if(node.x == clue.startNode.x && node.y == clue.startNode.y)
+                if(node.x == clue.Value.startNode.x && node.y == clue.Value.startNode.y)
                 {
-                    numberText.text = clue.itemNumber.ToString();
+                    numberText.text = clue.Value.itemNumber.ToString();
                     break;
                 }
             }
@@ -48,24 +59,49 @@ public class CrossWordTile : MonoBehaviour
             Grid<CrossWordObject> grid = CrossWordGridManager.instance.GetGrid();
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
 
-            bool hasLetterBelow = node.y > 0 && grid.GetGridObject(node.x, node.y - 1).letter != '\0';
+            hasLetterBelow = node.y > 0 && grid.GetGridObject(node.x, node.y - 1).letter != '\0';
 
-            if(!hasLetterBelow)
-            {
-                sr.sprite = crossWordTileSprites[1];
-            }
-            else
+            if(hasLetterBelow)
             {
                 sr.sprite = crossWordTileSprites[0];
             }
+            else
+            {
+                sr.sprite = crossWordTileSprites[1];
+            }
+
+            baseSprite = sr.sprite;
+            crossWordObject = node;
+
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseDown()
     {
-        
+        crossWordObject.isSelected = true;
+
+        //GET NEIGHBOUR TILES AND HIGHLIGHT IT
+        CrossWordManager.instance.SelectCrossWordObject(crossWordObject);
     }
 
+    public void HighlightCrossWordTile()
+    {
+        if(crossWordObject == null)
+        {
+            Debug.Log("CrossWord Object Does not exist");
+            return;
+        }
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        if(crossWordObject.isHighlighted)
+        {
+            sr.sprite = hasLetterBelow? crossWordTileHighlightSprites[0] : crossWordTileHighlightSprites[1];    
+        }
+        else
+        {
+            sr.sprite = baseSprite;
+        }
+    }
 
 }

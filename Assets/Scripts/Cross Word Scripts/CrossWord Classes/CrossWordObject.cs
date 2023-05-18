@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CrossWordObject
 {
    public int x;
@@ -9,8 +10,10 @@ public class CrossWordObject
     public Grid<CrossWordObject> grid;
 
    public char letter;
-   public HashSet<CrossWordClue> crossWordClues = new HashSet<CrossWordClue>();
+   public Dictionary<Orientation, CrossWordClue> crossWordClues = new Dictionary<Orientation, CrossWordClue>();
    public bool isAnswered;
+   public bool isHighlighted = false;
+   public bool isSelected = false;   
 
    public CrossWordObject(Grid<CrossWordObject> grid, int x, int y)
    {
@@ -22,6 +25,6 @@ public class CrossWordObject
    public void AssignPlacedWord(char letter, CrossWordClue clue)
    {      
       this.letter = letter;
-      crossWordClues.Add(clue);
+      crossWordClues.Add(clue.orientation, clue);
    }
 }

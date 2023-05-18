@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: -7422739093274881136
     second: mini-crossword-tiles_1
+  - first:
+      213: -8379232672304977183
+    second: mini-crossword-tiles_0_highlight
+  - first:
+      213: 1685193051654756383
+    second: mini-crossword-tiles_1-highlight
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -117,7 +123,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -146,6 +152,48 @@ TextureImporter:
       bones: []
       spriteID: 09312fc3f122df890800000000000000
       internalID: -7422739093274881136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mini-crossword-tiles_0_highlight
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea2ae4974cf6bb80800000000000000
+      internalID: -8379232672304977183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mini-crossword-tiles_1-highlight
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 14
+        width: 16
+        height: 18
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5555556}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1896d5e622036710800000000000000
+      internalID: 1685193051654756383
       vertices: []
       indices: 
       edges: []

@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.05}
+  m_AnchoredPosition: {x: 0, y: -0.008}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6202295110166362925
@@ -181,7 +181,6 @@ GameObject:
   - component: {fileID: 4198450909122628442}
   - component: {fileID: 4431019850049398009}
   - component: {fileID: 2244598299322368935}
-  - component: {fileID: 893539323711831212}
   m_Layer: 0
   m_Name: Number
   m_TagString: Untagged
@@ -205,7 +204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.004, y: 0.3181}
+  m_AnchoredPosition: {x: -0.004, y: 0.3601}
   m_SizeDelta: {x: 0.8641, y: 0.2365}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4431019850049398009
@@ -341,21 +340,6 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
---- !u!114 &893539323711831212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7180840848767420013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21f19c40d03a4554592d95a3fb78e6d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberText: {fileID: 0}
-  letterText: {fileID: 0}
-  crossWordTileSprites: []
 --- !u!1 &7182347317724808846
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +351,7 @@ GameObject:
   - component: {fileID: 3557265957211832832}
   - component: {fileID: 8254187998914899817}
   - component: {fileID: -5575165686565777756}
+  - component: {fileID: 5783538178457411293}
   m_Layer: 0
   m_Name: CrossWord Tile
   m_TagString: Untagged
@@ -430,7 +415,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7422739093274881136, guid: b3373bab592df97478e580b01026831d, type: 3}
+  m_Sprite: {fileID: -4372177542110671869, guid: b3373bab592df97478e580b01026831d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -453,8 +438,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f19c40d03a4554592d95a3fb78e6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crossWordObject:
+    x: 0
+    y: 0
+    letter: 0
+    isAnswered: 0
+    isHighlighted: 0
+    isSelected: 0
   numberText: {fileID: 2244598299322368935}
   letterText: {fileID: 3704459040844902322}
   crossWordTileSprites:
   - {fileID: -4372177542110671869, guid: b3373bab592df97478e580b01026831d, type: 3}
   - {fileID: -7422739093274881136, guid: b3373bab592df97478e580b01026831d, type: 3}
+  crossWordTileHighlightSprites:
+  - {fileID: -8379232672304977183, guid: b3373bab592df97478e580b01026831d, type: 3}
+  - {fileID: 1685193051654756383, guid: b3373bab592df97478e580b01026831d, type: 3}
+--- !u!61 &5783538178457411293
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7182347317724808846}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.000000029802322, y: 0.0016641617}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.88841015, y: 0.885082}
+  m_EdgeRadius: 0
