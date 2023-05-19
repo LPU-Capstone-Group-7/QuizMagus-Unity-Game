@@ -15,6 +15,7 @@ public class CrossWordClueUIHandler : MonoBehaviour
     [SerializeField] private Transform questionItemTextPrefab;
     [SerializeField] private Transform downListTransform;
     [SerializeField] private Transform acrossListTransform;
+    [SerializeField] private Animator sliderAnimator;
 
     private void Awake() 
     {
@@ -53,5 +54,15 @@ public class CrossWordClueUIHandler : MonoBehaviour
             }
         }
 
+    }
+
+    public void ShowCLueListUI()
+    {
+        sliderAnimator.Play("ClueList_Enter");
+    }
+
+    public void HideClueListUI()
+    {
+        sliderAnimator.Play("ClueList_Exit");
     }
 }
