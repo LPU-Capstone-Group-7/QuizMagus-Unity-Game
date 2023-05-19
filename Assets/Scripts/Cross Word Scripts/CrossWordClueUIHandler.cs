@@ -59,10 +59,12 @@ public class CrossWordClueUIHandler : MonoBehaviour
     public void ShowCLueListUI()
     {
         sliderAnimator.Play("ClueList_Enter");
+        CrossWordManager.instance.SetCanSelectTiles(false);
     }
 
     public void HideClueListUI()
     {
         sliderAnimator.Play("ClueList_Exit");
+        CrossWordManager.instance.SetCanSelectTiles(true);
     }
 }

@@ -11,6 +11,7 @@ public class CrossWordManager : MonoBehaviour
   [Header("CrossWordObject")]
   private CrossWordObject selectedCrossWordObject;
   private CrossWordClue activeClue;
+  private bool canSelectTiles = true;
 
   public Action<CrossWordClue> OnActiveClueChangeAction;
   public Action onNodeSelected;
@@ -30,6 +31,9 @@ public class CrossWordManager : MonoBehaviour
 
   public void SelectCrossWordObject(CrossWordObject node)
   {
+    
+    node.isSelected = true;
+
     if(selectedCrossWordObject == node && node.crossWordClues.Count > 1) //RE-CLICKING THE SAME SELECTED NODE
     {
       activeClue = activeClue.orientation == Orientation.across? node.crossWordClues[Orientation.down] : node.crossWordClues[Orientation.across];
@@ -41,10 +45,12 @@ public class CrossWordManager : MonoBehaviour
 
     }
 
-    //RESET ISHIGHLIGHTED ON ALL NODES
+    //RESET HIGHLIGHTED AND SELECTED ON ALL OTHER NODES
     foreach (CrossWordObject tiles in gridManager.GetGrid().GetAllGridObject())
     {
       if(tiles.letter == '\0') continue;
+
+      if(tiles != node) tiles.isSelected =false;
       tiles.isHighlighted = false;
     }
 
@@ -110,6 +116,21 @@ public class CrossWordManager : MonoBehaviour
     return crossWordNeighbours;
   }
 
+//CAN HIGHLIGHT TILES BOOLEAN
+public bool CanSelectTiles()
+{
+  return canSelectTiles;
+}
+
+public void SetCanSelectTiles(bool state)
+{
+  canSelectTiles = state;
+}
+
+public CrossWordClue GetActiveCLue()
+{
+  return activeClue;
+}
   
   
 }
