@@ -25,7 +25,6 @@ public class TickerItem : MonoBehaviour
         this.message = message;
         this.canMove = tickerWidth < GetComponent<TextMeshProUGUI>().preferredWidth;
 
-        Debug.Log(GetComponent<TextMeshProUGUI>().preferredWidth);
         rt.anchoredPosition = canMove? new Vector2(tickerWidth, 0) : Vector2.zero;
 
     }
