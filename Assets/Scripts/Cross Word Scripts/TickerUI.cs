@@ -22,7 +22,6 @@ public class TickerUI : MonoBehaviour
     {
         if(currentItem != null && currentItem.GetXPosition <= -currentItem.GetWidth)
         {
-            Debug.Log("lolz");
             CreateNewTicker(currentItem.GetMessage);
         }
     }

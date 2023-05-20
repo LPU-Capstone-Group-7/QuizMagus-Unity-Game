@@ -29,19 +29,28 @@ public class CrossWordManager : MonoBehaviour
     
   }
 
-  public void SelectCrossWordObject(CrossWordObject node)
+  public void SelectCrossWordObject(CrossWordObject node, Orientation orientation = Orientation.across)
   {
+    if(node.crossWordClues.Count == 0) return;
     
     node.isSelected = true;
 
-    if(selectedCrossWordObject == node && node.crossWordClues.Count > 1) //RE-CLICKING THE SAME SELECTED NODE
+    if(selectedCrossWordObject == node && selectedCrossWordObject.crossWordClues.Count > 1) //RE-CLICKING THE SAME SELECTED NODE
     {
       activeClue = activeClue.orientation == Orientation.across? node.crossWordClues[Orientation.down] : node.crossWordClues[Orientation.across];
     }
     else //SELECTING A NEW NODE
     {
       selectedCrossWordObject = node;
-      activeClue = node.crossWordClues.ContainsKey(Orientation.across)? node.crossWordClues[Orientation.across] : node.crossWordClues[Orientation.down];
+
+      if(node.crossWordClues.ContainsKey(orientation)) //DEFAULT ORIENTATION ACROSS
+      {
+        activeClue = node.crossWordClues[orientation];
+      }
+      else
+      {
+        activeClue = node.crossWordClues[Orientation.down];
+      }
 
     }
 
