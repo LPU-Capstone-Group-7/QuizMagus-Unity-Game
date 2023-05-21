@@ -92,19 +92,3 @@ public struct CrossWordEntry
         this.letterPlacements = letterPlacements;
     }
 }
-
-public struct CrossWordClue
-{
-    public int itemNumber;
-    public Vector2Int startNode;
-    public TriviaQuestion triviaQuestion;
-    public Orientation orientation;
-
-    public CrossWordClue(int itemNumber, Vector2Int startNode, TriviaQuestion triviaQuestion, Orientation orientation)
-    {
-        this.itemNumber = itemNumber;
-        this.startNode = startNode;
-        this.triviaQuestion = triviaQuestion;
-        this.orientation = orientation;
-    }
-}
