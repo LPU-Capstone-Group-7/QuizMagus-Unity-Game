@@ -10,6 +10,7 @@ public class CrossWordObject
     public Grid<CrossWordObject> grid;
 
    public char letter;
+   public char inputtedLetter;
    public Dictionary<Orientation, CrossWordClue> crossWordClues = new Dictionary<Orientation, CrossWordClue>();
    public bool isAnswered;
    public bool isHighlighted = false;
