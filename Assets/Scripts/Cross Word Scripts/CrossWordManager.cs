@@ -98,6 +98,50 @@ public class CrossWordManager : MonoBehaviour
     }
   }
 
+  private void CheckAllNodesForCorrectAnswers()
+  {
+    foreach (CrossWordGridItem item in CrossWordGridManager.instance.GetCrossWordGridItems())
+    {
+      foreach (CrossWordObject node in item.itemNodes)
+      {
+        //TODO
+      }
+    }
+  }
+
+  public void CheckForCorrectAnswers(CrossWordObject selectedNode)
+  {
+    //SHOW CORRECT ANSWER ONLY AT THE END OF THE GAME
+    if(!crossWordSettings.showCorrectAnswer) return;
+
+    //CHECK IF CROSSWORD ITEM TILES ARE ALREADY ANSWERED
+    List<CrossWordGridItem> relatedItems = CrossWordGridManager.instance.GetRelatedCrossWordGridItems(selectedNode);
+    
+    if(relatedItems.Count > 0)
+    {
+      foreach(CrossWordGridItem item in relatedItems)
+      {
+        bool answerIsCorrect = true;
+
+        foreach (CrossWordObject node in item.itemNodes)
+        {
+            if(node.inputtedLetter != node.letter)
+            {
+              answerIsCorrect = false;
+              break;
+            }    
+        }
+
+        if(answerIsCorrect)
+        {
+          item.isAnswered = true;
+          Debug.Log("ANSWER IS CORRECT");
+        }
+      }
+        
+    }
+  }
+
   private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
   {
     int x = startX + direction.x;

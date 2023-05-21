@@ -162,5 +162,26 @@ public class CrossWordGridManager : MonoBehaviour
   {
     return grid;
   }
-    
+  
+  //CROSSWORD GRID ITEM FUNCTIONS
+  public List<CrossWordGridItem> GetRelatedCrossWordGridItems(CrossWordObject selectedNode)
+  {
+    List<CrossWordGridItem> relatedItems = new List<CrossWordGridItem>();
+
+    foreach (CrossWordGridItem item in crossWordGridItems)
+    {
+      if(!item.isAnswered && item.itemNodes.Contains(selectedNode))
+      {
+        relatedItems.Add(item);
+      }
+    }
+
+    return relatedItems;
+  }
+
+  public List<CrossWordGridItem> GetCrossWordGridItems()
+  {
+    return crossWordGridItems;
+  }
+
 }
