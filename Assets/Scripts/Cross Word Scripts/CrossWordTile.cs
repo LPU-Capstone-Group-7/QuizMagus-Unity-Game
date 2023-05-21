@@ -14,7 +14,8 @@ using System;
     DISABLE SELECT WHEN CLUE LIST IS ACTIVE -- DONE
     ONLY ALLOW A-Z CHAR WHEN TYPING LETTERS -- DONE
     MOVE BACKWARDS WHEN BACKSPACE -- DONE
-    CHECK WHEN CROSSWORD ENTRY IS FINALLY CORRECT AND ALSO INCLUDE INDEX NUMBER FOR COMPARISON
+    CHECK WHEN CROSSWORD ENTRY IS FINALLY CORRECT AND ALSO INCLUDE INDEX NUMBER FOR COMPARISON -- DONE
+    SFX WHEN ANSWERED CORRECTLY
     TIMER
     FUNCTION FOR CALCULATING THE TIME IT TOOK TO FIND THE CORRECT ANSWER
     FUNCTION THAT UPDATES THE TIME IT TOOK TO FIND THE CORRECT ANSWER EVERYTIME NODE IS UPDATED (DO THIS ONLY WHEN NO NODES ARE EMPTY)
@@ -22,8 +23,8 @@ using System;
     CREATE CLUE IS ANSWERED EVENT HANDLER
     STRIKETHROUGH CLUES IN CLUES LIST WHEN IT IS ANSWERED ALREADY
     CREATE ART THAT SHOWS THAT TILE IS ALREADY ANSWERED
-    DO NOT HIGHLIGHT OR SELECT TILES THAT ARE ALREADY ANSWERED
-    SKIP TILES WHEN IT IS ALREADY ANSWERED
+    DO NOT HIGHLIGHT OR SELECT TILES THAT ARE ALREADY ANSWERED -- DONE
+    SKIP TILES WHEN IT IS ALREADY ANSWERED -- DONE
     END GAME WHEN ALL CLUES ARE ANSWERED
     BUTTON THAT ALLOWS PLAYER TO END THE GAME
     FORCE END GAME WHEN TIMER ELAPSED
@@ -111,11 +112,11 @@ public class CrossWordTile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(CrossWordManager.instance.CanSelectTiles())
+        //CAN ONLY SELECT TILES IF THERE ARE NO UI ELEMENT ACTIVE AND THE TILE IS NOT YET ANSWERED
+        if(CrossWordManager.instance.CanSelectTiles() && !crossWordObject.isAnswered)
         {
-            inputField.interactable = true;
-
             //GET NEIGHBOUR TILES AND HIGHLIGHT IT
+            inputField.interactable = true;
             CrossWordManager.instance.SelectCrossWordObject(crossWordObject);
         }
 
@@ -155,33 +156,36 @@ public class CrossWordTile : MonoBehaviour
         crossWordObject.inputtedLetter = inputField.text == "" ? '\0' : inputField.text.ToLower()[0];
         CrossWordClue activeClue = CrossWordManager.instance.GetActiveCLue();
 
-        //CHECK IF ANSWER IS CORRECT
-        CrossWordManager.instance.CheckForCorrectAnswers(crossWordObject);
+        //REVERSE DIRECTION AS DEFAULT DIRECTION
+        Vector2Int direction = activeClue.orientation == Orientation.across? Vector2Int.left : Vector2Int.up;        
 
-        int x = crossWordObject.x;
-        int y = crossWordObject.y;
-
-        if(crossWordObject.crossWordClues.ContainsKey(activeClue.orientation))
+        if(newValue != "")
         {
-            //MOVE TO NEXT TILE AND SELECT THAT TILE
-            if(activeClue.orientation == Orientation.across)
-            {
-                x = newValue != "" ? x + 1 : x - 1;
-            }
-            else
-            {
-                y = newValue != "" ? y - 1 : y + 1;
-            }
+            //CHECK IF ANSWER IS CORRECT AND CHANGE DIRECTION
+            CrossWordManager.instance.CheckForCorrectAnswers(crossWordObject);
+            direction = activeClue.orientation == Orientation.across? Vector2Int.right : Vector2Int.down;
         }
 
-        MoveToNextTile(x, y, activeClue.orientation);
+        MoveToNextTile(crossWordObject.x, crossWordObject.y, direction, activeClue.orientation);
     }
 
-    private CrossWordObject MoveToNextTile(int x, int y, Orientation orientation)
+    private CrossWordObject MoveToNextTile(int x, int y, Vector2Int direction, Orientation orientation)
     {
-        CrossWordObject nextNode = CrossWordGridManager.instance.GetGrid().GetGridObject(x, y);
+        //UPDATE TILE LOCATION DEPENDING ON DIRECTION
+        x += direction.x;
+        y += direction.y;
 
-        if(nextNode != null && nextNode.letter != '\0')
+        CrossWordObject nextNode = CrossWordGridManager.instance.GetGrid().GetGridObject(x, y);
+        
+        if(nextNode == null || nextNode.letter == '\0') //NODE IS INVALID, RETURN NULL
+        {
+            return nextNode;
+        }
+        else if(nextNode.isAnswered) //RE-RUN THIS FUNCTION WITH NEW COORDINATES
+        {
+            MoveToNextTile(x, y, direction, orientation);
+        }
+        else
         {
             crossWordObject.isSelected = false;
             CrossWordManager.instance.SelectCrossWordObject(nextNode, orientation);
@@ -192,27 +196,6 @@ public class CrossWordTile : MonoBehaviour
 
     private char RestrictSpecialChar(string text, int charIndex, char addedChar)
     {
-        Debug.Log("text: " + text + "CharIndex: " + charIndex);
-        if(addedChar == '\0')
-        {
-            CrossWordClue activeClue = CrossWordManager.instance.GetActiveCLue();
-
-            if(crossWordObject.crossWordClues.ContainsKey(activeClue.orientation))
-            {
-                //CHECK IF ALL TILE RELATED TO THIS HAS A VISIBLE TILES
-
-                //MOVE TO NEXT TILE AND SELECT THAT TILE
-                int x = activeClue.orientation == Orientation.across? crossWordObject.x - 1 : crossWordObject.x;
-                int y = activeClue.orientation == Orientation.down? crossWordObject.y + 1 : crossWordObject.y;
-
-                CrossWordObject nextNode = MoveToNextTile(x, y, activeClue.orientation);
-            }
-
-            Debug.Log("This is running");
-
-            return '\0';
-        }
-
         //IF INPUTTED IS NOT A LETTER
         if(!char.IsLetter(addedChar))
         {

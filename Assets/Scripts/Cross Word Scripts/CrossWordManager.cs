@@ -94,7 +94,8 @@ public class CrossWordManager : MonoBehaviour
 
     foreach (CrossWordObject node in highlightedTiles)
     {
-        node.isHighlighted = state;
+        //EXCLUDE ANSWERED TILES
+        if(!node.isAnswered) node.isHighlighted = state;
     }
   }
 
@@ -135,6 +136,16 @@ public class CrossWordManager : MonoBehaviour
         if(answerIsCorrect)
         {
           item.isAnswered = true;
+
+          //DESELECT TILES
+          foreach (CrossWordObject node in item.itemNodes)
+          {
+            node.isAnswered = true;
+            node.isHighlighted = false;
+            node.isSelected = false;    
+          }
+
+          onNodeSelected?.Invoke();
           Debug.Log("ANSWER IS CORRECT");
         }
       }

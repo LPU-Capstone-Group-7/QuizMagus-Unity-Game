@@ -170,7 +170,7 @@ public class CrossWordGridManager : MonoBehaviour
 
     foreach (CrossWordGridItem item in crossWordGridItems)
     {
-      if(!item.isAnswered && item.itemNodes.Contains(selectedNode))
+      if(!item.isAnswered && item.itemNodes.Contains(selectedNode) && selectedNode.getCrossWordCluesIndex().Contains(item.index))
       {
         relatedItems.Add(item);
       }

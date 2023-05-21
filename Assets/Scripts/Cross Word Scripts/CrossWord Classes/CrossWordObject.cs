@@ -23,6 +23,18 @@ public class CrossWordObject
         this.y = y;
    }
 
+   public HashSet<int> getCrossWordCluesIndex()
+   {
+      HashSet<int> indexSet = new HashSet<int>();
+
+      foreach ( KeyValuePair<Orientation, CrossWordClue> clue in crossWordClues)
+      {
+         indexSet.Add(clue.Value.itemNumber);
+      }
+
+      return indexSet;
+   }
+
    public void AssignPlacedWord(char letter, CrossWordClue clue)
    {      
       this.letter = letter;
