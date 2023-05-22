@@ -180,7 +180,14 @@ public class CrossWordGridManager : MonoBehaviour
 
     public string GetCrossWordGridItemInputtedAnswer(CrossWordGridItem item)
     {
+        string inputtedAnswer = "";
 
+        foreach (CrossWordObject node in item.itemNodes)
+        {
+            inputtedAnswer += node.inputtedLetter;
+        }
+
+        return inputtedAnswer.ToLower();
     }
 
     public List<CrossWordGridItem> GetCrossWordGridItems()

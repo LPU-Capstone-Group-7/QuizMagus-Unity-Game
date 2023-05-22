@@ -50,6 +50,11 @@ public class CrossWordTimer : MonoBehaviour
         isTimeRunning = true;
     }
 
+    public void PauseTimer()
+    {
+        isTimeRunning = false;
+    }
+
     public float GetTimeTakenToAnswer()
     {
         float roundedValue = Mathf.Round(timeTakenToAnswer * 100.0f) * 0.01f;

@@ -34,6 +34,33 @@ public class CrossWordManager : MonoBehaviour
         CrossWordTimer.instance.StartTimer(crossWordSettings.timeLimit);
         
     }
+    
+    private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
+    {
+        int x = startX + direction.x;
+        int y = startY + direction.y;
+
+        HashSet<CrossWordObject> crossWordNeighbours = new HashSet<CrossWordObject>();
+        CrossWordObject neighbourTile;
+
+        do
+        {
+        neighbourTile = gridManager.GetGrid().GetGridObject(x, y);
+
+        if (neighbourTile == null || neighbourTile.letter == '\0')
+        {
+            break; // Reached an invalid neighbour
+        }
+
+        crossWordNeighbours.Add(neighbourTile);
+
+        x += direction.x;
+        y += direction.y;
+        }
+        while(neighbourTile != null);
+
+        return crossWordNeighbours;
+    }
 
     public void SelectCrossWordObject(CrossWordObject node, Orientation orientation = Orientation.across)
     {
@@ -104,15 +131,26 @@ public class CrossWordManager : MonoBehaviour
         }
     }
 
+    //FUNCTIONS FOR CHECKING IF ANSWER IS CORRECT
     private void CheckAllNodesForCorrectAnswers()
     {
+        //PAUSE CROSSWORD TIMER
+        CrossWordTimer.instance.PauseTimer();
+
+        //CHECK ALL NODE FOR CORRRECT ANSWERS
         foreach (CrossWordGridItem item in gridManager.GetCrossWordGridItems())
         {
-            foreach (CrossWordObject node in item.itemNodes)
+            CheckCrossWordGridItem(item);
+
+            //UPDATE TIME TAKEN TO ANSWER ON ITEMS WITH ZERO VALUES
+            if(item.timeTakenToAnswer == 0f)
             {
-                //TODO
+                item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
             }
         }
+
+        //END GAME
+        CalculateCrossWordResults();
     }
 
     public void CheckForCorrectAnswers(CrossWordObject selectedNode)
@@ -123,69 +161,97 @@ public class CrossWordManager : MonoBehaviour
         //CHECK IF CROSSWORD ITEM TILES ARE ALREADY ANSWERED
         List<CrossWordGridItem> relatedItems = gridManager.GetRelatedCrossWordGridItems(selectedNode);
         
-        foreach(CrossWordGridItem item in relatedItems)
+        foreach (CrossWordGridItem item in relatedItems)
         {
-            bool answerIsCorrect = true;
+            CheckCrossWordGridItem(item);
+
+            //UPDATE TIME TAKEN TO ANSWER IF ALL TILES WERE ANSWERED REGARDLESS OF CORRECTNESS
             bool noEmptyTiles = true;
 
-            //VALIDATE IF ANSWER IS CORRECT AND IF THERE ARE NO EMPTY TILES
             foreach (CrossWordObject node in item.itemNodes)
             {
                 if(node.inputtedLetter == '\0') noEmptyTiles = false;
-                if(node.inputtedLetter != node.letter) answerIsCorrect = false; 
             }
 
-            //UPDATE TIME TAKEN TO ANSWER ON THIS GRID 
             if(noEmptyTiles) item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
+            
+        }
 
-            if(answerIsCorrect)
+        bool allItemsAreAnswered = true;
+
+        //CHECK IF ALL NODES ARE ANSWERED, IF THEY ARE THEN END THE GAME
+        foreach (CrossWordGridItem item in gridManager.GetCrossWordGridItems())
+        {
+            if(!item.isAnswered)
             {
-                item.isAnswered = true;
-                item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
-
-                //DESELECT TILES
-                foreach (CrossWordObject node in item.itemNodes)
-                {
-                    node.isAnswered = true;
-                    node.isHighlighted = false;
-                    node.isSelected = false;    
-                }
-
-                onNodeSelected?.Invoke();
-                onNodeAnswered?.Invoke();
+                allItemsAreAnswered = false;
+                break;
             }
         }
+
+        if(allItemsAreAnswered) CalculateCrossWordResults();
             
     }
 
-    private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
+    public void CheckCrossWordGridItem(CrossWordGridItem item)
     {
-        int x = startX + direction.x;
-        int y = startY + direction.y;
+        bool answerIsCorrect = true;
 
-        HashSet<CrossWordObject> crossWordNeighbours = new HashSet<CrossWordObject>();
-        CrossWordObject neighbourTile;
-
-        do
+        //VALIDATE IF ANSWER IS CORRECT AND IF THERE ARE NO EMPTY TILES
+        foreach (CrossWordObject node in item.itemNodes)
         {
-        neighbourTile = gridManager.GetGrid().GetGridObject(x, y);
-
-        if (neighbourTile == null || neighbourTile.letter == '\0')
-        {
-            break; // Reached an invalid neighbour
+            if(node.inputtedLetter != node.letter) answerIsCorrect = false; 
         }
 
-        crossWordNeighbours.Add(neighbourTile);
+        if(answerIsCorrect)
+        {
+            item.isAnswered = true;
 
-        x += direction.x;
-        y += direction.y;
+            //DESELECT TILES
+            foreach (CrossWordObject node in item.itemNodes)
+            {
+                node.isAnswered = true;
+                node.isHighlighted = false;
+                node.isSelected = false;    
+            }
+
+            onNodeSelected?.Invoke();
+            onNodeAnswered?.Invoke();
         }
-        while(neighbourTile != null);
+    }    
 
-        return crossWordNeighbours;
+    //FUNCTIONS FOR CROSSWORD FINAL RESULTS
+    public void CalculateCrossWordResults()
+    {
+        //INITIALIZE REQUIRED LIST NEEDED
+        List<CrossWordGridItem> crossWordGridItems = gridManager.GetCrossWordGridItems();
+        List<TriviaData> triviaDataList = new List<TriviaData>();
+
+        foreach (CrossWordGridItem item in crossWordGridItems)
+        {
+            TriviaQuestion triviaQuestion = item.triviaQuestion;
+
+            //GENERATE TRIVIA DATA DEPENDING ON THE RESULT
+            if(item.isAnswered)
+            {
+                TriviaData triviaData = new TriviaData(triviaQuestion.id, item.timeTakenToAnswer, true, triviaQuestion.question, triviaQuestion.answer, triviaQuestion.answer);
+                triviaDataList.Add(triviaData);
+            }
+            else
+            {
+                string inputtedAnswer = gridManager.GetCrossWordGridItemInputtedAnswer(item);
+                TriviaData triviaData = new TriviaData(triviaQuestion.id, item.timeTakenToAnswer, false, triviaQuestion.question, triviaQuestion.answer, inputtedAnswer);
+                triviaDataList.Add(triviaData);
+            }            
+        }
+
+        //SEND RESULTS TO TRIVIA GAME RESULT MANAGER SCRIPT
+        TriviaGameResultManager.instance.SetTriviaGameResults(triviaDataList.ToArray(), crossWordSettings.basedGrading);
+        GameManager.instance.LoadLevel("TriviaGameCredits");
+
     }
 
-    //CAN HIGHLIGHT TILES BOOLEAN
+    //GET ANS SET FUNCTIONS
     public bool CanSelectTiles()
     {
         return canSelectTiles;
