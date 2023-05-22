@@ -65,7 +65,7 @@ public class CrossWordGridItem
    public HashSet<CrossWordObject> itemNodes;
    public Orientation orientation;
    public bool isAnswered = false;
-
+   public float timeTakenToAnswer;
 
    public CrossWordGridItem(int index, TriviaQuestion triviaQuestion, HashSet<CrossWordObject> itemNodes, Orientation orientation, bool isAnswered)
    {
