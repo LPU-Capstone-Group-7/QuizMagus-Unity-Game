@@ -32,6 +32,7 @@ public class CrossWordManager : MonoBehaviour
 
         //START TIMER
         CrossWordTimer.instance.StartTimer(crossWordSettings.timeLimit);
+        CrossWordTimer.instance.onTimeFinished += CheckAllNodesForCorrectAnswers;
         
     }
     
