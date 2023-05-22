@@ -187,17 +187,17 @@ public class CrossWordManager : MonoBehaviour
     //CAN HIGHLIGHT TILES BOOLEAN
     public bool CanSelectTiles()
     {
-    return canSelectTiles;
+        return canSelectTiles;
     }
 
     public void SetCanSelectTiles(bool state)
     {
-    canSelectTiles = state;
+        canSelectTiles = state;
     }
 
     public CrossWordClue GetActiveCLue()
     {
-    return activeClue;
+        return activeClue;
     }
   
   
