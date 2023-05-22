@@ -16,6 +16,7 @@ public class CrossWordClueUIHandler : MonoBehaviour
     [SerializeField] private Transform downListTransform;
     [SerializeField] private Transform acrossListTransform;
     [SerializeField] private Animator sliderAnimator;
+    private Dictionary<int,TextMeshProUGUI> questionItemTextDictionary = new Dictionary<int, TextMeshProUGUI>();
 
     private void Awake() 
     {
@@ -25,6 +26,7 @@ public class CrossWordClueUIHandler : MonoBehaviour
     private void Start()
     {
         CrossWordManager.instance.OnActiveClueChangeAction += ChangeActiveClue;
+        CrossWordManager.instance.onCrossWordItemAnswered += UpdateAnsweredText;
     }
 
     private void ChangeActiveClue(CrossWordClue clue)
@@ -52,8 +54,23 @@ public class CrossWordClueUIHandler : MonoBehaviour
             { 
                 questionItemText.transform.SetParent(downListTransform, false);
             }
+
+            questionItemTextDictionary.Add(clues[i].index, questionItemText);
         }
 
+    }
+
+    void UpdateAnsweredText(CrossWordGridItem item)
+    {
+        if(questionItemTextDictionary.ContainsKey(item.index))
+        {
+            questionItemTextDictionary[item.index].fontStyle = FontStyles.Strikethrough;
+
+            //CHANGE ALPHA TO HALF
+            Color currentColor = questionItemTextDictionary[item.index].color;
+            currentColor.a = 0.5f;
+            questionItemTextDictionary[item.index].color = currentColor;
+        }
     }
 
     public void ShowCLueListUI()

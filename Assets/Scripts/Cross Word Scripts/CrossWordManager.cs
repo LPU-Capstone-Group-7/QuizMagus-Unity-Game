@@ -17,6 +17,7 @@ public class CrossWordManager : MonoBehaviour
     public Action<CrossWordClue> OnActiveClueChangeAction;
     public Action onNodeSelected;
     public Action onNodeAnswered;
+    public Action<CrossWordGridItem> onCrossWordItemAnswered;
     
     private void Awake()
     {
@@ -212,6 +213,7 @@ public class CrossWordManager : MonoBehaviour
                 node.isSelected = false;    
             }
 
+            onCrossWordItemAnswered?.Invoke(item);
             onNodeSelected?.Invoke();
             onNodeAnswered?.Invoke();
         }
