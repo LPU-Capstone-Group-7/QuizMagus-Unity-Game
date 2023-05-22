@@ -127,16 +127,43 @@ public class CrossWordTile : MonoBehaviour
         letterText.color = answeredFontColor;
         CrossWordManager.instance.onNodeAnswered -= HandleAnsweredTile;
     }
+
+    public void UpdateTimeTakenToAnswer()
+    {
+        List<CrossWordGridItem> relatedItems = CrossWordGridManager.instance.GetRelatedCrossWordGridItems(crossWordObject);
+
+        foreach (CrossWordGridItem item in relatedItems)
+        {            
+            //UPDATE TIME TAKEN TO ANSWER IF RELATED TILES ARE NOT EMPTY
+            bool noEmptyTiles = true;
+
+            foreach (CrossWordObject node in item.itemNodes)
+            {
+                if(node.inputtedLetter == '\0') noEmptyTiles = false;
+            }
+
+            if(noEmptyTiles)
+            {
+                item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
+                Debug.Log("Updating Time");
+            }
+        }
+
+    }
     
     //EVENT HANDLERS
     private void HandleInputValueChanged(string newValue)
-    {
+    {        
         //CHANGE EXISTING TEXT IF THERE ARE ANY
+        char oldValue = crossWordObject.inputtedLetter;
         if(newValue.Length > 1) inputField.text = newValue[1].ToString();
         
         //CHANGE INPUTTED LETTER FIELD AND CHECK CURRENT ORIENTATION
         crossWordObject.inputtedLetter = inputField.text == "" ? '\0' : inputField.text.ToLower()[0];
         CrossWordClue activeClue = CrossWordManager.instance.GetActiveCLue();
+
+        //UPDATE TIME TAKEN TO ANSWER IF USER INPUTTED A NEW VALUE
+        if(crossWordObject.inputtedLetter != oldValue) UpdateTimeTakenToAnswer();
 
         //REVERSE DIRECTION AS DEFAULT DIRECTION
         Vector2Int direction = activeClue.orientation == Orientation.across? Vector2Int.left : Vector2Int.up;        
@@ -184,6 +211,6 @@ public class CrossWordTile : MonoBehaviour
             return '\0';
         }
 
-        return addedChar;
+        return addedChar.ToString().ToLower()[0];
     }
 }

@@ -35,6 +35,13 @@ public class CrossWordManager : MonoBehaviour
         
     }
     
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            CheckAllNodesForCorrectAnswers();
+        }
+    }
     private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
     {
         int x = startX + direction.x;
@@ -163,18 +170,7 @@ public class CrossWordManager : MonoBehaviour
         
         foreach (CrossWordGridItem item in relatedItems)
         {
-            CheckCrossWordGridItem(item);
-
-            //UPDATE TIME TAKEN TO ANSWER IF ALL TILES WERE ANSWERED REGARDLESS OF CORRECTNESS
-            bool noEmptyTiles = true;
-
-            foreach (CrossWordObject node in item.itemNodes)
-            {
-                if(node.inputtedLetter == '\0') noEmptyTiles = false;
-            }
-
-            if(noEmptyTiles) item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
-            
+            CheckCrossWordGridItem(item);   
         }
 
         bool allItemsAreAnswered = true;

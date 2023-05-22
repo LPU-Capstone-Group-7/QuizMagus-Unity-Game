@@ -21,7 +21,7 @@ public class CrossWordGridManager : MonoBehaviour
     [SerializeField] Transform letterTransformPrefab;
     TriviaQuestion[] triviaQuestions;
     CrossWordLayout crossWordLayout;
-    List<CrossWordGridItem> crossWordGridItems = new List<CrossWordGridItem>();
+    [SerializeField] List<CrossWordGridItem> crossWordGridItems = new List<CrossWordGridItem>();
 
     private void Awake()
     {
