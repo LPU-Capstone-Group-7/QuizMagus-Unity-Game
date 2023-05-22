@@ -231,7 +231,7 @@ MonoBehaviour:
     such as passwords, credit card numbers and other financial data via emails, websites
     or instant messages ?\",\n      \"answer\": \"Phishing\",\n      \"difficulty\":
     \"normal\",\n      \"id\": \"4726c6c3-c21d-4a45-9eb7-3c1f34c25577\"\n    }\n 
-    ],\n  \"randomizeQuestion\": true,\n  \"basedGrading\": \"based 60\",\n  \"timeLimit\":
+    ],\n  \"randomizeQuestions\": true,\n  \"basedGrading\": \"based 60\",\n  \"timeLimit\":
     20,\n  \"numOfLettersToShow\": 5,\n  \"showCorrectAnswer\": true\n}"
 --- !u!1 &1223089540
 GameObject:

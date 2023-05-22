@@ -6,7 +6,7 @@ public class CrossWordSettings
 {
     public TriviaQuestion[] triviaQuestions;
     public int timeLimit;
-    public bool enableHints;
+    public bool randomizeQuestions;
     public string basedGrading;
     public bool showCorrectAnswer;
     public int numOfLettersToShow;

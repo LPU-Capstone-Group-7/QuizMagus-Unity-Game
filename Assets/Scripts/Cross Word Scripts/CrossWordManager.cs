@@ -8,6 +8,9 @@ public class CrossWordManager : MonoBehaviour
     private CrossWordGridManager gridManager;
     private CrossWordSettings crossWordSettings;
 
+    [Header("Trivia Question")]
+    TriviaQuestion[] inputtedTriviaQuestions;
+
     [Header("CrossWordObject")]
     private CrossWordObject selectedCrossWordObject;
     private CrossWordClue activeClue;
@@ -27,9 +30,14 @@ public class CrossWordManager : MonoBehaviour
     {
         crossWordSettings = DataManager.instance.GetGameSettings<CrossWordSettings>();
 
+        //RANDOMIZES ORDER WHILE ALSO RETAINING THE ORGINAL ORDER OF THE ARRAY
+        inputtedTriviaQuestions = new TriviaQuestion[crossWordSettings.triviaQuestions.Length];
+        System.Array.Copy(crossWordSettings.triviaQuestions, inputtedTriviaQuestions, crossWordSettings.triviaQuestions.Length);
+        if(crossWordSettings.randomizeQuestions) inputtedTriviaQuestions = GameManager.instance.ShuffleTriviaQuestions(inputtedTriviaQuestions);
+
         //CREATE CROSSWORD GRID
         gridManager = CrossWordGridManager.instance;
-        gridManager.CreateCrossWordGrid(crossWordSettings.triviaQuestions);
+        gridManager.CreateCrossWordGrid(inputtedTriviaQuestions);
 
         //START TIMER
         CrossWordTimer.instance.StartTimer(crossWordSettings.timeLimit);
