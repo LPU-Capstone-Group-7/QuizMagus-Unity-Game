@@ -42,7 +42,9 @@ public class CrossWordManager : MonoBehaviour
         //START TIMER
         CrossWordTimer.instance.StartTimer(crossWordSettings.timeLimit);
         CrossWordTimer.instance.onTimeFinished += CheckAllNodesForCorrectAnswers;
-        
+
+        //ANSWER SOME TILES DEPENDING ON THE UNIQUE SETTINGS
+        if(crossWordSettings.numOfLettersToShow > 0) AnswerRandomTiles(crossWordSettings.numOfLettersToShow);
     }
     
     private void Update()
@@ -52,6 +54,26 @@ public class CrossWordManager : MonoBehaviour
             CheckAllNodesForCorrectAnswers();
         }
     }
+
+    private void AnswerRandomTiles(int numOfLettersToShow)
+    {
+        //GENERATE LIST OF OCCUPIED NODES
+        List<CrossWordObject> crossWordObjectList = gridManager.GetGrid().GetAllGridObject();
+        crossWordObjectList.RemoveAll(node => node.letter == '\0');
+
+        for (int i = 0; i < numOfLettersToShow; i++)
+        {
+            //GET RANDOM NODE FROM LIST
+            int randomIndex = UnityEngine.Random.Range(0, crossWordObjectList.Count);
+            CrossWordObject node = crossWordObjectList[randomIndex];
+
+            node.isAnswered = true;
+            node.inputtedLetter = node.letter;
+        }
+
+        onNodeAnswered?.Invoke();
+    }
+
     private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
     {
         int x = startX + direction.x;

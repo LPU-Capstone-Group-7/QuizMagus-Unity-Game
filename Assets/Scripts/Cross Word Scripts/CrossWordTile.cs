@@ -24,6 +24,9 @@ public class CrossWordTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ADVANCE CALL IF TILE IS ALREADY ANSWERED
+        HandleAnsweredTile();
+
         CrossWordManager.instance.onNodeSelected += HighlightCrossWordTile;
         CrossWordManager.instance.onNodeAnswered += HandleAnsweredTile;
 
@@ -120,11 +123,13 @@ public class CrossWordTile : MonoBehaviour
     }
 
     public void HandleAnsweredTile()
-    {
-        //BREAK OUT IF NODE IS NOT ANSWERED A
+    { 
+        //BREAK OUT IF NODE IS NOT ANSWERED
         if(!crossWordObject.isAnswered) return;
 
         letterText.color = answeredFontColor;
+        letterText.text = crossWordObject.letter.ToString();
+            
         CrossWordManager.instance.onNodeAnswered -= HandleAnsweredTile;
     }
 
