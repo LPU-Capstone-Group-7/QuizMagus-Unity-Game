@@ -51,8 +51,25 @@ public class CameraDragController : MonoBehaviour
             float cameraHeight = Camera.main.orthographicSize;
             float cameraWidth = cameraHeight * Camera.main.aspect;
 
-            newPosition.x = Mathf.Clamp(newPosition.x, bottomLeftCoords.x + cameraWidth, upperRightCoords.x - cameraWidth);
-            newPosition.y = Mathf.Clamp(newPosition.y, bottomLeftCoords.y + cameraHeight, upperRightCoords.y - cameraHeight);
+            if (Mathf.Abs(upperRightCoords.x - bottomLeftCoords.x) > cameraWidth * 2)
+            {
+                newPosition.x = Mathf.Clamp(newPosition.x, bottomLeftCoords.x + cameraWidth, upperRightCoords.x - cameraWidth);
+            }
+            else
+            {
+                // Camera width is larger than available horizontal distance, don't allow horizontal movement
+                newPosition.x = Camera.main.transform.position.x;
+            }
+
+            if (Mathf.Abs(upperRightCoords.y - bottomLeftCoords.y) > cameraHeight * 2)
+            {
+                newPosition.y = Mathf.Clamp(newPosition.y, bottomLeftCoords.y + cameraHeight, upperRightCoords.y - cameraHeight);
+            }
+            else
+            {
+                // Camera height is larger than available vertical distance, don't allow vertical movement
+                newPosition.y = Camera.main.transform.position.y;
+            }
 
             // Update the position of the Cinemachine Virtual Camera
             Cinemachine.CinemachineVirtualCamera virtualCamera = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
@@ -74,8 +91,10 @@ public class CameraDragController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 bottomLeftCoords = new Vector3(transform.position.x - defaultBoundingBoxSize.x, transform.position.y - defaultBoundingBoxSize.y, transform.position.z);
-        Vector3 upperRightCoords =  new Vector3(transform.position.x + defaultBoundingBoxSize.x,  transform.position.y + defaultBoundingBoxSize.y);
+        //Vector3 bottomLeftCoords = new Vector3(transform.position.x - defaultBoundingBoxSize.x, transform.position.y - defaultBoundingBoxSize.y, transform.position.z);
+        //Vector3 upperRightCoords =  new Vector3(transform.position.x + defaultBoundingBoxSize.x,  transform.position.y + defaultBoundingBoxSize.y);
+
+        Gizmos.color = Color.green;
         //GIZMOS SHIT
         Gizmos.DrawLine(bottomLeftCoords, new Vector3(bottomLeftCoords.x, upperRightCoords.y));
         Gizmos.DrawLine(bottomLeftCoords, new Vector3(upperRightCoords.x, bottomLeftCoords.y));
