@@ -41,6 +41,7 @@
      <Compile Include="Assets\Scripts\Mini Game Scripts\MiniGameBook.cs" />
      <Compile Include="Assets\Scripts\SineMovement.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Classes\TriviaQuestion.cs" />
+     <Compile Include="Assets\CrossWordTimer.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\WordSearchManager.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Classes\TriviaGameResults.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\Sequence Game\SequenceButton.cs" />
@@ -73,6 +74,7 @@
      <Compile Include="Assets\Scripts\Manager Scripts\DataManager.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Classes\TriviaGameSettings.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Classes\TriviaData.cs" />
+     <Compile Include="Assets\Scripts\Utils Scripts\TimerUtils.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Manager\HintManager.cs" />
      <Compile Include="Assets\Scripts\Trivia Game Scripts\TriviaGameTimer.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\FlappyGhost\FlappyGhost.cs" />

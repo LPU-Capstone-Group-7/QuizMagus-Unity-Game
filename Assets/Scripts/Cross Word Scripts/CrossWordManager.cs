@@ -24,8 +24,12 @@ public class CrossWordManager : MonoBehaviour
   {
     crossWordSettings = DataManager.instance.GetGameSettings<CrossWordSettings>();
 
+    //CREATE CROSSWORD GRID
     gridManager = CrossWordGridManager.instance;
     gridManager.CreateCrossWordGrid(crossWordSettings.triviaQuestions);
+
+    //START TIMER
+    CrossWordTimer.instance.StartTimer(crossWordSettings.timeLimit);
     
   }
 
@@ -101,7 +105,7 @@ public class CrossWordManager : MonoBehaviour
 
   private void CheckAllNodesForCorrectAnswers()
   {
-    foreach (CrossWordGridItem item in CrossWordGridManager.instance.GetCrossWordGridItems())
+    foreach (CrossWordGridItem item in gridManager.GetCrossWordGridItems())
     {
       foreach (CrossWordObject node in item.itemNodes)
       {
@@ -116,7 +120,7 @@ public class CrossWordManager : MonoBehaviour
     if(!crossWordSettings.showCorrectAnswer) return;
 
     //CHECK IF CROSSWORD ITEM TILES ARE ALREADY ANSWERED
-    List<CrossWordGridItem> relatedItems = CrossWordGridManager.instance.GetRelatedCrossWordGridItems(selectedNode);
+    List<CrossWordGridItem> relatedItems = gridManager.GetRelatedCrossWordGridItems(selectedNode);
     
     if(relatedItems.Count > 0)
     {
@@ -163,7 +167,7 @@ public class CrossWordManager : MonoBehaviour
 
     do
     {
-      neighbourTile = CrossWordGridManager.instance.GetGrid().GetGridObject(x, y);
+      neighbourTile = gridManager.GetGrid().GetGridObject(x, y);
 
       if (neighbourTile == null || neighbourTile.letter == '\0')
       {
