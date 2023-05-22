@@ -122,39 +122,39 @@ public class CrossWordManager : MonoBehaviour
     //CHECK IF CROSSWORD ITEM TILES ARE ALREADY ANSWERED
     List<CrossWordGridItem> relatedItems = gridManager.GetRelatedCrossWordGridItems(selectedNode);
     
-    if(relatedItems.Count > 0)
+    foreach(CrossWordGridItem item in relatedItems)
     {
-      foreach(CrossWordGridItem item in relatedItems)
-      {
-        bool answerIsCorrect = true;
+      bool answerIsCorrect = true;
+      bool noEmptyTiles = true;
 
+      //VALIDATE IF ANSWER IS CORRECT AND IF THERE ARE NO EMPTY TILES
+      foreach (CrossWordObject node in item.itemNodes)
+      {
+          if(node.inputtedLetter == '\0') noEmptyTiles = false;
+          if(node.inputtedLetter != node.letter) answerIsCorrect = false; 
+      }
+
+      //UPDATE TIME TAKEN TO ANSWER ON THIS GRID 
+      if(noEmptyTiles) item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
+
+      if(answerIsCorrect)
+      {
+        item.isAnswered = true;
+        item.timeTakenToAnswer = CrossWordTimer.instance.GetTimeTakenToAnswer();
+
+        //DESELECT TILES
         foreach (CrossWordObject node in item.itemNodes)
         {
-            if(node.inputtedLetter != node.letter)
-            {
-              answerIsCorrect = false;
-              break;
-            }    
+          node.isAnswered = true;
+          node.isHighlighted = false;
+          node.isSelected = false;    
         }
 
-        if(answerIsCorrect)
-        {
-          item.isAnswered = true;
-
-          //DESELECT TILES
-          foreach (CrossWordObject node in item.itemNodes)
-          {
-            node.isAnswered = true;
-            node.isHighlighted = false;
-            node.isSelected = false;    
-          }
-
-          onNodeSelected?.Invoke();
-          Debug.Log("ANSWER IS CORRECT");
-        }
+        onNodeSelected?.Invoke();
+        Debug.Log("ANSWER IS CORRECT");
       }
-        
     }
+        
   }
 
   private HashSet<CrossWordObject> GetNeighboursInDirection(int startX, int startY, Vector2Int direction)
