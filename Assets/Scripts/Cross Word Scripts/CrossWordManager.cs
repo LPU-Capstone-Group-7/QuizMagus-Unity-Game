@@ -15,6 +15,7 @@ public class CrossWordManager : MonoBehaviour
 
   public Action<CrossWordClue> OnActiveClueChangeAction;
   public Action onNodeSelected;
+  public Action onNodeAnswered;
   
   private void Awake()
   {
@@ -151,7 +152,7 @@ public class CrossWordManager : MonoBehaviour
         }
 
         onNodeSelected?.Invoke();
-        Debug.Log("ANSWER IS CORRECT");
+        onNodeAnswered?.Invoke();
       }
     }
         

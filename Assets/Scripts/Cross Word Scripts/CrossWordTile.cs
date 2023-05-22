@@ -12,6 +12,7 @@ public class CrossWordTile : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] TextMeshPro numberText;
     [SerializeField] TextMeshPro letterText;
+    [SerializeField] Color answeredFontColor;
     [SerializeField] TMP_InputField inputField;
 
     [Header("Sprite Components")]
@@ -24,6 +25,8 @@ public class CrossWordTile : MonoBehaviour
     void Start()
     {
         CrossWordManager.instance.onNodeSelected += HighlightCrossWordTile;
+        CrossWordManager.instance.onNodeAnswered += HandleAnsweredTile;
+
         inputField.onValueChanged.AddListener(HandleInputValueChanged);
         inputField.onValidateInput += RestrictSpecialChar;
     }
@@ -116,6 +119,15 @@ public class CrossWordTile : MonoBehaviour
         }
     }
 
+    public void HandleAnsweredTile()
+    {
+        //BREAK OUT IF NODE IS NOT ANSWERED A
+        if(!crossWordObject.isAnswered) return;
+
+        letterText.color = answeredFontColor;
+        CrossWordManager.instance.onNodeAnswered -= HandleAnsweredTile;
+    }
+    
     //EVENT HANDLERS
     private void HandleInputValueChanged(string newValue)
     {
