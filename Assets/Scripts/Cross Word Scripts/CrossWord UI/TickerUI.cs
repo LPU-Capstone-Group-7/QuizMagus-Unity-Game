@@ -33,6 +33,8 @@ public class TickerUI : MonoBehaviour
 
     public void CreateNewTicker(string question)
     {
+        if(currentItem != null && question == currentItem.GetMessage) return;
+
         //DESTROY CURRENT TICKER
         if(currentItem != null) Destroy(currentItem.gameObject);
 
