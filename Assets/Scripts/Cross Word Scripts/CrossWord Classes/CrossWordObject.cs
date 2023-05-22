@@ -14,7 +14,7 @@ public class CrossWordObject
    public Dictionary<Orientation, CrossWordClue> crossWordClues = new Dictionary<Orientation, CrossWordClue>();
    public bool isAnswered;
    public bool isHighlighted = false;
-   public bool isSelected = false;   
+   public bool isSelected = false;
 
    public CrossWordObject(Grid<CrossWordObject> grid, int x, int y)
    {
@@ -58,6 +58,7 @@ public struct CrossWordClue
    }
 }
 
+[System.Serializable]
 public class CrossWordGridItem
 {
    public int index;
