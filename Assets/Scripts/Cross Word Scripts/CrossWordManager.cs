@@ -13,6 +13,7 @@ public class CrossWordManager : MonoBehaviour
     private CrossWordClue activeClue;
     private bool canSelectTiles = true;
 
+    [Header("Event Handlers")]
     public Action<CrossWordClue> OnActiveClueChangeAction;
     public Action onNodeSelected;
     public Action onNodeAnswered;
