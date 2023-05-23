@@ -31,11 +31,14 @@ public class TriviaGameResultManager : MonoBehaviour
         #endif
     }
 
-    public void SetTriviaGameResults(TriviaData[] triviaDatas, string basedGrading){
+    public void SetTriviaGameResults(TriviaData[] triviaDatas, string basedGrading, float totalTimeTaken = 0){
 
-        float totalTimeTaken = 0;
-        for (int i = 0; i < triviaDatas.Length; i++){
-            totalTimeTaken += triviaDatas[i].timeToAnswer;
+        if(totalTimeTaken == 0)
+        {
+            for (int i = 0; i < triviaDatas.Length; i++)
+            {
+                totalTimeTaken += triviaDatas[i].timeToAnswer;
+            }
         }
 
         float totalGrade = ComputeTotalGrade(getTotalScore(triviaDatas), triviaDatas.Length,basedGrading);

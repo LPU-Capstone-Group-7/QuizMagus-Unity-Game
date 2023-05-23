@@ -38,7 +38,7 @@ public class CrossWordTimer : MonoBehaviour
             isTimeRunning = false;
         }
 
-        if(trackTimeTakenToAnswer)
+        if(trackTimeTakenToAnswer && isTimeRunning)
         {
             timeTakenToAnswer += Time.deltaTime;
         }

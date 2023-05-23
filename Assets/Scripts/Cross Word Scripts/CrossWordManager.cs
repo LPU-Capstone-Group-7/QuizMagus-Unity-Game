@@ -106,6 +106,7 @@ public class CrossWordManager : MonoBehaviour
         if(node.crossWordClues.Count == 0) return;
         
         node.isSelected = true;
+        StartCoroutine(CameraDragController.instance.FocusCameraOnThisPosition(gridManager.GetGrid().GetCenterWorldPosition(node.x, node.y)));
 
         if(selectedCrossWordObject == node && selectedCrossWordObject.crossWordClues.Count > 1) //RE-CLICKING THE SAME SELECTED NODE
         {
@@ -274,7 +275,7 @@ public class CrossWordManager : MonoBehaviour
         }
 
         //SEND RESULTS TO TRIVIA GAME RESULT MANAGER SCRIPT
-        TriviaGameResultManager.instance.SetTriviaGameResults(triviaDataList.ToArray(), crossWordSettings.basedGrading);
+        TriviaGameResultManager.instance.SetTriviaGameResults(triviaDataList.ToArray(), crossWordSettings.basedGrading, CrossWordTimer.instance.GetTimeTakenToAnswer());
         GameManager.instance.LoadLevel("TriviaGameCredits");
 
     }
