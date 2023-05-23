@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class CrossWordClueUIHandler : MonoBehaviour
+public class CrossWordUIHandler : MonoBehaviour
 {
-    public static CrossWordClueUIHandler instance;
+    public static CrossWordUIHandler instance;
     public CrossWordClue activeClue;
+
+    private bool isUIActive = false;
 
     [Header("UI Ticker")]
     [SerializeField] TickerUI tickerUI;
@@ -15,7 +15,14 @@ public class CrossWordClueUIHandler : MonoBehaviour
     [SerializeField] private Transform questionItemTextPrefab;
     [SerializeField] private Transform downListTransform;
     [SerializeField] private Transform acrossListTransform;
+
+    [Header("CrossWord End Button")]
+    [SerializeField] GameObject confirmationWindow;
+    bool confirmationWindowIsActive = false;
+
+    [Header("UI Animator")]
     [SerializeField] private Animator sliderAnimator;
+    [SerializeField] private Animator overlayAnimator;
     private Dictionary<int,TextMeshProUGUI> questionItemTextDictionary = new Dictionary<int, TextMeshProUGUI>();
 
     private void Awake() 
@@ -75,13 +82,67 @@ public class CrossWordClueUIHandler : MonoBehaviour
 
     public void ShowCLueListUI()
     {
+        if(isUIActive) return;
+
         sliderAnimator.Play("ClueList_Enter");
-        CrossWordManager.instance.SetCanSelectTiles(false);
+        ActivateUIOverlay();
     }
 
     public void HideClueListUI()
     {
         sliderAnimator.Play("ClueList_Exit");
+        DisableUIOverlay();
+    }
+
+
+    /*
+    * CROSSWORD END BUTTON FUNCTIONS
+    */
+
+    public void ClickEndButton()
+   {
+        if(!confirmationWindowIsActive) ShowConfirmationWindow();
+   }
+
+   private void ShowConfirmationWindow()
+   {
+        if(isUIActive) return;
+
+        confirmationWindowIsActive = true;
+        confirmationWindow.SetActive(true);
+        ActivateUIOverlay();
+   }
+
+    public void HideConfirmationWindow()
+    {
+        confirmationWindowIsActive = false;
+        confirmationWindow.SetActive(false);
+        DisableUIOverlay();
+    }
+
+    public void EndGame()
+    {
+        CrossWordManager.instance.CalculateCrossWordResults();
+        confirmationWindow.SetActive(false);
+    }
+
+    /*
+    * UI OVERLAY FUNCTIONS
+    */
+
+    private void ActivateUIOverlay()
+    {
+        overlayAnimator.Play("Overlay_Show");
+        isUIActive = true;
+        CrossWordManager.instance.SetCanSelectTiles(false);
+        CameraDragController.instance.EnableCameraDrag(false);
+    }
+
+    private void DisableUIOverlay()
+    {
+        overlayAnimator.Play("Overlay_Hide");
+        isUIActive = false;
+        CameraDragController.instance.EnableCameraDrag(true);
         CrossWordManager.instance.SetCanSelectTiles(true);
     }
 }

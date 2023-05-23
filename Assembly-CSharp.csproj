@@ -47,7 +47,7 @@
      <Compile Include="Assets\Scripts\Trivia Game Scripts\Trivia Game Classes\TriviaGameResults.cs" />
      <Compile Include="Assets\Scripts\Mini Game Scripts\Sequence Game\SequenceButton.cs" />
      <Compile Include="Assets\Scripts\Word Search Scripts\Word Search Classes\WordSearchSettings.cs" />
-     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWordClueUIHandler.cs" />
+     <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWordUIHandler.cs" />
      <Compile Include="Assets\Scripts\Grid Scripts\Grid.cs" />
      <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWord Classes\CrossWordObject.cs" />
      <Compile Include="Assets\Scripts\Cross Word Scripts\CrossWord UI\TickerItem.cs" />

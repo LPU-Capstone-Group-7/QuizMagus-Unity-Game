@@ -21,14 +21,21 @@ public class CrossWordTile : MonoBehaviour
     [SerializeField] Sprite[] crossWordTileHighlightSprites;
     Sprite baseSprite;
 
-    // Start is called before the first frame update
+    [Header("Animator Components")]
+    Animator animator;
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();    
+    }
+
     void Start()
     {
-        //ADVANCE CALL IF TILE IS ALREADY ANSWERED
-        HandleAnsweredTile();
-
         CrossWordManager.instance.onNodeSelected += HighlightCrossWordTile;
         CrossWordManager.instance.onNodeAnswered += HandleAnsweredTile;
+
+        //ADVANCE CALL IF TILE IS ALREADY ANSWERED
+        FunctionTimer.Create(HandleAnsweredTile, 2f);
 
         inputField.onValueChanged.AddListener(HandleInputValueChanged);
         inputField.onValidateInput += RestrictSpecialChar;
@@ -129,6 +136,7 @@ public class CrossWordTile : MonoBehaviour
 
         letterText.color = answeredFontColor;
         letterText.text = crossWordObject.letter.ToString();
+        animator.Play("CrossWordTile_Answered");
             
         CrossWordManager.instance.onNodeAnswered -= HandleAnsweredTile;
     }

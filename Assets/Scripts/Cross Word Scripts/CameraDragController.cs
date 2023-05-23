@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraDragController : MonoBehaviour
 {
+    public static CameraDragController instance;
     [SerializeField] private float cameraSpeed;
     private Vector3 dragOrigin;
     private bool isDragging;
@@ -11,6 +12,10 @@ public class CameraDragController : MonoBehaviour
     [SerializeField] private Vector2 defaultBoundingBoxSize;
     Vector3 bottomLeftCoords, upperRightCoords;
 
+    void Awake()
+    {
+        if(instance == null) instance = this;    
+    }
     void Start()
     {
         //FIND CINEMACHINE CAMERA GAME OBJECT AND SET THIS AS PARENT
@@ -87,6 +92,11 @@ public class CameraDragController : MonoBehaviour
             upperRightCoords =  new Vector3(centerPosition.x + boxSize.x + margin,  centerPosition.y + boxSize.y + margin);
         }
 
+    }
+
+    public void EnableCameraDrag(bool state)
+    {
+        canDrag = state;
     }
 
     private void OnDrawGizmos()

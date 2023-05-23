@@ -112,7 +112,7 @@ public class CrossWordGridManager : MonoBehaviour
         SpawnCrossWordLetters();
 
         //GENERATE LIST OF QUESTIONS
-        CrossWordClueUIHandler.instance.ListAllClues(crossWordGridItems);
+        CrossWordUIHandler.instance.ListAllClues(crossWordGridItems);
 
     }
 
