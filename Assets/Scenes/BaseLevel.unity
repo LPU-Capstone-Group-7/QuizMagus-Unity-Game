@@ -199,24 +199,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is a Windows password
-    cracker?","answer":"Rainbow Table","difficulty":"normal","id":"db6f202a-e747-47d6-9ac0-475af8ca28c3"},{"question":"What
-    is a type of security measure to reduce network attacks?","answer":"Firewall","difficulty":"normal","id":"0be3714b-94c9-437a-8f70-552630963f93"},{"question":"What
-    is the practice of exploring the security of computer systems and networks by
-    simulating an attack on them?","answer":"Penetration Testing","difficulty":"normal","id":"9613ff3d-4e6a-466d-a7ae-8ee9849cd66c"},{"question":"What
-    is the act of obtaining illegal access to a computer system or network?","answer":"Hacking","difficulty":"normal","id":"5ed11cff-2e3d-4804-8d4f-04d9d55c6537"},{"question":"How
-    are bad actors typically identified when cyber-attacks occur?","answer":"IP Address","difficulty":"normal","id":"f589b17b-11ac-4993-b37d-8a1c03cc9408"},{"question":"What
-    type of malware modifies the behaviour or functionality of computers without
-    consent from the user?","answer":"Trojan Horse","difficulty":"normal","id":"4d1820fa-cadd-45c8-b9d8-1471311f96cf"},{"question":"Which
-    type of exploit takes advantage of hardware vulnerabilities during booting processes
-    and malicious codes are injected into RAM memory?","answer":"BIOS Rootkit","difficulty":"normal","id":"2472db3f-a3c4-4ae6-b036-3283c95ffab4"},{"question":"What
-    do attackers install on WiFi networks as part of an attack called Evil Twin/Fake
-    Access Point","answer":"Rogue Access Point","difficulty":"normal","id":"b943a469-a6f9-4a7f-9721-6c20e7d819e4"},{"question":"What
-    technique involves redirecting traffic to malicious websites by corrupting DNS
-    requests ?","answer":"DNS Hijacking","difficulty":"normal","id":"91a11bce-dacd-465d-a02e-a1bc73b0ed54"},{"question":"How
-    do attackers try to obtain sensitive information such as passwords, credit card
-    numbers and other financial data via emails, websites or instant messages ?","answer":"Phishing","difficulty":"normal","id":"d9390af6-cc4a-4e54-bd1c-addebf7d1eaf"}],"allowBackwards":true,"allowDiagonals":true,"enableHints":true,"randomizeQuestion":true,"maxNumOfChoices":3,"basedGrading":"based
-    60","timeLimit":8}'
+  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the capital of Italy?","answer":"Rome","difficulty":"normal","id":"2f4fb70e-a30d-4fc2-ba8b-2e2c4ccdaacc"},{"question":"What
+    is the capital of France?","answer":"Paris","difficulty":"normal","id":"53226dce-34ca-4afc-8741-457bbdf1e815"},{"question":"What
+    is the capital of South Korea?","answer":"Seoul","difficulty":"normal","id":"2df7cc67-b90f-432d-b5bd-0b85b0523d73"},{"question":"What
+    is the capital of Japan?","answer":"Tokyo","difficulty":"normal","id":"a0366b02-b507-4ae6-b679-4f3a4efe95e3"},{"question":"What
+    is the capital of India?","answer":"New Delhi","difficulty":"normal","id":"b52ce80e-5c53-450c-aa60-818c4d24900b"},{"question":"What
+    is the capital of Brazil?","answer":"Brasilia","difficulty":"normal","id":"b1b431ff-f921-4cfb-90b3-db4979326bc7"},{"question":"What
+    is the capital of Spain?","answer":"Madrid","difficulty":"normal","id":"f31306c5-291c-4e53-b3cb-439dacd760a7"},{"question":"What
+    is the capital of Canada ?","answer":"Ottawa","difficulty":"normal","id":"b0f81d60-f428-4b49-b605-2479d4d5aee9"},{"question":"What
+    is he  Capital  Of  China ?","answer":"Beijing","difficulty":"normal","id":"179168f8-76bd-4d4c-ae9f-7c435f977e5d"},{"question":"What
+    is The Capital Of Australia ?","answer":"Canberra","difficulty":"normal","id":"b14c422b-1548-4e37-a46a-82468bdb960f"}],"allowBackwards":true,"allowDiagonals":true,"enableHints":true,"randomizeQuestion":false,"maxNumOfChoices":3,"basedGrading":"based
+    50","timeLimit":10}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
