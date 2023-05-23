@@ -201,23 +201,23 @@ MonoBehaviour:
   allowedAttempts: 0
   uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name given to
     the exclusive rights granted to inventors for their inventions under the patent
-    law?","answer":"Patent","difficulty":"normal","id":"221c2d19-ee05-45f8-8328-5b05253367bf"},{"question":"What
+    law?","answer":"Patent","difficulty":"normal","id":"0f9ee504-5f7b-4732-affe-dc0351b69df0"},{"question":"What
     is the legal term used to describe the unauthorized use of a trademark by another
-    party?","answer":"Infringement","difficulty":"normal","id":"d5a7bcc7-7a59-4fe5-a9d9-a536448fc62e"},{"question":"What
+    party?","answer":"Infringement","difficulty":"normal","id":"a80d51e2-954c-4a41-9cf8-affdb26c066b"},{"question":"What
     is the term used to describe the unauthorized reproduction or distribution of
-    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"9f7af92d-2ba8-478d-af77-612b670bfd1e"},{"question":"What
+    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"39d4046d-67b5-41bf-a12a-238883e63dab"},{"question":"What
     type of intellectual property protects confidential business information, such
-    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"fe59de65-1835-4fba-9de6-62fdbfc01a61"},{"question":"What
+    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"984240f4-2228-4584-888c-e0dd56616bd2"},{"question":"What
     is the name given to the legal protection given to creators of original works,
-    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"958a18b7-b55d-4203-a043-dd2af6516d67"},{"question":"How
-    long does a patent last in the United States?","answer":"twenty years","difficulty":"normal","id":"2c66292c-05b5-4a51-b70b-5cdf6a5aa980"},{"question":"What
-    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"35f03d94-7991-4d9d-b3fe-5a542090f34b"},{"question":"What
+    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"a1eb0ca0-cc69-4991-afe2-53b80bfb9ead"},{"question":"How
+    long does a patent last in the United States?","answer":"20 years","difficulty":"normal","id":"0ce47f7c-6722-4998-b619-327dd7617dc1"},{"question":"What
+    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"718826a5-cd2c-42b7-98d1-3ff1862f282c"},{"question":"What
     is the term used to describe the unauthorized use of someone else''s work and
-    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"a28b4e3a-2fcf-4541-ae59-1837f7a27272"},{"question":"What
-    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"24131f69-a375-4c5d-af44-1be07b7416bb"},{"question":"What
+    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"d6ffc6e1-ca8e-4793-bba1-01c5e1836393"},{"question":"What
+    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"a44c8646-7bd0-49a6-90c4-32b4b03f20bd"},{"question":"What
     is the name of the international agreement that sets out minimum standards for
-    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"9c340863-16c0-4568-b1b9-47502af77123"}],"randomizeQuestions":true,"basedGrading":"based
-    60","timeLimit":20,"numOfLettersToShow":5,"showCorrectAnswer":true}'
+    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"49d839c1-7a02-4e2d-beaf-fde39578cbbe"}],"timePerQuestions":20,"enableHints":true,"randomizeQuestions":true,"basedGrading":"based
+    50"}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
@@ -347,7 +347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1253207542
 Transform:
   m_ObjectHideFlags: 0
@@ -432,7 +432,7 @@ GameObject:
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1310484416
 Transform:
   m_ObjectHideFlags: 0
