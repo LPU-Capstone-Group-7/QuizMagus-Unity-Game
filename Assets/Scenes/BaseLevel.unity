@@ -199,40 +199,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: "{\n  \"triviaQuestions\": [\n    {\n      \"question\": \"What
-    is a Windows password cracker?\",\n      \"answer\": \"Rainbow Table\",\n     
-    \"difficulty\": \"normal\",\n      \"id\": \"536167da-7628-4b33-8820-5d07c8047fc5\"\n   
-    },\n    {\n      \"question\": \"What is a type of security measure to reduce
-    network attacks?\",\n      \"answer\": \"Firewall\",\n      \"difficulty\": \"normal\",\n     
-    \"id\": \"c477fd8f-fe6f-45b9-8958-4cbf3fa657dd\"\n    },\n    {\n      \"question\":
-    \"What is the practice of exploring the security of computer systems and networks
-    by simulating an attack on them?\",\n      \"answer\": \"Penetration Testing\",\n     
-    \"difficulty\": \"normal\",\n      \"id\": \"d4398ca6-710a-4f55-b2ce-0abc46f68135\"\n   
-    },\n    {\n      \"question\": \"What is the act of obtaining illegal access
-    to a computer system or network?\",\n      \"answer\": \"Hacking\",\n      \"difficulty\":
-    \"normal\",\n      \"id\": \"3bcda28f-aa70-4571-b645-009c930fe489\"\n    },\n   
-    {\n      \"question\": \"How are bad actors typically identified when cyber-attacks
-    occur?\",\n      \"answer\": \"IP Address\",\n      \"difficulty\": \"normal\",\n     
-    \"id\": \"51dfdaf1-2071-4f55-bc7a-1dd4e97819c9\"\n    },\n    {\n      \"question\":
-    \"What type of malware modifies the behaviour or functionality of computers without
-    consent from the user?\",\n      \"answer\": \"Trojan Horse\",\n      \"difficulty\":
-    \"normal\",\n      \"id\": \"b1c97ef9-a28f-4c5a-a849-0e19ca8ca701\"\n    },\n   
-    {\n      \"question\": \"Which type of exploit takes advantage of hardware vulnerabilities
-    during booting processes and malicious codes are injected into RAM memory?\",\n     
-    \"answer\": \"BIOS Rootkit\",\n      \"difficulty\": \"normal\",\n      \"id\":
-    \"95ec0a20-b863-4f81-b427-eacb2a3f0608\"\n    },\n    {\n      \"question\":
-    \"What do attackers install on WiFi networks as part of an attack called Evil
-    Twin/Fake Access Point\",\n      \"answer\": \"Rogue Access Point\",\n      \"difficulty\":
-    \"normal\",\n      \"id\": \"3baab821-2c04-4194-b8c3-d0d9d460f1be\"\n    },\n   
-    {\n      \"question\": \"What technique involves redirecting traffic to malicious
-    websites by corrupting DNS requests ?\",\n      \"answer\": \"DNS Hijacking\",\n     
-    \"difficulty\": \"normal\",\n      \"id\": \"1905fd02-edd8-4273-ab8f-732c71ffebe3\"\n   
-    },\n    {\n      \"question\": \"How do attackers try to obtain sensitive information
-    such as passwords, credit card numbers and other financial data via emails, websites
-    or instant messages ?\",\n      \"answer\": \"Phishing\",\n      \"difficulty\":
-    \"normal\",\n      \"id\": \"4726c6c3-c21d-4a45-9eb7-3c1f34c25577\"\n    }\n 
-    ],\n  \"randomizeQuestions\": true,\n  \"basedGrading\": \"based 60\",\n  \"timeLimit\":
-    20,\n  \"numOfLettersToShow\": 5,\n  \"showCorrectAnswer\": true\n}"
+  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name given to
+    the exclusive rights granted to inventors for their inventions under the patent
+    law?","answer":"Patent","difficulty":"normal","id":"221c2d19-ee05-45f8-8328-5b05253367bf"},{"question":"What
+    is the legal term used to describe the unauthorized use of a trademark by another
+    party?","answer":"Infringement","difficulty":"normal","id":"d5a7bcc7-7a59-4fe5-a9d9-a536448fc62e"},{"question":"What
+    is the term used to describe the unauthorized reproduction or distribution of
+    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"9f7af92d-2ba8-478d-af77-612b670bfd1e"},{"question":"What
+    type of intellectual property protects confidential business information, such
+    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"fe59de65-1835-4fba-9de6-62fdbfc01a61"},{"question":"What
+    is the name given to the legal protection given to creators of original works,
+    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"958a18b7-b55d-4203-a043-dd2af6516d67"},{"question":"How
+    long does a patent last in the United States?","answer":"twenty years","difficulty":"normal","id":"2c66292c-05b5-4a51-b70b-5cdf6a5aa980"},{"question":"What
+    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"35f03d94-7991-4d9d-b3fe-5a542090f34b"},{"question":"What
+    is the term used to describe the unauthorized use of someone else''s work and
+    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"a28b4e3a-2fcf-4541-ae59-1837f7a27272"},{"question":"What
+    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"24131f69-a375-4c5d-af44-1be07b7416bb"},{"question":"What
+    is the name of the international agreement that sets out minimum standards for
+    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"9c340863-16c0-4568-b1b9-47502af77123"}],"randomizeQuestions":true,"basedGrading":"based
+    60","timeLimit":20,"numOfLettersToShow":5,"showCorrectAnswer":true}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
@@ -648,9 +633,9 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Tiles Placed
-    clip: {fileID: 8300000, guid: b2e6976a20240ae459c0d7032c8792cf, type: 3}
-    volume: 0.8
-    pitch: 0.3
+    clip: {fileID: 8300000, guid: fa11e2964f099d746b52ff16cc530739, type: 3}
+    volume: 1
+    pitch: 1.5
     loop: 0
     source: {fileID: 0}
 --- !u!1 &1721324624

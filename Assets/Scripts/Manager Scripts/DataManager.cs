@@ -37,8 +37,9 @@ public class DataManager : MonoBehaviour
 
         switch (unityReactGame.gameType)
         {
-            case "TriviaGame":  GameManager.instance.LoadLevel("TriviaGame"); break;
-            case "WordSearch":  GameManager.instance.LoadLevel("WordSearch"); break;
+            case "TriviaGame":  GameManager.instance.LoadLevel("TriviaGame");   break;
+            case "WordSearch":  GameManager.instance.LoadLevel("WordSearch");   break;
+            case "CrossWord":   GameManager.instance.LoadLevel("CrossWord");    break;
             default: break;
         }
     }

@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WordSearch.unity
     guid: 4aa4e1bed3b28924fb045727855c4fff
+  - enabled: 1
+    path: Assets/Scenes/CrossWord.unity
+    guid: 59a8985a92f3faf44be9441e075a2627
   m_configObjects: {}
