@@ -127,7 +127,7 @@ public class MiniGameManager : MonoBehaviour
 
     public void IncreasePlayingTime()
     {
-        float timeToIncrease = triviaGameTimer.GetTimePerQuestion() * .25f;
+        float timeToIncrease = triviaGameTimer.GetTimePerQuestion();
         GameObject.FindObjectOfType<TriviaGameTimer>().IncreaseTimerValue(timeToIncrease);
     }
 }

@@ -46,7 +46,7 @@ public class TriviaGameTimer : MonoBehaviour
 
     public void IncreaseTimerValue(float timeToIncrease)
     {
-        currentTime += timeToIncrease;
+        currentTime = Mathf.Min(timePerQuestion, currentTime + timeToIncrease);
     }
 
     public float GetCurrentTimePercentage()

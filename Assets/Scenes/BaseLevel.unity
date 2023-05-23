@@ -199,25 +199,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name given to
-    the exclusive rights granted to inventors for their inventions under the patent
-    law?","answer":"Patent","difficulty":"normal","id":"0f9ee504-5f7b-4732-affe-dc0351b69df0"},{"question":"What
-    is the legal term used to describe the unauthorized use of a trademark by another
-    party?","answer":"Infringement","difficulty":"normal","id":"a80d51e2-954c-4a41-9cf8-affdb26c066b"},{"question":"What
-    is the term used to describe the unauthorized reproduction or distribution of
-    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"39d4046d-67b5-41bf-a12a-238883e63dab"},{"question":"What
-    type of intellectual property protects confidential business information, such
-    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"984240f4-2228-4584-888c-e0dd56616bd2"},{"question":"What
-    is the name given to the legal protection given to creators of original works,
-    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"a1eb0ca0-cc69-4991-afe2-53b80bfb9ead"},{"question":"How
-    long does a patent last in the United States?","answer":"20 years","difficulty":"normal","id":"0ce47f7c-6722-4998-b619-327dd7617dc1"},{"question":"What
-    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"718826a5-cd2c-42b7-98d1-3ff1862f282c"},{"question":"What
-    is the term used to describe the unauthorized use of someone else''s work and
-    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"d6ffc6e1-ca8e-4793-bba1-01c5e1836393"},{"question":"What
-    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"a44c8646-7bd0-49a6-90c4-32b4b03f20bd"},{"question":"What
-    is the name of the international agreement that sets out minimum standards for
-    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"49d839c1-7a02-4e2d-beaf-fde39578cbbe"}],"timePerQuestions":20,"enableHints":true,"randomizeQuestions":true,"basedGrading":"based
-    50"}'
+  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is a Windows password
+    cracker?","answer":"Rainbow Table","difficulty":"normal","id":"db6f202a-e747-47d6-9ac0-475af8ca28c3"},{"question":"What
+    is a type of security measure to reduce network attacks?","answer":"Firewall","difficulty":"normal","id":"0be3714b-94c9-437a-8f70-552630963f93"},{"question":"What
+    is the practice of exploring the security of computer systems and networks by
+    simulating an attack on them?","answer":"Penetration Testing","difficulty":"normal","id":"9613ff3d-4e6a-466d-a7ae-8ee9849cd66c"},{"question":"What
+    is the act of obtaining illegal access to a computer system or network?","answer":"Hacking","difficulty":"normal","id":"5ed11cff-2e3d-4804-8d4f-04d9d55c6537"},{"question":"How
+    are bad actors typically identified when cyber-attacks occur?","answer":"IP Address","difficulty":"normal","id":"f589b17b-11ac-4993-b37d-8a1c03cc9408"},{"question":"What
+    type of malware modifies the behaviour or functionality of computers without
+    consent from the user?","answer":"Trojan Horse","difficulty":"normal","id":"4d1820fa-cadd-45c8-b9d8-1471311f96cf"},{"question":"Which
+    type of exploit takes advantage of hardware vulnerabilities during booting processes
+    and malicious codes are injected into RAM memory?","answer":"BIOS Rootkit","difficulty":"normal","id":"2472db3f-a3c4-4ae6-b036-3283c95ffab4"},{"question":"What
+    do attackers install on WiFi networks as part of an attack called Evil Twin/Fake
+    Access Point","answer":"Rogue Access Point","difficulty":"normal","id":"b943a469-a6f9-4a7f-9721-6c20e7d819e4"},{"question":"What
+    technique involves redirecting traffic to malicious websites by corrupting DNS
+    requests ?","answer":"DNS Hijacking","difficulty":"normal","id":"91a11bce-dacd-465d-a02e-a1bc73b0ed54"},{"question":"How
+    do attackers try to obtain sensitive information such as passwords, credit card
+    numbers and other financial data via emails, websites or instant messages ?","answer":"Phishing","difficulty":"normal","id":"d9390af6-cc4a-4e54-bd1c-addebf7d1eaf"}],"allowBackwards":true,"allowDiagonals":true,"enableHints":true,"randomizeQuestion":true,"maxNumOfChoices":3,"basedGrading":"based
+    60","timeLimit":8}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
@@ -347,7 +346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1253207542
 Transform:
   m_ObjectHideFlags: 0
@@ -432,7 +431,7 @@ GameObject:
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1310484416
 Transform:
   m_ObjectHideFlags: 0
