@@ -25,6 +25,7 @@ public class WordSearchGridManager : MonoBehaviour
 
     [Header("Word Search Grid Action")]
     public Action onGridRefresh;
+    public Action onGridGenerates;
     private void Awake()
     {
         instance = this;
@@ -310,6 +311,7 @@ public class WordSearchGridManager : MonoBehaviour
     public void GenerateGrid(int width, int height, float cellSize, Vector3 position)
     {
         grid = new Grid<LetterGridObject>(width, height, cellSize, position, (Grid<LetterGridObject> g, int x, int y) => new LetterGridObject(g, x, y));
+        onGridGenerates?.Invoke();
     }
 
     public LetterGridObject GetLetterGridObject(int x, int y)

@@ -16,10 +16,10 @@ public class WordSearchLineController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateNewActiveLineTransform();
-
         WordSearchGridManager.instance.onGridRefresh += RemoveAllLineTransforms;
         WordSearchManager.instance.onQuestionLoads += () => {if(lastAnswerIsCorrect) CreateNewActiveLineTransform();};
+        WordSearchGridManager.instance.onGridGenerates += CreateNewActiveLineTransform;
+    
     }
 
     // Update is called once per frame
@@ -88,6 +88,12 @@ public class WordSearchLineController : MonoBehaviour
     {
         //INSTANTIATE LINE TRANSFORM FOR LINE CONTROLLER
         activeLineTransform = Instantiate(lineTransformPrefab, transform.position, Quaternion.identity);
+
+        //CHANGE WIDTH OF LINE TRANSFORM
+        float lineWidth = Mathf.Min(1, WordSearchGridManager.instance.GetGrid().GetCellSize());
+        activeLineTransform.GetComponent<LineRenderer>().startWidth = lineWidth;
+
+
         lineTransformList.Add(activeLineTransform);
         activeLineTransform.gameObject.SetActive(false);
     }
