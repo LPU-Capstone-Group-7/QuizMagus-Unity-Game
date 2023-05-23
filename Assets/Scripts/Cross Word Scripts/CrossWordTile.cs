@@ -96,11 +96,13 @@ public class CrossWordTile : MonoBehaviour
     private void OnMouseDown()
     {
         //CAN ONLY SELECT TILES IF THERE ARE NO UI ELEMENT ACTIVE AND THE TILE IS NOT YET ANSWERED
-        if(CrossWordManager.instance.CanSelectTiles() && !crossWordObject.isAnswered)
+        if(CrossWordManager.instance.CanSelectTiles() && !crossWordObject.isAnswered && (!crossWordObject.isSelected || crossWordObject.crossWordClues.Count > 1))
         {
             //GET NEIGHBOUR TILES AND HIGHLIGHT IT
             inputField.interactable = true;
             CrossWordManager.instance.SelectCrossWordObject(crossWordObject);
+
+            if(!AudioManager.instance.isPlaying("Bubble Pop")) AudioManager.instance.Play("Bubble Pop");
         }
 
     }
@@ -137,6 +139,9 @@ public class CrossWordTile : MonoBehaviour
         letterText.color = answeredFontColor;
         letterText.text = crossWordObject.letter.ToString();
         animator.Play("CrossWordTile_Answered");
+
+        //SFX
+        if(!AudioManager.instance.isPlaying("Tiles Placed")) AudioManager.instance.Play("Tiles Placed");
             
         CrossWordManager.instance.onNodeAnswered -= HandleAnsweredTile;
     }

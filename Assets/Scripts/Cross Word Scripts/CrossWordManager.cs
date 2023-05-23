@@ -123,7 +123,6 @@ public class CrossWordManager : MonoBehaviour
             {
                 activeClue = node.crossWordClues[Orientation.down];
             }
-
         }
 
         //RESET HIGHLIGHTED AND SELECTED ON ALL OTHER NODES

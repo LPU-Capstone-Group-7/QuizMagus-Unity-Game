@@ -85,12 +85,14 @@ public class CrossWordUIHandler : MonoBehaviour
         if(isUIActive) return;
 
         sliderAnimator.Play("ClueList_Enter");
+        AudioManager.instance.Play("Swoosh");
         ActivateUIOverlay();
     }
 
     public void HideClueListUI()
     {
         sliderAnimator.Play("ClueList_Exit");
+        AudioManager.instance.Play("Swoosh");
         DisableUIOverlay();
     }
 
