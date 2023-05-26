@@ -15,6 +15,7 @@ public class CameraDragController : MonoBehaviour
 
     [Header("Camera Bounding Box")]
     [SerializeField] private Vector2 defaultBoundingBoxSize;
+    [SerializeField] private float margin;
     Vector3 bottomLeftCoords, upperRightCoords;
 
     void Awake()
@@ -66,7 +67,7 @@ public class CameraDragController : MonoBehaviour
         }
     }
     
-    public void SetCameraBoundingBox(Vector2 boxSize, Vector3 centerPosition, float margin = 0f)
+    public void SetCameraBoundingBox(Vector2 boxSize, Vector3 centerPosition)
     {
         //MAKES SURE THAT THE NEW BOUNDING BOX IS NOT SMALLER THAN THE DEFAULT BOUNDING BOX
         if(boxSize.x >= defaultBoundingBoxSize.x || boxSize.y >= defaultBoundingBoxSize.y)
@@ -143,10 +144,10 @@ public class CameraDragController : MonoBehaviour
         canDrag = state;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        //Vector3 bottomLeftCoords = new Vector3(transform.position.x - defaultBoundingBoxSize.x, transform.position.y - defaultBoundingBoxSize.y, transform.position.z);
-        //Vector3 upperRightCoords =  new Vector3(transform.position.x + defaultBoundingBoxSize.x,  transform.position.y + defaultBoundingBoxSize.y);
+        Vector3 bottomLeftCoords = new Vector3(transform.position.x - defaultBoundingBoxSize.x, transform.position.y - defaultBoundingBoxSize.y, transform.position.z);
+        Vector3 upperRightCoords =  new Vector3(transform.position.x + defaultBoundingBoxSize.x,  transform.position.y + defaultBoundingBoxSize.y);
 
         Gizmos.color = Color.green;
         //GIZMOS SHIT

@@ -63,7 +63,7 @@ public class CrossWordGridManager : MonoBehaviour
 
         //CENTER CROSSWORD BOARD AND SET CAMERA BOUNDING BOX DEPENDING ON THE SIZE OF THE GRID
         Vector3 boardPosition = GetBoardPosition(width, height, cellSize, position);
-        GameObject.FindObjectOfType<CameraDragController>().SetCameraBoundingBox(new Vector2(width * cellSize, height * cellSize) /2, position, 1.5f);
+        GameObject.FindObjectOfType<CameraDragController>().SetCameraBoundingBox(new Vector2(width * cellSize, height * cellSize) /2, position);
 
         grid = new Grid<CrossWordObject>(width, height, cellSize, boardPosition, (Grid<CrossWordObject> g, int x, int y) => new CrossWordObject(g, x, y));
 

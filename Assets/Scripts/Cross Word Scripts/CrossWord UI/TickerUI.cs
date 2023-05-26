@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TickerUI : MonoBehaviour
 {
-    [Range(1f, 10f)] public float itemDuration = 3f;
+    public float itemSpeed = 3f;
     private float width;
-    private float pixelsPerSecond;
     public Transform tickerItemPrefab;
     private TickerItem currentItem;
     
@@ -14,7 +13,6 @@ public class TickerUI : MonoBehaviour
     void Start()
     {
         width = GetComponent<RectTransform>().rect.width;
-        pixelsPerSecond = width / itemDuration;
     }
 
     // Update is called once per frame
@@ -43,7 +41,7 @@ public class TickerUI : MonoBehaviour
         width = GetComponent<RectTransform>().rect.width;
 
         currentItem = ticker.gameObject.GetComponent<TickerItem>();
-        currentItem.Initialize(width, pixelsPerSecond, question);
+        currentItem.Initialize(width, itemSpeed, question);
 
         //CHECK TICKER WIDTH IF ITS GREATER THAN THE CANVAS SIZE OR NOT
     }

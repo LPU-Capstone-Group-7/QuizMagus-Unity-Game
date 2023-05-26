@@ -6,7 +6,7 @@ using TMPro;
 public class TickerItem : MonoBehaviour
 {
     float tickerWidth;
-    float pixelsPerSecond;
+    float itemSpeed;
     string message;
     RectTransform rt;
     bool canMove = false;
@@ -15,15 +15,15 @@ public class TickerItem : MonoBehaviour
     public float GetWidth{get {return rt.rect.width; }}
     public string GetMessage{get {return message;}}
 
-    public void Initialize(float tickerWidth, float pixelsPerSecond, string message)
+    public void Initialize(float tickerWidth, float itemSpeed, string message)
     {
         rt = GetComponent<RectTransform>();
-        GetComponent<TextMeshProUGUI>().text = message + "      ";
+        GetComponent<TextMeshProUGUI>().text = message;
 
         this.tickerWidth = tickerWidth;
-        this.pixelsPerSecond = pixelsPerSecond;
+        this.itemSpeed = itemSpeed;
         this.message = message;
-        this.canMove = tickerWidth < GetComponent<TextMeshProUGUI>().preferredWidth;
+        this.canMove = tickerWidth < GetComponentInParent<RectTransform>().rect.width;
 
         rt.anchoredPosition = canMove? new Vector2(tickerWidth, 0) : Vector2.zero;
 
@@ -34,7 +34,7 @@ public class TickerItem : MonoBehaviour
     {
         if(canMove)
         {
-            rt.position += Vector3.left * pixelsPerSecond * Time.deltaTime;
+            rt.position += Vector3.left * itemSpeed;
         }
         
         if(GetXPosition <= 0 - tickerWidth - GetWidth)
