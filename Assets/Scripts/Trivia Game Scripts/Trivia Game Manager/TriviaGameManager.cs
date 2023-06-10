@@ -81,7 +81,7 @@ public class TriviaGameManager : MonoBehaviour
 
         if(!triviaGameTimer.IsTimerUIPaused()){currentTimePerQuestion += Time.deltaTime;}
 
-        if(Input.GetKeyDown(KeyCode.Return) && inputField.text != "")
+        if(Input.GetKeyDown(KeyCode.Return) && inputField.text != "" && !triviaGameTimer.IsTimerUIPaused())
         {
 
             if(IsAnswerCorrect(inputField.text)) //DO THIS WHEN ANSWER IS CORRECT

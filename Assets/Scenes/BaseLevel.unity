@@ -434,25 +434,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name given to
-    the exclusive rights granted to inventors for their inventions under the patent
-    law?","answer":"Patent","difficulty":"normal","id":"221c2d19-ee05-45f8-8328-5b05253367bf"},{"question":"What
-    is the legal term used to describe the unauthorized use of a trademark by another
-    party?","answer":"Infringement","difficulty":"normal","id":"d5a7bcc7-7a59-4fe5-a9d9-a536448fc62e"},{"question":"What
-    is the term used to describe the unauthorized reproduction or distribution of
-    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"9f7af92d-2ba8-478d-af77-612b670bfd1e"},{"question":"What
-    type of intellectual property protects confidential business information, such
-    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"fe59de65-1835-4fba-9de6-62fdbfc01a61"},{"question":"What
-    is the name given to the legal protection given to creators of original works,
-    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"958a18b7-b55d-4203-a043-dd2af6516d67"},{"question":"How
-    long does a patent last in the United States?","answer":"twenty years","difficulty":"normal","id":"2c66292c-05b5-4a51-b70b-5cdf6a5aa980"},{"question":"What
-    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"35f03d94-7991-4d9d-b3fe-5a542090f34b"},{"question":"What
-    is the term used to describe the unauthorized use of someone else''s work and
-    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"a28b4e3a-2fcf-4541-ae59-1837f7a27272"},{"question":"What
-    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"24131f69-a375-4c5d-af44-1be07b7416bb"},{"question":"What
-    is the name of the international agreement that sets out minimum standards for
-    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"9c340863-16c0-4568-b1b9-47502af77123"}],"randomizeQuestions":true,"basedGrading":"based
-    60","timeLimit":20,"numOfLettersToShow":5,"showCorrectAnswer":true}'
+  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name for a value
+    that doesn''t change throughout the program?","answer":"Constant","difficulty":"easy","id":"f2328ef8-7ec8-4a61-8f2d-f785062d90e7"},{"question":"What
+    is the name for a set of instructions that are executed in particular order","answer":"Algorithm","difficulty":"normal","id":"3d527d75-35f1-4227-a273-fb74e1a54131"},{"question":"Name
+    for a block of code that can be reused multiple times in a prog","answer":"Function","difficulty":"normal","id":"2f7563e7-0948-4321-a16a-a29bec23c2d1"},{"question":"What
+    is the name for a language that is easy for humans to understand and needs to
+    be translated in","answer":"High level language","difficulty":"hard","id":"4bb545f1-e27f-4c43-a4c4-5cfc91d384f6"},{"question":"What
+    is the name for the smallest unit of programming that can be executed?","answer":"Statement","difficulty":"easy","id":"971f29fc-c482-40e5-a69b-abbaaa0ebdaa"},{"question":"Name
+    for the data structure that stores a collection of values that can be accessed
+    by a key?","answer":"Dictionary","difficulty":"hard","id":"e7f8af0e-f091-4ba1-ad03-d2fff85c4bfb"},{"question":"What
+    is the name for a loop that executes a block of code as long as a certain condition
+    is true?","answer":"While loop","difficulty":"normal","id":"f2e49674-0dcc-474a-89f4-689b4011d7dc"},{"question":"What
+    is the name for the process of finding and fixing errors in a program?","answer":"Debugging","difficulty":"easy","id":"983bfe25-79c5-413a-bb4f-b9595f2453dd"},{"question":"What
+    is the name for the code that is executed when an error occurs in a program?","answer":"Exception
+    handling","difficulty":"normal","id":"1dc6bb15-2876-430a-8dd6-aa8cb792e8cf"},{"question":"Name
+    for a type of programming that uses a graphical interface to create programs
+    by dra","answer":"Visual programming","difficulty":"hard","id":"5665724b-251e-4b9b-a132-5c41a4369645"}],"timePerQuestions":10,"enableHints":true,"randomizeQuestions":true,"basedGrading":"based
+    50"}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3

@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class SongPrompt : MonoBehaviour
 {
     public static SongPrompt instance;
@@ -9,9 +9,10 @@ public class SongPrompt : MonoBehaviour
     bool isPlayingMusic = false;
     
     [Header("Song Prompt UI")]
-    [SerializeField] Animator songPromptAnimator;
-    [SerializeField] TextMeshProUGUI songTitleText;
-    [SerializeField] TextMeshProUGUI songAuthorText;
+    Transform songPromptUI;
+    Animator songPromptAnimator;
+    TextMeshProUGUI songTitleText;
+    TextMeshProUGUI songAuthorText;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class SongPrompt : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    
+
     void Update()
     {
         if(!isPlayingMusic && songList.Length > 1) PlayRandomBackgroundMusic();
@@ -34,6 +37,15 @@ public class SongPrompt : MonoBehaviour
 
     public void PlayRandomBackgroundMusic()
     {
+        if(songPromptUI == null)
+        {
+            songPromptUI = GameObject.Find("Music Credits").transform;
+            
+            songPromptAnimator = songPromptUI.GetComponent<Animator>();
+            songTitleText = songPromptUI.Find("Title Text").GetComponent<TextMeshProUGUI>();
+            songAuthorText = songPromptUI.Find("Author Text").GetComponent<TextMeshProUGUI>();
+        }
+
         isPlayingMusic = true;
         SongItem newSong;
 
