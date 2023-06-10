@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    string currentPlayingMusic = "";
-    bool isPlayingMusic = false;
+
     private void Awake()
     {
         if(instance == null)
@@ -30,41 +29,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync("BaseLevel", LoadSceneMode.Additive);
         }
 
-    }
-
-    void Update()
-    {
-        if(!isPlayingMusic) PlayRandomBackgroundMusic();
-        if(isPlayingMusic && !AudioManager.instance.isPlaying(currentPlayingMusic)) isPlayingMusic = false;
-    }
-
-    public void PlayRandomBackgroundMusic()
-    {
-        Debug.Log("Playing random ass music");
-        isPlayingMusic = true;
-        string backgroundMusic = "";
-
-        System.Random random = new System.Random();
-        int randomIndex = random.Next(0,3);
-
-        //KEEP PICKING NEW SONG THAT IS DIFFERENT FROM THE PREVIOUS ONE
-        do
-        {
-            switch (randomIndex)
-            {
-                case 0:     backgroundMusic = "two_left_socks";
-                    break;
-                case 1:     backgroundMusic = "somewhere_in_the_elevator";
-                    break;
-                default:    backgroundMusic = "bossa_nova";
-                    break;
-            }
-        }
-        while(backgroundMusic == "" && currentPlayingMusic == backgroundMusic);
-        Debug.Log(backgroundMusic);
-
-        currentPlayingMusic = backgroundMusic;
-        AudioManager.instance.Play(backgroundMusic);
     }
 
     public void LoadLevel(string sceneName)
