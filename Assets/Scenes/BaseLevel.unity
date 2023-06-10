@@ -199,17 +199,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the capital of Italy?","answer":"Rome","difficulty":"normal","id":"2f4fb70e-a30d-4fc2-ba8b-2e2c4ccdaacc"},{"question":"What
-    is the capital of France?","answer":"Paris","difficulty":"normal","id":"53226dce-34ca-4afc-8741-457bbdf1e815"},{"question":"What
-    is the capital of South Korea?","answer":"Seoul","difficulty":"normal","id":"2df7cc67-b90f-432d-b5bd-0b85b0523d73"},{"question":"What
-    is the capital of Japan?","answer":"Tokyo","difficulty":"normal","id":"a0366b02-b507-4ae6-b679-4f3a4efe95e3"},{"question":"What
-    is the capital of India?","answer":"New Delhi","difficulty":"normal","id":"b52ce80e-5c53-450c-aa60-818c4d24900b"},{"question":"What
-    is the capital of Brazil?","answer":"Brasilia","difficulty":"normal","id":"b1b431ff-f921-4cfb-90b3-db4979326bc7"},{"question":"What
-    is the capital of Spain?","answer":"Madrid","difficulty":"normal","id":"f31306c5-291c-4e53-b3cb-439dacd760a7"},{"question":"What
-    is the capital of Canada ?","answer":"Ottawa","difficulty":"normal","id":"b0f81d60-f428-4b49-b605-2479d4d5aee9"},{"question":"What
-    is he  Capital  Of  China ?","answer":"Beijing","difficulty":"normal","id":"179168f8-76bd-4d4c-ae9f-7c435f977e5d"},{"question":"What
-    is The Capital Of Australia ?","answer":"Canberra","difficulty":"normal","id":"b14c422b-1548-4e37-a46a-82468bdb960f"}],"allowBackwards":true,"allowDiagonals":true,"enableHints":true,"randomizeQuestion":false,"maxNumOfChoices":3,"basedGrading":"based
-    50","timeLimit":10}'
+  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name given to
+    the exclusive rights granted to inventors for their inventions under the patent
+    law?","answer":"Patent","difficulty":"normal","id":"221c2d19-ee05-45f8-8328-5b05253367bf"},{"question":"What
+    is the legal term used to describe the unauthorized use of a trademark by another
+    party?","answer":"Infringement","difficulty":"normal","id":"d5a7bcc7-7a59-4fe5-a9d9-a536448fc62e"},{"question":"What
+    is the term used to describe the unauthorized reproduction or distribution of
+    copyrighted material?","answer":"Piracy","difficulty":"easy","id":"9f7af92d-2ba8-478d-af77-612b670bfd1e"},{"question":"What
+    type of intellectual property protects confidential business information, such
+    as a secret recipe or formula?","answer":"Trade Secret","difficulty":"normal","id":"fe59de65-1835-4fba-9de6-62fdbfc01a61"},{"question":"What
+    is the name given to the legal protection given to creators of original works,
+    such as books, music, and artwork?","answer":"Copyright","difficulty":"easy","id":"958a18b7-b55d-4203-a043-dd2af6516d67"},{"question":"How
+    long does a patent last in the United States?","answer":"twenty years","difficulty":"normal","id":"2c66292c-05b5-4a51-b70b-5cdf6a5aa980"},{"question":"What
+    is the purpose of trademark?","answer":"Distinguish products","difficulty":"easy","id":"35f03d94-7991-4d9d-b3fe-5a542090f34b"},{"question":"What
+    is the term used to describe the unauthorized use of someone else''s work and
+    presenting it as one''s own?","answer":"Plagiarism","difficulty":"normal","id":"a28b4e3a-2fcf-4541-ae59-1837f7a27272"},{"question":"What
+    is the term for the unauthorized use of a trade secret by a former employee?","answer":"Misappropriation","difficulty":"normal","id":"24131f69-a375-4c5d-af44-1be07b7416bb"},{"question":"What
+    is the name of the international agreement that sets out minimum standards for
+    the protection and enforcement of intellectual property rights?","answer":"TRIPS","difficulty":"hard","id":"9c340863-16c0-4568-b1b9-47502af77123"}],"randomizeQuestions":true,"basedGrading":"based
+    60","timeLimit":20,"numOfLettersToShow":5,"showCorrectAnswer":true}'
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
@@ -596,19 +604,19 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: somewhere_in_the_elevator
     clip: {fileID: 8300000, guid: 8b785533337c0f844b495ce2563e6293, type: 3}
-    volume: 0.25
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: two_left_socks
     clip: {fileID: 8300000, guid: 127f49bdf46cbab449b7f339eeb172e1, type: 3}
-    volume: 0.25
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: bossa_nova
     clip: {fileID: 8300000, guid: 917f5439c52bb6e48aa674a0eab5d31f, type: 3}
-    volume: 0.25
+    volume: 0.1
     pitch: 1
     loop: 0
     source: {fileID: 0}

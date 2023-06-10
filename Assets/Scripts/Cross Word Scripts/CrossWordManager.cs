@@ -240,12 +240,15 @@ public class CrossWordManager : MonoBehaviour
             {
                 node.isAnswered = true;
                 node.isHighlighted = false;
-                node.isSelected = false;    
+                node.isSelected = false;
             }
+
+            activeClue = default;
 
             onCrossWordItemAnswered?.Invoke(item);
             onNodeSelected?.Invoke();
             onNodeAnswered?.Invoke();
+            OnActiveClueChangeAction?.Invoke(activeClue);
         }
     }    
 

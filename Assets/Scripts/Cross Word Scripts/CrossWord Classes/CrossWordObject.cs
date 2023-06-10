@@ -42,6 +42,7 @@ public class CrossWordObject
    }
 }
 
+[System.Serializable]
 public struct CrossWordClue
 {
    public int itemNumber;

@@ -1607,5 +1607,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Question Board
       objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_text
+      value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec
+        pretium odio, at orci aliquam.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_fontSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247952, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247953, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247953, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.039656095
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247953, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1.2604227
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247953, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 3.6795566
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579724263115247953, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.6302948
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 343d2e928eb4a14498fdbfa98efb3212, type: 3}

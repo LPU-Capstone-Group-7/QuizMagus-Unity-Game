@@ -39,7 +39,12 @@ public class CrossWordUIHandler : MonoBehaviour
     private void ChangeActiveClue(CrossWordClue clue)
     {
         if(activeClue.triviaQuestion == clue.triviaQuestion && activeClue.startNode == clue.startNode) return;
-        tickerUI.CreateNewTicker(clue.triviaQuestion.question);
+
+        if(clue.triviaQuestion == null)
+        {
+            tickerUI.CreateNewTicker("");
+        }
+        else {tickerUI.CreateNewTicker(clue.triviaQuestion.question);}
     }
 
     public void ListAllClues(List<CrossWordGridItem> clues)

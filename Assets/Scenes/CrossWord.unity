@@ -559,6 +559,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7e7514dd97d4340bd837d832093ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeClue:
+    itemNumber: 0
+    startNode: {x: 0, y: 0}
+    triviaQuestion:
+      question: 
+      answer: 
+      difficulty: 
+      id: 
+    orientation: 0
   tickerUI: {fileID: 1217424049}
   questionItemTextPrefab: {fileID: 1964911116142907873, guid: 5cc7e8e928eda974fa4865d43d456117, type: 3}
   downListTransform: {fileID: 1423701732}
@@ -1578,6 +1587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraSpeed: 75
   defaultBoundingBoxSize: {x: 18, y: 10}
+  margin: 2.5
 --- !u!4 &1000541923
 Transform:
   m_ObjectHideFlags: 0
@@ -1848,7 +1858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3512cef3010c04db9d25d102d41e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemDuration: 2
+  itemSpeed: 3
   tickerItemPrefab: {fileID: 7268658477347621802, guid: 700f8704e68d3b14ebfc0e739510d080, type: 3}
 --- !u!114 &1217424050
 MonoBehaviour:

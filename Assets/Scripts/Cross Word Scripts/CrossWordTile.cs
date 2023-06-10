@@ -8,6 +8,8 @@ public class CrossWordTile : MonoBehaviour
 {
     public CrossWordObject crossWordObject;
     bool hasLetterBelow;
+    bool isStartingTile = false;
+    int startingNumber = 0;
 
     [Header("UI Components")]
     [SerializeField] TextMeshPro numberText;
@@ -23,6 +25,9 @@ public class CrossWordTile : MonoBehaviour
 
     [Header("Animator Components")]
     Animator animator;
+
+    [Header("Thought Bubble")]
+    [SerializeField] Transform thoughtBubbleTransform;
 
     void Awake()
     {
@@ -65,6 +70,12 @@ public class CrossWordTile : MonoBehaviour
                 if(node.x == clue.Value.startNode.x && node.y == clue.Value.startNode.y)
                 {
                     numberText.text = clue.Value.itemNumber.ToString();
+                    thoughtBubbleTransform.GetComponentInChildren<TextMeshPro>().text = "# " + clue.Value.itemNumber.ToString();
+                    
+                    CrossWordManager.instance.OnActiveClueChangeAction += DisplayThoughtBubble;
+                    startingNumber = clue.Value.itemNumber;
+                    
+                    isStartingTile = true;
                     break;
                 }
             }
@@ -123,11 +134,24 @@ public class CrossWordTile : MonoBehaviour
         selectSpriteTransform.gameObject.SetActive(crossWordObject.isSelected);
         if(crossWordObject.isHighlighted)
         {
-            sr.sprite = hasLetterBelow? crossWordTileHighlightSprites[0] : crossWordTileHighlightSprites[1];    
+            sr.sprite = hasLetterBelow? crossWordTileHighlightSprites[0] : crossWordTileHighlightSprites[1]; 
         }
         else
         {
             sr.sprite = baseSprite;
+        }
+
+    }
+
+    public void DisplayThoughtBubble(CrossWordClue clue)
+    {
+        if(clue.itemNumber == startingNumber)
+        {
+            thoughtBubbleTransform.gameObject.SetActive(true);
+        }
+        else
+        {
+            thoughtBubbleTransform.gameObject.SetActive(false);
         }
     }
 
