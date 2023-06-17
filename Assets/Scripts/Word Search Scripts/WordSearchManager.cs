@@ -259,4 +259,9 @@ public class WordSearchManager : MonoBehaviour
             questionBoardAnimator.Play("QuestionBoard_Close");
         }, 0f);
     }
+
+    public bool enableHints()
+    {
+        return wordSearchSettings.enableHints;
+    }
 }

@@ -434,23 +434,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedAttempts: 0
-  uniqueGameSettings: '{"triviaQuestions":[{"question":"What is the name for a value
-    that doesn''t change throughout the program?","answer":"Constant","difficulty":"easy","id":"f2328ef8-7ec8-4a61-8f2d-f785062d90e7"},{"question":"What
-    is the name for a set of instructions that are executed in particular order","answer":"Algorithm","difficulty":"normal","id":"3d527d75-35f1-4227-a273-fb74e1a54131"},{"question":"Name
-    for a block of code that can be reused multiple times in a prog","answer":"Function","difficulty":"normal","id":"2f7563e7-0948-4321-a16a-a29bec23c2d1"},{"question":"What
-    is the name for a language that is easy for humans to understand and needs to
-    be translated in","answer":"High level language","difficulty":"hard","id":"4bb545f1-e27f-4c43-a4c4-5cfc91d384f6"},{"question":"What
-    is the name for the smallest unit of programming that can be executed?","answer":"Statement","difficulty":"easy","id":"971f29fc-c482-40e5-a69b-abbaaa0ebdaa"},{"question":"Name
-    for the data structure that stores a collection of values that can be accessed
-    by a key?","answer":"Dictionary","difficulty":"hard","id":"e7f8af0e-f091-4ba1-ad03-d2fff85c4bfb"},{"question":"What
-    is the name for a loop that executes a block of code as long as a certain condition
-    is true?","answer":"While loop","difficulty":"normal","id":"f2e49674-0dcc-474a-89f4-689b4011d7dc"},{"question":"What
-    is the name for the process of finding and fixing errors in a program?","answer":"Debugging","difficulty":"easy","id":"983bfe25-79c5-413a-bb4f-b9595f2453dd"},{"question":"What
-    is the name for the code that is executed when an error occurs in a program?","answer":"Exception
-    handling","difficulty":"normal","id":"1dc6bb15-2876-430a-8dd6-aa8cb792e8cf"},{"question":"Name
-    for a type of programming that uses a graphical interface to create programs
-    by dra","answer":"Visual programming","difficulty":"hard","id":"5665724b-251e-4b9b-a132-5c41a4369645"}],"timePerQuestions":10,"enableHints":true,"randomizeQuestions":true,"basedGrading":"based
-    50"}'
+  uniqueGameSettings: "{\"triviaQuestions\":[{\"question\":\"What is the name for
+    malicious software that appears benign but performs malicious activities when
+    activated?\",\"answer\":\"Trojan Horse\",\"difficulty\":\"normal\",\"id\":\"f3816e71-3386-4e23-b1ef-315125e0e55c\"},{\"question\":\"What
+    techniques are employed in cryptography to make sure that messages can only be
+    decoded by its intended recipient?\",\"answer\":\"Encryption\",\"difficulty\":\"normal\",\"id\":\"ddf95c59-aae4-4f6c-9fc2-4f9024428698\"},{\"question\":\"What
+    does SSH stand for ?\",\"answer\":\"Secure Shell\",\"difficulty\":\"normal\",\"id\":\"2998f54c-308d-414e-a7d7-536be1fcd4e7\"},{\"question\":\"Which
+    type of attack uses phishing emails or malicious attachments in order to gain
+    access inside an organization\u2019s network ?\",\"answer\":\"spear phishing\",\"difficulty\":\"normal\",\"id\":\"bc5abfce-4b1b-4b71-8b43-6ad8e56f18f9\"},{\"question\":\"What
+    type of attack takes advantage of weaknesses in a system security procedure and
+    requires some interaction between users and the attacker before gaining access?\",\"answer\":\"social
+    engineering\",\"difficulty\":\"normal\",\"id\":\"94ddac10-77d1-4f5a-980b-d38ab24cca5b\"},{\"question\":\"What
+    term is used describe the practice where data centers reroute traffic away from
+    failed or overcrowded servers or networks ?\",\"answer\":\"load balancing\",\"difficulty\":\"normal\",\"id\":\"55c3fcbb-1531-41ef-87c8-ecdf5b40cd95\"},{\"question\":\"Which
+    type of data breach involves direct attacks on websites, databases, applications,
+    services or devices without going through any intervening systems or networks
+    ?\",\"answer\":\"direct to web attack\",\"difficulty\":\"normal\",\"id\":\"363755c5-095e-4cc6-85da-4081bb13cdc2\"},{\"question\":\"Which
+    term refers to programs specially written with malicious intent such as viruses,
+    worms and Trojans  ?\",\"answer\":\"malware\",\"difficulty\":\"normal\",\"id\":\"bf38df77-ba7c-4ba4-9789-32e327ec577a\"},{\"question\":\"What
+    protocol allows remote login over an unsecured network such as the internet using
+    passwords for authentication instead of traditional encryption methods?\",\"answer\":\"Telnet\",\"difficulty\":\"normal\",\"id\":\"1164b926-13d6-41af-9426-d52d8f2bad87\"},{\"question\":\"What
+    type os virus hides itself by intercepting requests from a user asking an operating
+    system for file location information.\",\"answer\":\"file hiding virus\",\"difficulty\":\"normal\",\"id\":\"36c86c71-5d7c-4c72-ab39-7bbced6b9307\"}],\"allowBackwards\":false,\"allowDiagonals\":false,\"enableHints\":true,\"randomizeQuestion\":true,\"maxNumOfChoices\":5,\"basedGrading\":\"based
+    60\",\"timeLimit\":20}"
 --- !u!1 &1223089540
 GameObject:
   m_ObjectHideFlags: 3
@@ -1068,9 +1074,6 @@ MonoBehaviour:
     author: Lud and Schlatt Crossing
   - title: Schlatt Crossing
     author: Philip Milman
-  songPromptAnimator: {fileID: 711386664}
-  songTitleText: {fileID: 1370917282}
-  songAuthorText: {fileID: 566009077}
 --- !u!1 &1721324624
 GameObject:
   m_ObjectHideFlags: 0

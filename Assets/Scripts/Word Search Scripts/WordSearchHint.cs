@@ -30,7 +30,7 @@ public class WordSearchHint : MonoBehaviour
 
     private void Update()
     {
-        if(timeToShowHint <= WordSearchTimer.instance.GetTimeTakenToAnswer() && WordSearchManager.instance.GetCurrentWordSearchContents().Count > 1 && !hintButtonTransform.gameObject.activeInHierarchy && !buttonWasClicked)
+        if(timeToShowHint <= WordSearchTimer.instance.GetTimeTakenToAnswer() && WordSearchManager.instance.GetCurrentWordSearchContents().Count > 1 && !hintButtonTransform.gameObject.activeInHierarchy && !buttonWasClicked && WordSearchManager.instance.enableHints())
         {
             ShowButton();
         }
